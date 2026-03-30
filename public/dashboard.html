@@ -6,6 +6,7 @@
   <title>Dashboard - VOLTUM</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body class="bg-gradient-to-b from-black via-purple-900/20 to-black text-white">
   <div class="min-h-screen">
@@ -134,39 +135,30 @@
     </div>
   </div>
 
-  <script async defer>
-    let supabaseClient = null;
+  <script>
+    const SUPABASE_URL = 'https://btwrbjqvnwxxsyhipjta.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ0d3JianF2bnd4eHN5aGlwanRhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ4NTc1NDgsImV4cCI6MjA5MDQzMzU0OH0.ZFItnsTbRkVSz4Ut7JH7iccOZZPxiycsK36KgYEG7Tk';
+
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
     let events = [];
 
-    // Cargar Supabase
-    async function initSupabase() {
-      const script = document.createElement('script');
-      script.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
-      script.onload = () => {
-        if (window.supabase) {
-          supabaseClient = window.supabase.createClient(
-            'https://btwrbjqvnwxxsyhipjta.supabase.co',
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ0d3JianF2bnd4eHN5aGlwanRhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc0MDk1MjYsImV4cCI6MjA5Mjk4NTUyNn0.PwQW47h0BflM0JVQc0HKJ-8t3NjXTiY-9H_QD7k-R7A'
-          );
-          loadEvents();
-        }
-      };
-      document.head.appendChild(script);
-    }
-
     async function loadEvents() {
-      if (!supabaseClient) return;
       try {
-        const { data, error } = await supabaseClient
+        const { data, error } = await supabase
           .from('events')
           .select('*')
           .order('event_date', { ascending: true });
-        
-        if (error) throw error;
+
+        if (error) {
+          console.error('Error Supabase:', error);
+          throw error;
+        }
+
         events = data || [];
         renderEvents();
-      } catch (e) {
-        console.error('Error:', e);
+      } catch (error) {
+        console.error('Error cargando:', error);
+        alert('⚠️ Error: ' + error.message);
       }
     }
 
@@ -220,12 +212,7 @@
     async function saveEvent(e) {
       e.preventDefault();
 
-      if (!supabaseClient) {
-        alert('❌ Supabase no está conectado');
-        return;
-      }
-
-      const data = {
+      const newEvent = {
         event_name: document.getElementById('eventName').value,
         event_date: document.getElementById('eventDate').value,
         event_time: document.getElementById('eventTime').value || null,
@@ -236,30 +223,32 @@
       };
 
       try {
-        const { error } = await supabaseClient.from('events').insert([data]);
+        const { error } = await supabase.from('events').insert([newEvent]);
         if (error) throw error;
+
         closeModal();
         loadEvents();
         alert('✅ Evento agregado correctamente');
-      } catch (err) {
-        console.error('Error:', err);
-        alert('❌ Error: ' + err.message);
+      } catch (error) {
+        console.error('Error:', error);
+        alert('❌ Error: ' + error.message);
       }
     }
 
     async function deleteEvent(id) {
       if (!confirm('¿Eliminar este evento?')) return;
+
       try {
-        const { error } = await supabaseClient.from('events').delete().eq('id', id);
+        const { error } = await supabase.from('events').delete().eq('id', id);
         if (error) throw error;
         loadEvents();
-      } catch (e) {
+      } catch (error) {
         alert('❌ Error al eliminar');
       }
     }
 
-    // Inicializar
-    initSupabase();
+    // Cargar al iniciar
+    window.addEventListener('load', loadEvents);
   </script>
 </body>
 </html>
