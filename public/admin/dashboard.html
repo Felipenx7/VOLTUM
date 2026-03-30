@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - VOLTUM</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="bg-gradient-to-b from-black via-purple-900/20 to-black text-white">
+  <div class="min-h-screen">
+    <nav class="bg-black/40 backdrop-blur border-b border-purple-500/20 sticky top-0 z-50">
+      <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+        <div class="text-2xl font-black bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">⚡ VOLTUM ADMIN</div>
+        <div class="flex gap-4">
+          <span class="text-sm text-gray-400">Bienvenido, Admin</span>
+          <button onclick="logout()" class="px-4 py-2 bg-red-600 hover:bg-red-700 rounded-lg font-bold text-sm">Salir</button>
+        </div>
+      </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 py-12">
+      <h1 class="text-4xl font-black mb-12">📊 Panel de Control</h1>
+
+      <!-- KPIs -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+        <div class="bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-2xl p-6">
+          <div class="text-gray-400 text-sm mb-2">DJs Activos</div>
+          <div class="text-4xl font-black mb-2" id="djsActivos">0</div>
+          <div class="text-green-400 text-sm">Usuarios pagos</div>
+        </div>
+
+        <div class="bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-2xl p-6">
+          <div class="text-gray-400 text-sm mb-2">Ingresos Totales</div>
+          <div class="text-4xl font-black mb-2" id="ingresosTotales">$0</div>
+          <div class="text-green-400 text-sm">Este mes</div>
+        </div>
+
+        <div class="bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-2xl p-6">
+          <div class="text-gray-400 text-sm mb-2">Renovaciones Próximas</div>
+          <div class="text-4xl font-black mb-2" id="renovacionesProximas">0</div>
+          <div class="text-blue-400 text-sm">Próximos 7 días</div>
+        </div>
+
+        <div class="bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-2xl p-6">
+          <div class="text-gray-400 text-sm mb-2">Tasa de Retención</div>
+          <div class="text-4xl font-black mb-2">100%</div>
+          <div class="text-green-400 text-sm">Sin cancelaciones</div>
+        </div>
+      </div>
+
+      <!-- Tabla de DJs -->
+      <div class="bg-gray-900/50 border border-purple-500/20 rounded-2xl p-6">
+        <h2 class="text-2xl font-bold mb-6">👥 DJs Registrados</h2>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead class="border-b border-purple-500/20">
+              <tr class="text-gray-400">
+                <th class="text-left py-3">Nombre</th>
+                <th class="text-left py-3">Email</th>
+                <th class="text-left py-3">Usuario</th>
+                <th class="text-left py-3">Estado</th>
+                <th class="text-left py-3">Renovación</th>
+                <th class="text-left py-3">Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="tablaDJs" class="divide-y divide-purple-500/10">
+              <!-- Se llena dinámicamente -->
+            </tbody>
+          </table>
+        </div>
+
+        <div id="estadoVacio" class="text-center py-12 text-gray-400">
+          <i class="fas fa-users text-4xl mb-4 block"></i>
+          <p>No hay DJs registrados aún</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const sbURL = 'https://btwrbjqvnwxxsyhipjta.supabase.co';
+    const sbKEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ0d3JianF2bnd4eHN5aGlwanRhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ4NTc1NDgsImV4cCI6MjA5MDQzMzU0OH0.ZFItnsTbRkVSz4Ut7JH7iccOZZPxiycsK36KgYEG7Tk';
+    const supabase = window.supabase.createClient(sbURL, sbKEY);
+
+    let djs = [];
+
+    async function cargarDatos() {
+      try {
+        // Cargar DJs
+        const { data: users, error: userError } = await supabase.from('users').select('*').eq('role', 'dj');
+        if (userError) throw userError;
+
+        // Cargar suscripciones
+        const { data: subs, error: subError } = await supabase.from('subscriptions').select('*');
+        if (subError) throw subError;
+
+        djs = users.map(user => {
+          const sub = subs.find(s => s.user_id === user.id);
+          return { ...user, subscription: sub };
+        });
+
+        mostrarUI();
+      } catch (e) {
+        console.error('Error:', e);
+      }
+    }
+
+    function mostrarUI() {
+      const tabla = document.getElementById('tablaDJs');
+      const vacio = document.getElementById('estadoVacio');
+
+      if (djs.length === 0) {
+        tabla.innerHTML = '';
+        vacio.classList.remove('hidden');
+        document.getElementById('djsActivos').textContent = '0';
+        return;
+      }
+
+      vacio.classList.add('hidden');
+
+      const djsActivos = djs.filter(d => d.subscription && d.subscription.status === 'active').length;
+      const ingresosTotal = djsActivos * 10000;
+      
+      document.getElementById('djsActivos').textContent = djsActivos;
+      document.getElementById('ingresosTotales').textContent = '$' + ingresosTotal.toLocaleString();
+
+      tabla.innerHTML = djs.map(dj => `
+        <tr class="border-b border-purple-500/10 hover:bg-purple-500/5">
+          <td class="py-3 font-bold">${dj.artist_name || dj.username}</td>
+          <td class="py-3 text-gray-400">${dj.email}</td>
+          <td class="py-3 text-gray-400">@${dj.username}</td>
+          <td class="py-3">
+            <span class="px-2 py-1 rounded text-xs font-bold ${dj.subscription?.status === 'active' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}">
+              ${dj.subscription?.status === 'active' ? '✅ Activo' : '❌ Inactivo'}
+            </span>
+          </td>
+          <td class="py-3 text-gray-400">${dj.subscription?.renewal_date || 'N/A'}</td>
+          <td class="py-3">
+            <button onclick="verPerfil('${dj.username}')" class="px-2 py-1 bg-purple-600 hover:bg-purple-700 rounded text-xs">Ver</button>
+            ${dj.subscription?.status === 'active' ? `<button onclick="cancelarSuscripcion('${dj.id}')" class="px-2 py-1 bg-red-600 hover:bg-red-700 rounded text-xs ml-1">Cancelar</button>` : ''}
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function verPerfil(username) {
+      window.location.href = `/dj/${username}`;
+    }
+
+    async function cancelarSuscripcion(userId) {
+      if (!confirm('¿Estás seguro de cancelar esta suscripción?')) return;
+
+      try {
+        await supabase.from('subscriptions').update({ status: 'cancelled' }).eq('user_id', userId);
+        cargarDatos();
+        alert('✅ Suscripción cancelada');
+      } catch (e) {
+        alert('❌ Error: ' + e.message);
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem('voltum_admin');
+      window.location.href = '/';
+    }
+
+    // Proteger página
+    window.addEventListener('load', () => {
+      const admin = localStorage.getItem('voltum_admin');
+      if (!admin) {
+        window.location.href = '/admin/login.html';
+        return;
+      }
+      cargarDatos();
+    });
+  </script>
+</body>
+</html>
