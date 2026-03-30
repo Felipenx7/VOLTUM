@@ -3,490 +3,155 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mi Preskit - VOLTUM</title>
+  <title>Login - VOLTUM</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="bg-gradient-to-b from-black via-purple-900/20 to-black text-white">
-  <div class="min-h-screen">
-    <!-- NAV -->
-    <nav class="bg-black/40 backdrop-blur border-b border-purple-500/20 sticky top-0 z-50">
-      <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-        <div class="text-2xl font-black bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">⚡ VOLTUM</div>
-        <div class="flex gap-4">
-          <a href="#" onclick="verPreskit()" class="px-4 py-2 bg-purple-600 rounded-lg font-bold text-sm">👁️ Ver Preskit</a>
-          <button onclick="logout()" class="px-4 py-2 border border-purple-500 rounded-lg font-bold text-sm">Salir</button>
+  <div class="min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-md">
+      <div class="bg-gray-900/50 border border-purple-500/30 rounded-2xl p-8">
+        <div class="text-center mb-8">
+          <div class="text-4xl font-black bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent mb-2">⚡ VOLTUM</div>
+          <p class="text-gray-400">Tu preskit profesional</p>
+        </div>
+
+        <div id="loginTab" class="space-y-4">
+          <div class="flex gap-2 mb-6">
+            <button id="btnLogin" class="flex-1 py-2 bg-purple-600 rounded-lg font-bold" onclick="showTab('login')">Ingresar</button>
+            <button id="btnSignup" class="flex-1 py-2 border border-purple-500 rounded-lg font-bold" onclick="showTab('signup')">Crear</button>
+          </div>
+          <input type="email" id="email" placeholder="Email" class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
+          <input type="password" id="pass" placeholder="Contraseña" class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
+          <div id="loginError" class="text-red-400 text-sm hidden"></div>
+          <button onclick="login()" class="w-full py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold hover:opacity-90">Ingresar</button>
+        </div>
+
+        <div id="signupTab" class="space-y-4 hidden">
+          <div class="flex gap-2 mb-6">
+            <button id="btnLogin2" class="flex-1 py-2 border border-purple-500 rounded-lg font-bold" onclick="showTab('login')">Ingresar</button>
+            <button id="btnSignup2" class="flex-1 py-2 bg-purple-600 rounded-lg font-bold" onclick="showTab('signup')">Crear</button>
+          </div>
+          <input type="email" id="signEmail" placeholder="Email" class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
+          <input type="text" id="signUser" placeholder="Usuario (dj-nombre)" class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
+          <input type="text" id="signArtist" placeholder="Nombre artístico" class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
+          <input type="password" id="signPass" placeholder="Contraseña (mín 6)" class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
+          <p class="text-xs text-gray-500">Plan: $10.000 CLP/mes</p>
+          <div id="signupError" class="text-red-400 text-sm hidden"></div>
+          <button onclick="signup()" class="w-full py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold hover:opacity-90">Crear Cuenta</button>
+        </div>
+
+        <div class="mt-8 pt-8 border-t border-purple-500/20">
+          <a href="/demo.html" class="block text-center py-2 border border-purple-500 rounded-lg font-bold hover:bg-purple-500/10">👀 Ver Demo</a>
         </div>
       </div>
-    </nav>
-
-    <div class="max-w-5xl mx-auto px-4 py-12">
-      <h1 class="text-4xl font-black mb-2">✏️ Edita tu Preskit</h1>
-      <p class="text-gray-400 mb-8">Todo lo que necesitas para que las productoras te contraten</p>
-
-      <!-- FORM PRINCIPAL -->
-      <form id="prestikForm" class="space-y-8">
-
-        <!-- SECCIÓN 1: FOTO DE PERFIL -->
-        <div class="bg-gray-900/50 border border-purple-500/20 rounded-2xl p-8">
-          <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
-            <i class="fas fa-user-circle text-purple-400"></i> Tu Foto de Perfil
-          </h2>
-          
-          <div class="flex gap-8 items-start">
-            <div class="flex-shrink-0">
-              <div id="profilePreview" class="w-40 h-40 rounded-full bg-gradient-to-br from-purple-600 to-pink-600 overflow-hidden border-4 border-purple-500 flex items-center justify-center">
-                <i class="fas fa-user text-6xl text-white opacity-50"></i>
-              </div>
-            </div>
-
-            <div class="flex-1">
-              <label class="block mb-4">
-                <span class="text-sm text-gray-400 mb-2 block">Sube tu foto (JPG, PNG)</span>
-                <input type="file" id="profilePhoto" accept="image/*" class="block w-full px-4 py-3 bg-gray-800 border border-purple-500/30 rounded-lg text-white cursor-pointer">
-              </label>
-              <p class="text-xs text-gray-500">Tamaño recomendado: 500x500px</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- SECCIÓN 2: INFO BÁSICA -->
-        <div class="bg-gray-900/50 border border-purple-500/20 rounded-2xl p-8">
-          <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
-            <i class="fas fa-info-circle text-purple-400"></i> Información Básica
-          </h2>
-
-          <div class="space-y-4">
-            <div>
-              <label class="block text-sm text-gray-400 mb-2">Nombre Artístico</label>
-              <input type="text" id="artistName" placeholder="DJ Phoenix" class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
-            </div>
-
-            <div>
-              <label class="block text-sm text-gray-400 mb-2">Usuario (para tu URL)</label>
-              <div class="flex gap-2">
-                <span class="px-4 py-2 bg-gray-700 border border-purple-500/30 rounded-lg text-gray-400">voltum.cl/dj/</span>
-                <input type="text" id="username" placeholder="dj-phoenix" disabled class="flex-1 px-4 py-2 bg-gray-700 border border-purple-500/30 rounded-lg text-gray-400">
-              </div>
-            </div>
-
-            <div>
-              <label class="block text-sm text-gray-400 mb-2">Tu Bio / Descripción</label>
-              <textarea id="bio" placeholder="House • Techno • Minimal | 10 años de experiencia..." rows="4" class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white"></textarea>
-            </div>
-          </div>
-        </div>
-
-        <!-- SECCIÓN 3: GÉNEROS -->
-        <div class="bg-gray-900/50 border border-purple-500/20 rounded-2xl p-8">
-          <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
-            <i class="fas fa-music text-purple-400"></i> Géneros que Tocas
-          </h2>
-
-          <div id="genresList" class="grid grid-cols-2 md:grid-cols-4 gap-3">
-            <!-- Se llena con JS -->
-          </div>
-        </div>
-
-        <!-- SECCIÓN 4: REDES SOCIALES -->
-        <div class="bg-gray-900/50 border border-purple-500/20 rounded-2xl p-8">
-          <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
-            <i class="fas fa-share-alt text-purple-400"></i> Tus Redes Sociales
-          </h2>
-
-          <div class="space-y-4">
-            <div>
-              <label class="block text-sm text-gray-400 mb-2">📱 Instagram</label>
-              <input type="url" id="instagram" placeholder="https://instagram.com/tuusuario" class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
-            </div>
-
-            <div>
-              <label class="block text-sm text-gray-400 mb-2">💬 WhatsApp</label>
-              <input type="tel" id="whatsapp" placeholder="569 1234 5678" class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
-            </div>
-
-            <div>
-              <label class="block text-sm text-gray-400 mb-2">🎵 Spotify</label>
-              <input type="url" id="spotify" placeholder="https://open.spotify.com/artist/..." class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
-            </div>
-
-            <div>
-              <label class="block text-sm text-gray-400 mb-2">🎬 YouTube</label>
-              <input type="url" id="youtube" placeholder="https://youtube.com/@tucanal" class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
-            </div>
-
-            <div>
-              <label class="block text-sm text-gray-400 mb-2">☁️ SoundCloud</label>
-              <input type="url" id="soundcloud" placeholder="https://soundcloud.com/tuusuario" class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
-            </div>
-          </div>
-        </div>
-
-        <!-- SECCIÓN 5: EQUIPOS DONDE TOCA -->
-        <div class="bg-gray-900/50 border border-purple-500/20 rounded-2xl p-8">
-          <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
-            <i class="fas fa-headphones text-purple-400"></i> Equipos Donde Toco
-          </h2>
-
-          <button type="button" onclick="openEquipmentSelector()" class="mb-6 px-6 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg font-bold">+ Seleccionar Equipos</button>
-
-          <div id="equipmentSelected" class="grid grid-cols-2 md:grid-cols-3 gap-3">
-            <!-- Se llena con JS -->
-          </div>
-
-          <div id="emptyEquipment" class="text-center py-8 text-gray-400">
-            <i class="fas fa-plus text-4xl mb-3 block"></i>
-            <p>Selecciona los equipos donde tocas</p>
-          </div>
-        </div>
-
-        <!-- SECCIÓN 6: GALERÍA DE FOTOS -->
-        <div class="bg-gray-900/50 border border-purple-500/20 rounded-2xl p-8">
-          <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
-            <i class="fas fa-images text-purple-400"></i> Galería (máximo 5 fotos)
-          </h2>
-
-          <button type="button" id="addPhotoBtn" onclick="addPhotoInput()" class="mb-6 px-6 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg font-bold">+ Agregar Foto</button>
-
-          <div id="photosList" class="space-y-3">
-            <!-- Se llena con JS -->
-          </div>
-        </div>
-
-        <!-- SECCIÓN 7: EVENTOS / PRESENTACIONES -->
-        <div class="bg-gray-900/50 border border-purple-500/20 rounded-2xl p-8">
-          <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
-            <i class="fas fa-calendar-alt text-purple-400"></i> Mis Presentaciones
-          </h2>
-
-          <button type="button" onclick="addEventForm()" class="mb-6 px-6 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg font-bold">+ Agregar Presentación</button>
-
-          <div id="eventsList" class="space-y-4">
-            <!-- Se llena con JS -->
-          </div>
-        </div>
-
-        <!-- BOTÓN GUARDAR -->
-        <div class="flex gap-4">
-          <button type="submit" class="flex-1 py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold text-lg hover:opacity-90 transition">
-            💾 Guardar Cambios
-          </button>
-          <a href="#" onclick="verPreskit()" class="flex-1 py-3 border border-purple-500 rounded-lg font-bold text-lg text-center hover:bg-purple-500/10 transition">
-            👁️ Ver Preskit
-          </a>
-        </div>
-      </form>
-
+      <div class="text-center mt-6"><a href="/" class="text-gray-500 hover:text-gray-300">← Inicio</a></div>
     </div>
   </div>
 
   <script>
-    const GENEROS_DISPONIBLES = [
-      'House', 'Techno', 'Minimal', 'Deep House', 'Tech House', 'Electro',
-      'Trance', 'Progressive House', 'Ambient', 'Industrial', 'Drum & Bass', 'Dubstep'
-    ];
-
-    const EQUIPOS_DISPONIBLES = [
-      { id: 1, name: 'Blondie', city: 'Santiago', icon: '🎪' },
-      { id: 2, name: 'Castro', city: 'Santiago', icon: '🎭' },
-      { id: 3, name: 'The Clinic', city: 'Santiago', icon: '🎧' },
-      { id: 4, name: 'Subterráneo', city: 'Santiago', icon: '🎸' },
-      { id: 5, name: 'La Feria', city: 'Santiago', icon: '🎪' },
-      { id: 6, name: 'Moods', city: 'Santiago', icon: '🎵' },
-      { id: 7, name: 'Sentient', city: 'Santiago', icon: '🔊' },
-      { id: 8, name: 'Club Náutico', city: 'Santiago', icon: '⛵' },
-      { id: 9, name: 'Garage', city: 'Valparaíso', icon: '🎸' },
-      { id: 10, name: 'Tartaglia', city: 'Valparaíso', icon: '🎭' },
-      { id: 11, name: 'La Discoteca', city: 'Concepción', icon: '💃' },
-      { id: 12, name: 'Club Social', city: 'Concepción', icon: '🎪' },
-      { id: 13, name: 'Evento Corporativo', city: 'Varios', icon: '🏢' },
-      { id: 14, name: 'Evento Privado', city: 'Varios', icon: '🎉' },
-      { id: 15, name: 'Wedding', city: 'Varios', icon: '💒' },
-      { id: 16, name: 'Festival', city: 'Varios', icon: '🎪' },
-    ];
-
-    let user = null;
-    let preskit = {};
-    let photoCount = 0;
-    let eventCount = 0;
-
-    function init() {
-      user = JSON.parse(localStorage.getItem('voltum_user'));
-      if (!user) { 
-        window.location.href = '/login.html'; 
-        return; 
+    function showTab(t) {
+      if (t === 'login') {
+        document.getElementById('loginTab').classList.remove('hidden');
+        document.getElementById('signupTab').classList.add('hidden');
+        document.getElementById('btnLogin').classList.add('bg-purple-600');
+        document.getElementById('btnLogin').classList.remove('border', 'border-purple-500');
+        document.getElementById('btnSignup').classList.remove('bg-purple-600');
+        document.getElementById('btnSignup').classList.add('border', 'border-purple-500');
+      } else {
+        document.getElementById('signupTab').classList.remove('hidden');
+        document.getElementById('loginTab').classList.add('hidden');
+        document.getElementById('btnSignup2').classList.add('bg-purple-600');
+        document.getElementById('btnSignup2').classList.remove('border', 'border-purple-500');
+        document.getElementById('btnLogin2').classList.remove('bg-purple-600');
+        document.getElementById('btnLogin2').classList.add('border', 'border-purple-500');
       }
+    }
 
-      if (!user.subscription || !user.subscription.active) {
-        alert('⚠️ Necesitas pagar tu suscripción');
-        window.location.href = '/checkout.html';
+    function login() {
+      const email = document.getElementById('email').value.trim();
+      const pass = document.getElementById('pass').value;
+      const errorDiv = document.getElementById('loginError');
+
+      if (!email || !pass) {
+        errorDiv.textContent = '⚠️ Rellena todos los campos';
+        errorDiv.classList.remove('hidden');
         return;
       }
 
-      document.getElementById('username').value = user.username;
-      document.getElementById('artistName').value = user.artist_name || '';
-
-      loadPreskit();
-      renderGenres();
-      renderEventsList();
-      renderEquipmentList();
-      renderPhotosList();
-      renderEventsList();
-
-      document.getElementById('profilePhoto').addEventListener('change', previewProfilePhoto);
-      document.getElementById('prestikForm').addEventListener('submit', savePreskit);
-    }
-
-    function loadPreskit() {
-      const stored = localStorage.getItem(`preskit_${user.id}`);
-      preskit = stored ? JSON.parse(stored) : {};
-
-      document.getElementById('bio').value = preskit.bio || '';
-      document.getElementById('instagram').value = preskit.instagram || '';
-      document.getElementById('whatsapp').value = preskit.whatsapp || '';
-      document.getElementById('spotify').value = preskit.spotify || '';
-      document.getElementById('youtube').value = preskit.youtube || '';
-      document.getElementById('soundcloud').value = preskit.soundcloud || '';
-    }
-
-    function previewProfilePhoto(e) {
-      const file = e.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          document.getElementById('profilePreview').innerHTML = `<img src="${event.target.result}" class="w-full h-full object-cover">`;
-          preskit.profilePhoto = event.target.result;
-        };
-        reader.readAsDataURL(file);
-      }
-    }
-
-    function renderGenres() {
-      const list = document.getElementById('genresList');
-      const selected = preskit.genres || [];
-
-      list.innerHTML = GENEROS_DISPONIBLES.map(g => `
-        <label class="flex items-center gap-2 p-3 bg-gray-800 border border-purple-500/30 rounded-lg hover:bg-purple-500/20 cursor-pointer transition">
-          <input type="checkbox" value="${g}" ${selected.includes(g) ? 'checked' : ''} onchange="updateGenres()">
-          <span>🎵 ${g}</span>
-        </label>
-      `).join('');
-    }
-
-    function updateGenres() {
-      const checkboxes = document.querySelectorAll('#genresList input[type="checkbox"]:checked');
-      preskit.genres = Array.from(checkboxes).map(c => c.value);
-    }
-
-    function openEquipmentSelector() {
-      const selected = preskit.equipment || [];
-      const html = `
-        <div class="fixed inset-0 bg-black/50 backdrop-blur flex items-center justify-center z-50 p-4">
-          <div class="bg-gray-900 border border-purple-500/30 rounded-2xl p-8 max-w-2xl w-full max-h-[80vh] overflow-y-auto">
-            <h2 class="text-2xl font-bold mb-4">Selecciona tus Equipos</h2>
-            <input type="text" id="searchEq" placeholder="Buscar..." class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg mb-4 text-white" onkeyup="filterEquipos()">
-
-            <div id="equipoCheckList" class="grid grid-cols-2 gap-3 mb-6">
-              ${EQUIPOS_DISPONIBLES.map(eq => `
-                <label class="flex items-center gap-2 p-3 bg-gray-800 border border-purple-500/30 rounded-lg hover:bg-purple-500/20 cursor-pointer">
-                  <input type="checkbox" data-id="${eq.id}" data-name="${eq.name}" data-city="${eq.city}" data-icon="${eq.icon}" ${selected.find(e => e.id === eq.id) ? 'checked' : ''}>
-                  <div class="flex-1">
-                    <div>${eq.icon} ${eq.name}</div>
-                    <div class="text-xs text-gray-500">${eq.city}</div>
-                  </div>
-                </label>
-              `).join('')}
-            </div>
-
-            <button onclick="saveEquipmentSelection()" class="w-full px-4 py-2 bg-purple-600 rounded-lg font-bold">Guardar</button>
-          </div>
-        </div>
-      `;
-
-      const modal = document.createElement('div');
-      modal.id = 'equipmentModal';
-      modal.innerHTML = html;
-      document.body.appendChild(modal);
-    }
-
-    function filterEquipos() {
-      const search = document.getElementById('searchEq').value.toLowerCase();
-      document.querySelectorAll('#equipoCheckList label').forEach(label => {
-        label.style.display = label.textContent.toLowerCase().includes(search) ? 'flex' : 'none';
-      });
-    }
-
-    function saveEquipmentSelection() {
-      const checkboxes = document.querySelectorAll('#equipoCheckList input:checked');
-      preskit.equipment = Array.from(checkboxes).map(c => ({
-        id: parseInt(c.dataset.id),
-        name: c.dataset.name,
-        city: c.dataset.city,
-        icon: c.dataset.icon
-      }));
-
-      document.getElementById('equipmentModal').remove();
-      renderEquipmentList();
-    }
-
-    function renderEquipmentList() {
-      const list = document.getElementById('equipmentSelected');
-      const empty = document.getElementById('emptyEquipment');
-      const equipment = preskit.equipment || [];
-
-      if (equipment.length === 0) {
-        list.innerHTML = '';
-        empty.classList.remove('hidden');
+      const users = JSON.parse(localStorage.getItem('voltum_users') || '[]');
+      const user = users.find(u => u.email === email && u.password === pass);
+      
+      if (!user) {
+        errorDiv.textContent = '❌ Email o contraseña incorrectos';
+        errorDiv.classList.remove('hidden');
         return;
       }
 
-      empty.classList.add('hidden');
-      list.innerHTML = equipment.map(eq => `
-        <div class="bg-purple-600/20 border border-purple-500/30 rounded-lg p-3 flex items-center justify-between">
-          <div>
-            <div class="text-2xl">${eq.icon}</div>
-            <div class="font-bold text-sm">${eq.name}</div>
-            <div class="text-xs text-gray-500">${eq.city}</div>
-          </div>
-          <button type="button" onclick="removeEquipment('${eq.id}')" class="text-red-400 hover:text-red-500">✕</button>
-        </div>
-      `).join('');
+      localStorage.setItem('voltum_user', JSON.stringify(user));
+      window.location.href = '/dashboard.html';
     }
 
-    function removeEquipment(id) {
-      preskit.equipment = preskit.equipment.filter(e => e.id != id);
-      renderEquipmentList();
-    }
+    function signup() {
+      const email = document.getElementById('signEmail').value.trim();
+      const user = document.getElementById('signUser').value.trim().toLowerCase();
+      const artist = document.getElementById('signArtist').value.trim();
+      const pass = document.getElementById('signPass').value;
+      const errorDiv = document.getElementById('signupError');
 
-    function addPhotoInput() {
-      if (photoCount >= 5) {
-        alert('⚠️ Máximo 5 fotos');
+      if (!email || !user || !artist || !pass) {
+        errorDiv.textContent = '⚠️ Rellena todos los campos';
+        errorDiv.classList.remove('hidden');
         return;
       }
 
-      const html = `
-        <div id="photo-${photoCount}" class="bg-gray-800 border border-purple-500/30 rounded-lg p-4 flex gap-4 items-center">
-          <input type="file" accept="image/*" onchange="handlePhotoChange(${photoCount})" class="flex-1 px-3 py-2 bg-gray-700 border border-purple-500/20 rounded text-white text-sm">
-          <button type="button" onclick="removePhoto(${photoCount})" class="px-3 py-2 bg-red-600 hover:bg-red-700 rounded text-sm">Eliminar</button>
-        </div>
-      `;
-
-      document.getElementById('photosList').insertAdjacentHTML('beforeend', html);
-      photoCount++;
-      updatePhotoButtonState();
-    }
-
-    function handlePhotoChange(index) {
-      const input = document.querySelector(`#photo-${index} input`);
-      const file = input.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          if (!preskit.photos) preskit.photos = [];
-          preskit.photos[index] = e.target.result;
-        };
-        reader.readAsDataURL(file);
-      }
-    }
-
-    function removePhoto(index) {
-      document.getElementById(`photo-${index}`).remove();
-      if (preskit.photos) delete preskit.photos[index];
-      updatePhotoButtonState();
-    }
-
-    function updatePhotoButtonState() {
-      const photoInputs = document.querySelectorAll('#photosList > div').length;
-      document.getElementById('addPhotoBtn').disabled = photoInputs >= 5;
-    }
-
-    function renderPhotosList() {
-      const photos = preskit.photos || [];
-      if (photos.length === 0) {
-        document.getElementById('photosList').innerHTML = '<p class="text-gray-500 text-center py-8">Sin fotos agregadas</p>';
+      if (pass.length < 6) {
+        errorDiv.textContent = '⚠️ Contraseña mínimo 6 caracteres';
+        errorDiv.classList.remove('hidden');
         return;
       }
 
-      document.getElementById('photosList').innerHTML = photos.map((p, i) => `
-        <div id="photo-${i}" class="bg-gray-800 border border-purple-500/30 rounded-lg p-4 flex gap-4 items-center">
-          <div class="w-16 h-16 rounded bg-gray-700 overflow-hidden">
-            <img src="${p}" class="w-full h-full object-cover">
-          </div>
-          <button type="button" onclick="removePhoto(${i})" class="px-3 py-2 bg-red-600 rounded text-sm">Eliminar</button>
-        </div>
-      `).join('');
-    }
-
-    function addEventForm() {
-      const html = `
-        <div id="event-${eventCount}" class="bg-gray-800 border border-purple-500/30 rounded-lg p-6">
-          <div class="grid grid-cols-2 gap-4 mb-4">
-            <input type="text" placeholder="Nombre evento" class="px-3 py-2 bg-gray-700 border border-purple-500/20 rounded text-white event-name">
-            <input type="date" class="px-3 py-2 bg-gray-700 border border-purple-500/20 rounded text-white event-date">
-          </div>
-          <div class="grid grid-cols-2 gap-4 mb-4">
-            <input type="time" class="px-3 py-2 bg-gray-700 border border-purple-500/20 rounded text-white event-time">
-            <input type="text" placeholder="Ciudad" class="px-3 py-2 bg-gray-700 border border-purple-500/20 rounded text-white event-city">
-          </div>
-          <div class="grid grid-cols-2 gap-4 mb-4">
-            <input type="text" placeholder="Lugar" class="px-3 py-2 bg-gray-700 border border-purple-500/20 rounded text-white event-venue">
-            <input type="url" placeholder="Link entradas" class="px-3 py-2 bg-gray-700 border border-purple-500/20 rounded text-white event-ticket">
-          </div>
-          <button type="button" onclick="removeEvent(${eventCount})" class="px-4 py-2 bg-red-600 rounded text-sm">Eliminar</button>
-        </div>
-      `;
-
-      document.getElementById('eventsList').insertAdjacentHTML('beforeend', html);
-      eventCount++;
-    }
-
-    function removeEvent(index) {
-      document.getElementById(`event-${index}`).remove();
-    }
-
-    function renderEventsList() {
-      const eventos = preskit.eventos || [];
-      if (eventos.length === 0) {
-        document.getElementById('eventsList').innerHTML = '<p class="text-gray-500 text-center py-8">Sin eventos agregados</p>';
+      if (!/^[a-z0-9\-]+$/.test(user)) {
+        errorDiv.textContent = '⚠️ Usuario: solo letras, números y guiones';
+        errorDiv.classList.remove('hidden');
         return;
       }
+
+      const users = JSON.parse(localStorage.getItem('voltum_users') || '[]');
+      
+      if (users.find(u => u.email === email)) {
+        errorDiv.textContent = '⚠️ Email ya existe';
+        errorDiv.classList.remove('hidden');
+        return;
+      }
+
+      if (users.find(u => u.username === user)) {
+        errorDiv.textContent = '⚠️ Usuario ya existe';
+        errorDiv.classList.remove('hidden');
+        return;
+      }
+
+      const newUser = {
+        id: Date.now(),
+        email,
+        username: user,
+        artist_name: artist,
+        password: pass,
+        role: 'dj',
+        created: new Date().toISOString(),
+        subscription: null
+      };
+
+      users.push(newUser);
+      localStorage.setItem('voltum_users', JSON.stringify(users));
+      localStorage.setItem('voltum_user', JSON.stringify(newUser));
+      
+      alert('✅ Cuenta creada correctamente\n\nAhora irás a pagar tu suscripción...');
+      window.location.href = '/checkout.html';
     }
 
-    function savePreskit(e) {
-      e.preventDefault();
-
-      preskit.artistName = document.getElementById('artistName').value;
-      preskit.bio = document.getElementById('bio').value;
-      preskit.instagram = document.getElementById('instagram').value;
-      preskit.whatsapp = document.getElementById('whatsapp').value;
-      preskit.spotify = document.getElementById('spotify').value;
-      preskit.youtube = document.getElementById('youtube').value;
-      preskit.soundcloud = document.getElementById('soundcloud').value;
-
-      const eventForms = document.querySelectorAll('#eventsList > div[id^="event-"]');
-      preskit.eventos = Array.from(eventForms).map(form => ({
-        name: form.querySelector('.event-name').value,
-        date: form.querySelector('.event-date').value,
-        time: form.querySelector('.event-time').value,
-        city: form.querySelector('.event-city').value,
-        venue: form.querySelector('.event-venue').value,
-        ticket: form.querySelector('.event-ticket').value
-      })).filter(e => e.name && e.date);
-
-      localStorage.setItem(`preskit_${user.id}`, JSON.stringify(preskit));
-      alert('✅ Preskit guardado correctamente');
+    if (localStorage.getItem('voltum_user')) {
+      window.location.href = '/dashboard.html';
     }
-
-    function verPreskit() {
-      window.location.href = '/dj/' + user.username;
-    }
-
-    function logout() {
-      localStorage.removeItem('voltum_user');
-      window.location.href = '/login.html';
-    }
-
-    window.addEventListener('load', init);
   </script>
 </body>
 </html>
