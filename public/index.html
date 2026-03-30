@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VOLTUM - DJ Preskit SaaS</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-black text-white">
+  <div id="app">
+    <!-- Navbar -->
+    <nav class="fixed top-0 w-full bg-black/40 backdrop-blur border-b border-purple-500/20 z-50">
+      <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-2">
+          <span class="text-2xl font-black bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">⚡ VOLTUM</span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <div class="relative min-h-screen flex items-center justify-center pt-20">
+      <div class="relative z-10 max-w-4xl mx-auto px-4 text-center">
+        <h1 class="text-6xl md:text-7xl font-black mb-6 leading-tight">
+          Tu Preskit Profesional
+          <span class="block bg-gradient-to-r from-purple-400 via-pink-500 to-purple-400 bg-clip-text text-transparent">
+            En 5 Minutos
+          </span>
+        </h1>
+
+        <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
+          Impresiona a promotores y clientes con un preskit profesional. Edita tu información sin código, comparte tu música, eventos y equipamiento. Todo en un lugar.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+          <form class="flex gap-2 max-w-md w-full mx-auto" onsubmit="return handleSubmit(event)">
+            <input
+              type="email"
+              placeholder="tu@email.com"
+              id="emailInput"
+              class="flex-1 px-4 py-3 bg-gray-800 rounded-lg border border-purple-500/30 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500"
+              required
+            />
+            <button
+              type="submit"
+              class="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-90 rounded-lg font-bold transition-all"
+            >
+              Comenzar
+            </button>
+          </form>
+        </div>
+
+        <div class="grid grid-cols-3 gap-4 text-center text-gray-400 text-sm mb-12">
+          <div>⚡ Sin código</div>
+          <div>🎵 Para DJs</div>
+          <div>🚀 Instant</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Features -->
+    <section class="py-20 px-4">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl md:text-5xl font-black mb-4">
+            Todo lo que un DJ necesita
+          </h2>
+          <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+            Secciones profesionales diseñadas específicamente para DJs
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-2xl p-6 hover:border-purple-500/50 transition">
+            <h3 class="text-xl font-bold mb-2">🎵 Tracks Destacados</h3>
+            <p class="text-gray-400">Muestra tus mejores producciones</p>
+          </div>
+          <div class="bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-2xl p-6 hover:border-purple-500/50 transition">
+            <h3 class="text-xl font-bold mb-2">📅 Próximas Presentaciones</h3>
+            <p class="text-gray-400">Eventos con link de entradas</p>
+          </div>
+          <div class="bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-2xl p-6 hover:border-purple-500/50 transition">
+            <h3 class="text-xl font-bold mb-2">📈 Estadísticas</h3>
+            <p class="text-gray-400">Muestra tu alcance en Spotify</p>
+          </div>
+          <div class="bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-2xl p-6 hover:border-purple-500/50 transition">
+            <h3 class="text-xl font-bold mb-2">⭐ Testimonios</h3>
+            <p class="text-gray-400">Opiniones de promotores y clientes</p>
+          </div>
+          <div class="bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-2xl p-6 hover:border-purple-500/50 transition">
+            <h3 class="text-xl font-bold mb-2">⚙️ Equipamiento</h3>
+            <p class="text-gray-400">Tu gear profesional listado</p>
+          </div>
+          <div class="bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-2xl p-6 hover:border-purple-500/50 transition">
+            <h3 class="text-xl font-bold mb-2">📷 Galería</h3>
+            <p class="text-gray-400">Fotos de eventos y performances</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="py-20 px-4">
+      <div class="max-w-4xl mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl md:text-5xl font-black mb-4">
+            Planes Simples
+          </h2>
+          <p class="text-gray-400 text-lg">Sin sorpresas, sin compromisos a largo plazo</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <!-- Free -->
+          <div class="bg-gray-900/50 border border-gray-700 rounded-2xl p-8">
+            <h3 class="text-2xl font-bold mb-2">Prueba Gratis</h3>
+            <p class="text-gray-400 mb-6">30 días completos</p>
+            <div class="text-4xl font-black mb-6">$0<span class="text-lg text-gray-400">/mes</span></div>
+            <ul class="space-y-3 mb-8">
+              <li class="flex items-center gap-3">
+                <span class="text-purple-400">✓</span> 3 secciones básicas
+              </li>
+              <li class="flex items-center gap-3">
+                <span class="text-purple-400">✓</span> Marca de agua VOLTUM
+              </li>
+              <li class="flex items-center gap-3">
+                <span class="text-purple-400">✓</span> 1 URL compartible
+              </li>
+            </ul>
+            <button class="w-full py-3 border border-purple-500 rounded-lg font-bold hover:bg-purple-500/10 transition">
+              Comenzar Gratis
+            </button>
+          </div>
+
+          <!-- Pro -->
+          <div class="bg-gradient-to-br from-purple-600/30 to-pink-600/30 border-2 border-purple-500 rounded-2xl p-8 relative">
+            <div class="absolute top-4 right-4 bg-purple-600 px-3 py-1 rounded-full text-sm font-bold">
+              MÁS POPULAR
+            </div>
+            <h3 class="text-2xl font-bold mb-2">Plan Pro</h3>
+            <p class="text-gray-300 mb-6">Para DJs serios</p>
+            <div class="text-4xl font-black mb-2">$9.990<span class="text-lg text-gray-400">/mes</span></div>
+            <p class="text-sm text-gray-400 mb-6">O $99.900/año (ahorra 17%)</p>
+            <ul class="space-y-3 mb-8">
+              <li class="flex items-center gap-3">
+                <span class="text-purple-400">✓</span> Todas las secciones
+              </li>
+              <li class="flex items-center gap-3">
+                <span class="text-purple-400">✓</span> Sin marca de agua
+              </li>
+              <li class="flex items-center gap-3">
+                <span class="text-purple-400">✓</span> URL personalizada
+              </li>
+              <li class="flex items-center gap-3">
+                <span class="text-purple-400">✓</span> Analytics completo
+              </li>
+              <li class="flex items-center gap-3">
+                <span class="text-purple-400">✓</span> Descargar como PDF
+              </li>
+              <li class="flex items-center gap-3">
+                <span class="text-purple-400">✓</span> Soporte prioritario
+              </li>
+            </ul>
+            <button class="w-full py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold hover:opacity-90 transition">
+              Activar Pro Ahora
+            </button>
+          </div>
+        </div>
+
+        <div class="mt-12 bg-gray-900/50 border border-gray-700 rounded-xl p-6 text-center">
+          <p class="text-gray-400">
+            ✅ Cancela cuando quieras • ✅ Sin contrato • ✅ Acceso inmediato
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-purple-500/20 py-8 px-4">
+      <div class="max-w-6xl mx-auto text-center text-gray-500">
+        <p>© 2024 VOLTUM. Todos los derechos reservados. 🎸⚡</p>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    function handleSubmit(e) {
+      e.preventDefault();
+      const email = document.getElementById('emailInput').value;
+      console.log('Email:', email);
+      alert('¡Gracias por tu interés! Te contactaremos pronto.');
+      document.getElementById('emailInput').value = '';
+      return false;
+    }
+  </script>
+</body>
+</html>
