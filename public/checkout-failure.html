@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pago Rechazado - VOLTUM</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gradient-to-b from-black via-purple-900/20 to-black text-white">
+  <div class="min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-md">
+      <div class="bg-gray-900/50 border border-red-500/30 rounded-2xl p-8 text-center">
+        <div class="mb-8">
+          <i class="fas fa-times-circle text-6xl text-red-400 mb-4 block"></i>
+          <h1 class="text-3xl font-black text-red-400">Pago Rechazado</h1>
+        </div>
+
+        <div class="mb-8">
+          <p class="text-gray-300 mb-6">Hubo un problema al procesar tu pago. Por favor, intenta de nuevo.</p>
+          
+          <div class="bg-red-600/20 border border-red-500/30 rounded-lg p-6 mb-6">
+            <p class="text-sm text-gray-300 mb-3">
+              <strong>Posibles razones:</strong>
+            </p>
+            <ul class="text-xs text-gray-400 space-y-2 text-left">
+              <li>✗ Fondos insuficientes</li>
+              <li>✗ Tarjeta expirada</li>
+              <li>✗ Datos incorrectos</li>
+              <li>✗ Límite de transacciones</li>
+            </ul>
+          </div>
+
+          <div class="bg-blue-600/20 border border-blue-500/30 rounded-lg p-4 mb-6">
+            <p class="text-xs text-gray-400">
+              💡 <strong>TIP:</strong> Verifica que tu tarjeta esté activa y tenga fondos suficientes
+            </p>
+          </div>
+        </div>
+
+        <div class="space-y-3">
+          <a href="/checkout.html" class="block w-full py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold hover:opacity-90 transition">
+            🔄 Intentar de Nuevo
+          </a>
+          <a href="/login.html" class="block w-full py-3 border border-gray-500 rounded-lg font-bold hover:bg-gray-500/10 transition">
+            ← Volver a Login
+          </a>
+        </div>
+
+        <div class="mt-8 pt-8 border-t border-purple-500/20 text-xs text-gray-500">
+          <p>¿Problemas técnicos?</p>
+          <p class="mt-2">Contacta a Gerencia@voltum.cl o WhatsApp +56 9 3039 4883</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
