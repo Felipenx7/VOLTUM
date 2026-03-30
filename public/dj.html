@@ -65,9 +65,9 @@
           </div>
         </div>
 
-        <!-- EQUIPOS DONDE TOCA -->
+        <!-- EQUIPAMIENTO PIONEER -->
         <div id="equipmentSection" class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-8 mb-12 hidden">
-          <h2 class="text-3xl font-bold mb-8">🎧 Equipos Donde Toco</h2>
+          <h2 class="text-3xl font-bold mb-8">🎛️ Mi Equipamiento Pioneer</h2>
           <div id="equipmentList" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             <!-- Se llena dinámicamente -->
           </div>
@@ -208,7 +208,7 @@
           <div class="bg-gradient-to-br from-purple-600/30 to-pink-600/30 rounded-lg px-4 py-4 text-center border border-purple-500/30 hover:border-purple-500/60 transition">
             <div class="text-3xl mb-2">${eq.icon}</div>
             <div class="font-bold text-sm">${eq.name}</div>
-            <div class="text-xs text-gray-500 mt-1">${eq.city || ''}</div>
+            <div class="text-xs text-gray-500 mt-1">${eq.category || ''}</div>
           </div>
         `).join('');
       }
