@@ -3,155 +3,339 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - VOLTUM</title>
+  <title>Dashboard - VOLTUM</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="bg-gradient-to-b from-black via-purple-900/20 to-black text-white">
-  <div class="min-h-screen flex items-center justify-center p-4">
-    <div class="w-full max-w-md">
-      <div class="bg-gray-900/50 border border-purple-500/30 rounded-2xl p-8">
-        <div class="text-center mb-8">
-          <div class="text-4xl font-black bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent mb-2">⚡ VOLTUM</div>
-          <p class="text-gray-400">Tu preskit profesional</p>
-        </div>
-
-        <div id="loginTab" class="space-y-4">
-          <div class="flex gap-2 mb-6">
-            <button id="btnLogin" class="flex-1 py-2 bg-purple-600 rounded-lg font-bold" onclick="showTab('login')">Ingresar</button>
-            <button id="btnSignup" class="flex-1 py-2 border border-purple-500 rounded-lg font-bold" onclick="showTab('signup')">Crear</button>
-          </div>
-          <input type="email" id="email" placeholder="Email" class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
-          <input type="password" id="pass" placeholder="Contraseña" class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
-          <div id="loginError" class="text-red-400 text-sm hidden"></div>
-          <button onclick="login()" class="w-full py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold hover:opacity-90">Ingresar</button>
-        </div>
-
-        <div id="signupTab" class="space-y-4 hidden">
-          <div class="flex gap-2 mb-6">
-            <button id="btnLogin2" class="flex-1 py-2 border border-purple-500 rounded-lg font-bold" onclick="showTab('login')">Ingresar</button>
-            <button id="btnSignup2" class="flex-1 py-2 bg-purple-600 rounded-lg font-bold" onclick="showTab('signup')">Crear</button>
-          </div>
-          <input type="email" id="signEmail" placeholder="Email" class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
-          <input type="text" id="signUser" placeholder="Usuario (dj-nombre)" class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
-          <input type="text" id="signArtist" placeholder="Nombre artístico" class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
-          <input type="password" id="signPass" placeholder="Contraseña (mín 6)" class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
-          <p class="text-xs text-gray-500">Plan: $10.000 CLP/mes</p>
-          <div id="signupError" class="text-red-400 text-sm hidden"></div>
-          <button onclick="signup()" class="w-full py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold hover:opacity-90">Crear Cuenta</button>
-        </div>
-
-        <div class="mt-8 pt-8 border-t border-purple-500/20">
-          <a href="/demo.html" class="block text-center py-2 border border-purple-500 rounded-lg font-bold hover:bg-purple-500/10">👀 Ver Demo</a>
+  <div class="min-h-screen">
+    <nav class="bg-black/40 backdrop-blur border-b border-purple-500/20 sticky top-0 z-50">
+      <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+        <div class="text-2xl font-black bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">⚡ VOLTUM</div>
+        <div class="flex gap-4 items-center">
+          <span class="text-sm" id="userName">DJ</span>
+          <a href="#" onclick="verPreskit(); return false;" class="px-4 py-2 bg-purple-600 rounded-lg font-bold text-sm">👁️ Ver</a>
+          <button onclick="logout()" class="px-4 py-2 border border-purple-500 rounded-lg font-bold text-sm hover:bg-purple-500/10">Salir</button>
         </div>
       </div>
-      <div class="text-center mt-6"><a href="/" class="text-gray-500 hover:text-gray-300">← Inicio</a></div>
+    </nav>
+
+    <div class="max-w-6xl mx-auto px-4 py-12">
+      <h1 class="text-4xl font-black mb-8">📊 Mi Dashboard</h1>
+      
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div class="bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-2xl p-6">
+          <div class="text-gray-400 text-sm">Visitas</div>
+          <div class="text-4xl font-black">1.250</div>
+        </div>
+        <div class="bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-2xl p-6">
+          <div class="text-gray-400 text-sm">Visitantes</div>
+          <div class="text-4xl font-black">342</div>
+        </div>
+        <div class="bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-2xl p-6">
+          <div class="text-gray-400 text-sm">Clicks</div>
+          <div class="text-4xl font-black">156</div>
+        </div>
+        <div class="bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-2xl p-6">
+          <div class="text-gray-400 text-sm">Eventos</div>
+          <div class="text-4xl font-black" id="eventCount">0</div>
+        </div>
+      </div>
+
+      <!-- EQUIPOS PIONEER -->
+      <div class="mb-12">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-3xl font-bold">🎛️ Mi Equipamiento Pioneer</h2>
+          <button class="px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg font-bold text-sm" onclick="openEquipmentModal()">+ Agregar</button>
+        </div>
+        <div id="equipmentList" class="grid grid-cols-2 md:grid-cols-3 gap-4"></div>
+        <div id="emptyEquipment" class="bg-gray-900/50 border border-purple-500/20 rounded-2xl p-8 text-center">
+          <i class="fas fa-sliders-h text-6xl text-purple-500 mb-4 block"></i>
+          <p class="text-gray-400 mb-4">Sin equipos seleccionados</p>
+          <button class="px-6 py-2 bg-purple-600 rounded-lg font-bold" onclick="openEquipmentModal()">Agregar equipamiento</button>
+        </div>
+      </div>
+
+      <!-- EVENTOS -->
+      <div class="mb-12">
+        <div class="flex justify-between items-center mb-8">
+          <h2 class="text-3xl font-bold">📅 Mis Presentaciones</h2>
+          <button class="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold" onclick="showModal()">+ Agregar</button>
+        </div>
+        <div id="eventsList" class="space-y-4"></div>
+        <div id="emptyState" class="bg-gray-900/50 border border-purple-500/20 rounded-2xl p-12 text-center">
+          <i class="fas fa-calendar text-6xl text-purple-500 mb-4 block"></i>
+          <p class="text-gray-400 mb-4">Sin presentaciones</p>
+          <button class="px-6 py-2 bg-purple-600 rounded-lg font-bold" onclick="showModal()">Agregar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL EVENTOS -->
+  <div id="modal" class="hidden fixed inset-0 bg-black/50 backdrop-blur flex items-center justify-center z-50 p-4">
+    <div class="bg-gray-900 border border-purple-500/30 rounded-2xl p-8 max-w-md w-full">
+      <h2 class="text-2xl font-bold mb-6">Agregar Evento</h2>
+      <div class="space-y-4">
+        <input type="text" id="eventName" placeholder="Nombre" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
+        <input type="date" id="eventDate" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
+        <input type="time" id="eventTime" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
+        <input type="text" id="eventCity" placeholder="Ciudad" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
+        <input type="text" id="eventVenue" placeholder="Lugar" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
+        <input type="url" id="eventTicket" placeholder="Link entradas" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white text-sm">
+        <div class="flex gap-3">
+          <button onclick="closeModal()" class="flex-1 px-4 py-2 border border-purple-500 rounded-lg font-bold">Cancelar</button>
+          <button onclick="saveEvent()" class="flex-1 px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold">Guardar</button>
+        </div>
+      </div>
     </div>
   </div>
 
   <script>
-    function showTab(t) {
-      if (t === 'login') {
-        document.getElementById('loginTab').classList.remove('hidden');
-        document.getElementById('signupTab').classList.add('hidden');
-        document.getElementById('btnLogin').classList.add('bg-purple-600');
-        document.getElementById('btnLogin').classList.remove('border', 'border-purple-500');
-        document.getElementById('btnSignup').classList.remove('bg-purple-600');
-        document.getElementById('btnSignup').classList.add('border', 'border-purple-500');
-      } else {
-        document.getElementById('signupTab').classList.remove('hidden');
-        document.getElementById('loginTab').classList.add('hidden');
-        document.getElementById('btnSignup2').classList.add('bg-purple-600');
-        document.getElementById('btnSignup2').classList.remove('border', 'border-purple-500');
-        document.getElementById('btnLogin2').classList.remove('bg-purple-600');
-        document.getElementById('btnLogin2').classList.add('border', 'border-purple-500');
-      }
-    }
+    let user = null;
+    let eventos = [];
+    let equipmentSelected = [];
 
-    function login() {
-      const email = document.getElementById('email').value.trim();
-      const pass = document.getElementById('pass').value;
-      const errorDiv = document.getElementById('loginError');
+    const EQUIPOS_PIONEER = [
+      // CONTROLADORES DJ
+      { id: 1, name: 'Pioneer DDJ-1000', category: 'Controlador', icon: '🎛️' },
+      { id: 2, name: 'Pioneer DDJ-800', category: 'Controlador', icon: '🎛️' },
+      { id: 3, name: 'Pioneer DDJ-400', category: 'Controlador', icon: '🎛️' },
+      { id: 4, name: 'Pioneer DDJ-200', category: 'Controlador', icon: '🎛️' },
+      { id: 5, name: 'Pioneer DDJ-FLX6', category: 'Controlador', icon: '🎛️' },
+      { id: 6, name: 'Pioneer DDJ-SR2', category: 'Controlador', icon: '🎛️' },
+      
+      // CDJ
+      { id: 7, name: 'Pioneer CDJ-3000', category: 'Reproductor', icon: '📀' },
+      { id: 8, name: 'Pioneer CDJ-2000NXS2', category: 'Reproductor', icon: '📀' },
+      { id: 9, name: 'Pioneer CDJ-900NXS', category: 'Reproductor', icon: '📀' },
+      
+      // MEZCLADORES
+      { id: 10, name: 'Pioneer DJM-900NXS2', category: 'Mezclador', icon: '🎚️' },
+      { id: 11, name: 'Pioneer DJM-750MK2', category: 'Mezclador', icon: '🎚️' },
+      { id: 12, name: 'Pioneer DJM-450', category: 'Mezclador', icon: '🎚️' },
+      { id: 13, name: 'Pioneer DJM-250MK2', category: 'Mezclador', icon: '🎚️' },
+      
+      // ACCESORIOS
+      { id: 14, name: 'Pioneer DVS (Vinyl)', category: 'Accesorio', icon: '💿' },
+      { id: 15, name: 'Pioneer HDJ-1500 (Auriculares)', category: 'Accesorio', icon: '🎧' },
+      { id: 16, name: 'Pioneer HDJ-X5 (Auriculares)', category: 'Accesorio', icon: '🎧' },
+      { id: 17, name: 'Pioneer RMX-1000 (Efectos)', category: 'Accesorio', icon: '⚙️' },
+      { id: 18, name: 'Pioneer EFX-1000 (Efectos)', category: 'Accesorio', icon: '⚙️' },
+    ];
 
-      if (!email || !pass) {
-        errorDiv.textContent = '⚠️ Rellena todos los campos';
-        errorDiv.classList.remove('hidden');
-        return;
-      }
-
-      const users = JSON.parse(localStorage.getItem('voltum_users') || '[]');
-      const user = users.find(u => u.email === email && u.password === pass);
+    function initDashboard() {
+      user = JSON.parse(localStorage.getItem('voltum_user') || 'null');
       
       if (!user) {
-        errorDiv.textContent = '❌ Email o contraseña incorrectos';
-        errorDiv.classList.remove('hidden');
+        window.location.replace('/login.html');
         return;
       }
-
-      localStorage.setItem('voltum_user', JSON.stringify(user));
-      window.location.href = '/dashboard.html';
+      
+      if (!user.subscription || !user.subscription.active) {
+        alert('⚠️ Necesitas pagar tu suscripción');
+        window.location.replace('/checkout.html');
+        return;
+      }
+      
+      document.getElementById('userName').textContent = user.artist_name || user.username;
+      
+      const stored = localStorage.getItem(`eventos_${user.id}`);
+      eventos = stored ? JSON.parse(stored) : [];
+      renderEventos();
+      
+      loadEquipment();
     }
 
-    function signup() {
-      const email = document.getElementById('signEmail').value.trim();
-      const user = document.getElementById('signUser').value.trim().toLowerCase();
-      const artist = document.getElementById('signArtist').value.trim();
-      const pass = document.getElementById('signPass').value;
-      const errorDiv = document.getElementById('signupError');
+    function renderEventos() {
+      const list = document.getElementById('eventsList');
+      const empty = document.getElementById('emptyState');
 
-      if (!email || !user || !artist || !pass) {
-        errorDiv.textContent = '⚠️ Rellena todos los campos';
-        errorDiv.classList.remove('hidden');
+      if (eventos.length === 0) {
+        list.innerHTML = '';
+        empty.classList.remove('hidden');
+        document.getElementById('eventCount').textContent = '0';
         return;
       }
 
-      if (pass.length < 6) {
-        errorDiv.textContent = '⚠️ Contraseña mínimo 6 caracteres';
-        errorDiv.classList.remove('hidden');
-        return;
-      }
+      empty.classList.add('hidden');
+      document.getElementById('eventCount').textContent = eventos.length;
 
-      if (!/^[a-z0-9\-]+$/.test(user)) {
-        errorDiv.textContent = '⚠️ Usuario: solo letras, números y guiones';
-        errorDiv.classList.remove('hidden');
-        return;
-      }
+      list.innerHTML = eventos.map((e, i) => `
+        <div class="bg-gradient-to-r from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-6">
+          <div class="flex justify-between">
+            <div>
+              <h3 class="text-xl font-bold">${e.name}</h3>
+              <p class="text-gray-400 text-sm">📅 ${e.date}${e.time ? ' ' + e.time : ''}</p>
+              <p class="text-gray-400 text-sm">📍 ${e.city || 'N/A'}</p>
+            </div>
+            <button onclick="deleteEvent(${i})" class="px-2 py-1 bg-red-600 rounded text-xs">🗑️</button>
+          </div>
+        </div>
+      `).join('');
+    }
 
-      const users = JSON.parse(localStorage.getItem('voltum_users') || '[]');
+    function showModal() { document.getElementById('modal').classList.remove('hidden'); }
+    function closeModal() { document.getElementById('modal').classList.add('hidden'); }
+
+    function saveEvent() {
+      const name = document.getElementById('eventName').value;
+      const date = document.getElementById('eventDate').value;
+
+      if (!name || !date) { alert('Rellena nombre y fecha'); return; }
+
+      eventos.push({
+        name,
+        date,
+        time: document.getElementById('eventTime').value,
+        city: document.getElementById('eventCity').value,
+        venue: document.getElementById('eventVenue').value,
+        ticket: document.getElementById('eventTicket').value
+      });
+
+      localStorage.setItem(`eventos_${user.id}`, JSON.stringify(eventos));
+      closeModal();
+      renderEventos();
       
-      if (users.find(u => u.email === email)) {
-        errorDiv.textContent = '⚠️ Email ya existe';
-        errorDiv.classList.remove('hidden');
+      // Limpiar formulario
+      document.getElementById('eventName').value = '';
+      document.getElementById('eventDate').value = '';
+      document.getElementById('eventTime').value = '';
+      document.getElementById('eventCity').value = '';
+      document.getElementById('eventVenue').value = '';
+      document.getElementById('eventTicket').value = '';
+      
+      alert('✅ Evento agregado');
+    }
+
+    function deleteEvent(i) {
+      if (!confirm('¿Eliminar?')) return;
+      eventos.splice(i, 1);
+      localStorage.setItem(`eventos_${user.id}`, JSON.stringify(eventos));
+      renderEventos();
+    }
+
+    function loadEquipment() {
+      const stored = localStorage.getItem(`equipment_${user.id}`);
+      equipmentSelected = stored ? JSON.parse(stored) : [];
+      renderEquipment();
+    }
+
+    function renderEquipment() {
+      const list = document.getElementById('equipmentList');
+      const empty = document.getElementById('emptyEquipment');
+
+      if (equipmentSelected.length === 0) {
+        list.innerHTML = '';
+        empty.classList.remove('hidden');
         return;
       }
 
-      if (users.find(u => u.username === user)) {
-        errorDiv.textContent = '⚠️ Usuario ya existe';
-        errorDiv.classList.remove('hidden');
-        return;
-      }
+      empty.classList.add('hidden');
+      list.innerHTML = equipmentSelected.map(eq => `
+        <div class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-xl p-4 flex items-center justify-between hover:border-purple-500/60 transition">
+          <div class="flex-1">
+            <div class="text-3xl mb-2">${eq.icon}</div>
+            <div class="font-bold text-sm">${eq.name}</div>
+            <div class="text-xs text-gray-500">${eq.category}</div>
+          </div>
+          <button onclick="removeEquipment(${eq.id})" class="text-red-400 hover:text-red-500 text-xl">✕</button>
+        </div>
+      `).join('');
+    }
 
-      const newUser = {
-        id: Date.now(),
-        email,
-        username: user,
-        artist_name: artist,
-        password: pass,
-        role: 'dj',
-        created: new Date().toISOString(),
-        subscription: null
+    function openEquipmentModal() {
+      const categorizedEquipos = {
+        'Controlador': EQUIPOS_PIONEER.filter(e => e.category === 'Controlador'),
+        'Reproductor': EQUIPOS_PIONEER.filter(e => e.category === 'Reproductor'),
+        'Mezclador': EQUIPOS_PIONEER.filter(e => e.category === 'Mezclador'),
+        'Accesorio': EQUIPOS_PIONEER.filter(e => e.category === 'Accesorio')
       };
 
-      users.push(newUser);
-      localStorage.setItem('voltum_users', JSON.stringify(users));
-      localStorage.setItem('voltum_user', JSON.stringify(newUser));
-      
-      alert('✅ Cuenta creada correctamente\n\nAhora irás a pagar tu suscripción...');
-      window.location.href = '/checkout.html';
+      const html = `
+        <div class="fixed inset-0 bg-black/50 backdrop-blur flex items-center justify-center z-50 p-4">
+          <div class="bg-gray-900 border border-purple-500/30 rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <h2 class="text-2xl font-bold mb-6">🎛️ Selecciona tu Equipamiento Pioneer</h2>
+            
+            <div class="mb-6">
+              <input type="text" id="searchEquipo" placeholder="Buscar equipo..." class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white" onkeyup="filterEquipos()">
+            </div>
+
+            <div id="equipoList" class="space-y-6">
+              ${Object.entries(categorizedEquipos).map(([category, equipos]) => `
+                <div>
+                  <h3 class="text-lg font-bold text-purple-400 mb-3">${category}</h3>
+                  <div class="grid grid-cols-2 gap-3">
+                    ${equipos.map(eq => `
+                      <label class="flex items-center gap-3 p-3 bg-gray-800 border border-purple-500/30 rounded-lg hover:bg-purple-500/20 cursor-pointer transition">
+                        <input type="checkbox" onchange="toggleEquipo(${eq.id}, '${eq.name}', '${eq.category}', '${eq.icon}')" class="w-4 h-4" ${equipmentSelected.find(e => e.id === eq.id) ? 'checked' : ''}>
+                        <div class="flex-1">
+                          <div class="text-sm">${eq.icon} ${eq.name}</div>
+                        </div>
+                      </label>
+                    `).join('')}
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+
+            <div class="flex gap-3 mt-8">
+              <button onclick="closeEquipmentModal()" class="flex-1 px-4 py-2 border border-purple-500 rounded-lg font-bold">Cancelar</button>
+              <button onclick="closeEquipmentModal()" class="flex-1 px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold">Guardar</button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      const modal = document.createElement('div');
+      modal.id = 'equipmentModal';
+      modal.innerHTML = html;
+      document.body.appendChild(modal);
     }
 
-    if (localStorage.getItem('voltum_user')) {
-      window.location.href = '/dashboard.html';
+    function filterEquipos() {
+      const search = document.getElementById('searchEquipo').value.toLowerCase();
+      const items = document.querySelectorAll('#equipoList label');
+      items.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        item.style.display = text.includes(search) ? 'flex' : 'none';
+      });
     }
+
+    function toggleEquipo(id, name, category, icon) {
+      const exists = equipmentSelected.find(e => e.id === id);
+      if (exists) {
+        equipmentSelected = equipmentSelected.filter(e => e.id !== id);
+      } else {
+        equipmentSelected.push({ id, name, category, icon });
+      }
+      localStorage.setItem(`equipment_${user.id}`, JSON.stringify(equipmentSelected));
+    }
+
+    function removeEquipment(id) {
+      equipmentSelected = equipmentSelected.filter(e => e.id !== id);
+      localStorage.setItem(`equipment_${user.id}`, JSON.stringify(equipmentSelected));
+      renderEquipment();
+    }
+
+    function closeEquipmentModal() {
+      const modal = document.getElementById('equipmentModal');
+      if (modal) modal.remove();
+      loadEquipment();
+    }
+
+    function verPreskit() {
+      if (!user) return false;
+      window.location.href = '/dj/' + user.username;
+      return false;
+    }
+
+    function logout() {
+      localStorage.removeItem('voltum_user');
+      window.location.replace('/login.html');
+    }
+
+    window.addEventListener('load', initDashboard);
   </script>
 </body>
 </html>
