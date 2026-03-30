@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DJ Preskit - VOLTUM</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gradient-to-b from-black via-purple-900/20 to-black text-white">
+  <div class="min-h-screen">
+    <nav class="bg-black/40 backdrop-blur border-b border-purple-500/20 sticky top-0 z-50">
+      <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+        <a href="/" class="text-2xl font-black bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">⚡ VOLTUM</a>
+        <div class="flex gap-4">
+          <a href="/login.html" class="px-4 py-2 border border-purple-500 rounded-lg font-bold text-sm">Mis Eventos</a>
+          <a href="/" class="px-4 py-2 bg-purple-600 rounded-lg font-bold text-sm">← Atrás</a>
+        </div>
+      </div>
+    </nav>
+
+    <div id="loading" class="min-h-screen flex items-center justify-center">
+      <div class="text-center">
+        <div class="animate-spin text-4xl mb-4">⚡</div>
+        <p class="text-gray-400">Cargando preskit...</p>
+      </div>
+    </div>
+
+    <div id="notFound" class="min-h-screen flex items-center justify-center hidden">
+      <div class="text-center">
+        <i class="fas fa-user-slash text-6xl text-purple-500 mb-4 block"></i>
+        <p class="text-2xl font-bold mb-4">DJ no encontrado</p>
+        <a href="/" class="px-6 py-2 bg-purple-600 rounded-lg font-bold">Volver al inicio</a>
+      </div>
+    </div>
+
+    <div id="preskit" class="hidden">
+      <div class="max-w-2xl mx-auto px-4 py-12">
+        <!-- Header -->
+        <div class="text-center mb-12">
+          <div id="profilePhoto" class="w-48 h-48 rounded-full mx-auto mb-6 bg-purple-500/20 border-4 border-purple-500 overflow-hidden">
+            <i class="fas fa-user text-8xl text-purple-500 flex items-center justify-center h-full"></i>
+          </div>
+          <h1 id="artistName" class="text-4xl font-black mb-2">DJ Phoenix</h1>
+          <p id="djUsername" class="text-gray-400 text-lg mb-4">@dj-phoenix</p>
+          <p id="bioDJ" class="text-gray-300 max-w-xl mx-auto mb-6">Vibe house y techno desde 2018</p>
+        </div>
+
+        <!-- Redes Sociales -->
+        <div id="socialLinks" class="flex justify-center gap-4 mb-12 flex-wrap">
+          <!-- Se llena dinámicamente -->
+        </div>
+
+        <!-- Géneros -->
+        <div id="genresSection" class="bg-gray-900/50 border border-purple-500/20 rounded-2xl p-8 mb-12 hidden">
+          <h2 class="text-2xl font-bold mb-6">🎵 Mis Géneros</h2>
+          <div id="genres" class="grid grid-cols-2 md:grid-cols-3 gap-3">
+            <!-- Se llena dinámicamente -->
+          </div>
+        </div>
+
+        <!-- Próximas Presentaciones -->
+        <div id="eventsSection" class="mb-12 hidden">
+          <h2 class="text-2xl font-bold mb-6">📅 Próximas Presentaciones</h2>
+          <div id="eventsList" class="space-y-4">
+            <!-- Se llena dinámicamente -->
+          </div>
+        </div>
+
+        <!-- Call to Action -->
+        <div class="bg-gradient-to-r from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-8 text-center">
+          <h2 class="text-2xl font-bold mb-4">¿Necesitas un preskit así?</h2>
+          <p class="text-gray-400 mb-6">Crea tu preskit profesional en minutos</p>
+          <a href="/login.html" class="px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold inline-block">Crear mi Preskit</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function getUsername() {
+      const path = window.location.pathname;
+      const match = path.match(/\/dj\/([a-zA-Z0-9\-_]+)/);
+      return match ? match[1] : null;
+    }
+
+    function loadPreskit() {
+      const username = getUsername();
+      
+      if (!username) {
+        showNotFound();
+        return;
+      }
+
+      const users = JSON.parse(localStorage.getItem('voltum_users') || '[]');
+      const dj = users.find(u => u.username === username && u.role === 'dj');
+
+      if (!dj) {
+        showNotFound();
+        return;
+      }
+
+      showPreskit(dj);
+    }
+
+    function showPreskit(dj) {
+      document.getElementById('loading').classList.add('hidden');
+      document.getElementById('notFound').classList.add('hidden');
+      document.getElementById('preskit').classList.remove('hidden');
+
+      // Datos básicos
+      document.getElementById('artistName').textContent = dj.artist_name || dj.username;
+      document.getElementById('djUsername').textContent = '@' + dj.username;
+      document.getElementById('bioDJ').textContent = 'DJ profesional | Reservas disponibles';
+
+      // Redes sociales (hardcodeadas por ahora)
+      const socials = [
+        { icon: 'fab fa-instagram', url: '#', name: 'Instagram' },
+        { icon: 'fab fa-whatsapp', url: 'https://wa.me/56912345678', name: 'WhatsApp' },
+        { icon: 'fab fa-spotify', url: '#', name: 'Spotify' },
+        { icon: 'fas fa-envelope', url: 'mailto:' + dj.email, name: 'Email' }
+      ];
+
+      document.getElementById('socialLinks').innerHTML = socials.map(s => `
+        <a href="${s.url}" target="_blank" class="w-16 h-16 bg-gradient-to-br from-purple-600 to-pink-600 rounded-full flex items-center justify-center hover:scale-110 transition" title="${s.name}">
+          <i class="${s.icon} text-2xl"></i>
+        </a>
+      `).join('');
+
+      // Eventos
+      const eventos = JSON.parse(localStorage.getItem(`eventos_${dj.id}`) || '[]');
+      
+      if (eventos.length > 0) {
+        document.getElementById('eventsSection').classList.remove('hidden');
+        document.getElementById('eventsList').innerHTML = eventos.map(e => `
+          <div class="bg-gradient-to-r from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-6">
+            <h3 class="text-xl font-bold mb-2">${e.name}</h3>
+            <p class="text-gray-300">📅 ${e.date}${e.time ? ' • ' + e.time : ''}</p>
+            ${e.city ? `<p class="text-gray-300">📍 ${e.city}${e.venue ? ' • ' + e.venue : ''}</p>` : ''}
+            ${e.ticket ? `<a href="${e.ticket}" target="_blank" class="inline-block mt-3 px-4 py-2 bg-purple-600 rounded-lg font-bold text-sm">🎫 Entradas</a>` : ''}
+          </div>
+        `).join('');
+      }
+    }
+
+    function showNotFound() {
+      document.getElementById('loading').classList.add('hidden');
+      document.getElementById('preskit').classList.add('hidden');
+      document.getElementById('notFound').classList.remove('hidden');
+    }
+
+    window.addEventListener('load', loadPreskit);
+  </script>
+</body>
+</html>
