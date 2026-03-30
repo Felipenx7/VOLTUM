@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DJ Preskit - VOLTUM</title>
+  <title>Preskit DJ - VOLTUM</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -13,255 +13,205 @@
     <nav class="bg-black/40 backdrop-blur border-b border-purple-500/20 sticky top-0 z-50">
       <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
         <a href="/" class="text-2xl font-black bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">⚡ VOLTUM</a>
-        <div class="flex gap-4">
-          <button id="editBtn" onclick="goEditPreskit()" class="px-4 py-2 bg-purple-600 rounded-lg font-bold text-sm hidden">✏️ Editar</button>
-          <a href="/" class="px-4 py-2 border border-purple-500 rounded-lg font-bold text-sm">← Atrás</a>
+        <div class="flex gap-3">
+          <button id="editBtn" onclick="goToDashboard()" class="hidden px-4 py-2 bg-purple-600 rounded-lg font-bold text-sm">✏️ Editar</button>
+          <a href="/" class="px-4 py-2 border border-purple-500 rounded-lg font-bold text-sm">← Inicio</a>
         </div>
       </div>
     </nav>
 
-    <!-- LOADING -->
-    <div id="loading" class="min-h-screen flex items-center justify-center">
-      <div class="text-center">
-        <div class="animate-spin text-4xl mb-4">⚡</div>
-        <p class="text-gray-400">Cargando preskit...</p>
-      </div>
-    </div>
-
-    <!-- NOT FOUND -->
-    <div id="notFound" class="min-h-screen flex items-center justify-center hidden">
-      <div class="text-center">
-        <i class="fas fa-user-slash text-6xl text-purple-500 mb-4 block"></i>
-        <p class="text-2xl font-bold mb-4">DJ no encontrado</p>
-        <a href="/" class="px-6 py-2 bg-purple-600 rounded-lg font-bold">Volver al inicio</a>
-      </div>
-    </div>
-
-    <!-- PRESKIT CONTENT -->
-    <div id="preskit" class="hidden">
-      <div class="max-w-4xl mx-auto px-4 py-12">
+    <div class="max-w-4xl mx-auto px-4 py-12">
+      
+      <!-- HEADER CON FOTO -->
+      <div class="text-center mb-12">
+        <div class="w-56 h-56 rounded-full mx-auto mb-8 bg-gradient-to-br from-purple-600 to-pink-600 overflow-hidden border-4 border-purple-500 flex items-center justify-center">
+          <img id="djPhoto" src="" alt="DJ" class="w-full h-full object-cover hidden">
+          <i id="djIcon" class="fas fa-user text-8xl text-white opacity-30"></i>
+        </div>
         
-        <!-- HEADER CON FOTO -->
-        <div class="text-center mb-12">
-          <div id="profilePhoto" class="w-56 h-56 rounded-full mx-auto mb-8 bg-gradient-to-br from-purple-600 to-pink-600 overflow-hidden border-4 border-purple-500 flex items-center justify-center">
-            <i class="fas fa-user text-8xl text-white opacity-50"></i>
-          </div>
-          
-          <h1 id="artistName" class="text-5xl font-black mb-2 bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">DJ Phoenix</h1>
-          <p id="djUsername" class="text-gray-400 text-xl mb-6">@dj-phoenix</p>
-          <p id="bioDJ" class="text-gray-300 max-w-2xl mx-auto text-lg mb-8 leading-relaxed">Sin descripción aún</p>
-        </div>
+        <h1 id="djName" class="text-5xl font-black mb-2 bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">DJ Name</h1>
+        <p id="djHandle" class="text-gray-400 text-xl mb-6">@usuario</p>
+        <p id="djBio" class="text-gray-300 max-w-2xl mx-auto text-lg mb-8 leading-relaxed">
+          Bio aquí...
+        </p>
+      </div>
 
-        <!-- REDES SOCIALES -->
-        <div id="socialLinks" class="flex justify-center gap-6 mb-16 flex-wrap">
-          <!-- Se llena dinámicamente -->
-        </div>
+      <!-- REDES SOCIALES -->
+      <div id="socialLinks" class="flex justify-center gap-6 mb-16 flex-wrap">
+        <!-- Se genera dinámicamente -->
+      </div>
 
-        <!-- EQUIPAMIENTO PIONEER -->
-        <div id="equipmentSection" class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-8 mb-12 hidden">
-          <h2 class="text-3xl font-bold mb-8">🎛️ Mi Equipamiento Pioneer</h2>
-          <div id="equipmentList" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            <!-- Se llena dinámicamente -->
-          </div>
+      <!-- EQUIPAMIENTO PIONEER -->
+      <div id="equipmentSection" class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-8 mb-12 hidden">
+        <h2 class="text-3xl font-bold mb-8">🎛️ Mi Equipamiento Pioneer</h2>
+        <div id="equipmentList" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <!-- Se genera dinámicamente -->
         </div>
+      </div>
 
-        <!-- GALERÍA DE FOTOS -->
-        <div id="gallerySection" class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-8 mb-12 hidden">
-          <h2 class="text-3xl font-bold mb-8">📸 Galería</h2>
-          <div id="gallery" class="grid grid-cols-2 md:grid-cols-3 gap-4">
-            <!-- Se llena dinámicamente -->
-          </div>
+      <!-- GALERÍA DE FOTOS -->
+      <div id="gallerySection" class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-8 mb-12 hidden">
+        <h2 class="text-3xl font-bold mb-8">📸 Galería</h2>
+        <div id="galleryGrid" class="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <!-- Se genera dinámicamente -->
         </div>
+      </div>
 
-        <!-- PRÓXIMAS PRESENTACIONES -->
-        <div id="eventsSection" class="mb-12 hidden">
-          <h2 class="text-3xl font-bold mb-8">📅 Próximas Presentaciones</h2>
-          <div id="eventsList" class="space-y-4 mb-8">
-            <!-- Se llena dinámicamente -->
-          </div>
+      <!-- PRÓXIMAS PRESENTACIONES -->
+      <div id="eventsSection" class="mb-12 hidden">
+        <h2 class="text-3xl font-bold mb-8">📅 Próximas Presentaciones</h2>
+        <div id="eventsList" class="space-y-4">
+          <!-- Se genera dinámicamente -->
         </div>
+      </div>
 
-        <!-- ESTADÍSTICAS -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          <div class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-6 text-center">
-            <div class="text-4xl font-black text-pink-400 mb-2" id="statVisits">1,250</div>
-            <div class="text-gray-400">Visitas al preskit</div>
-          </div>
-          <div class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-6 text-center">
-            <div class="text-4xl font-black text-pink-400 mb-2" id="statClicks">156</div>
-            <div class="text-gray-400">Clicks en redes</div>
-          </div>
-          <div class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-6 text-center">
-            <div class="text-4xl font-black text-pink-400 mb-2" id="statEvents">0</div>
-            <div class="text-gray-400">Eventos próximos</div>
-          </div>
-        </div>
-
-        <!-- CTA -->
-        <div class="bg-gradient-to-r from-purple-600/30 to-pink-600/30 border border-purple-500/30 rounded-2xl p-12 text-center mb-8">
-          <h2 class="text-3xl font-bold mb-4">¿Necesitas un preskit profesional?</h2>
-          <p class="text-gray-400 mb-8 text-lg">Crea tu preskit en minutos, comparte en redes y gestiona tus eventos</p>
-          <a href="/login.html" class="px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold text-lg inline-block hover:opacity-90 transition">
-            ⚡ Crear mi Preskit
-          </a>
-        </div>
-
-        <!-- INFO VOLTUM -->
-        <div class="text-center text-gray-500 text-sm">
-          <p>Preskit creado con <span class="text-pink-500">❤️</span> en VOLTUM</p>
-          <p class="mt-2">
-            <a href="/" class="hover:text-gray-300">Inicio</a> • 
-            <a href="/login.html" class="hover:text-gray-300">Crear cuenta</a> • 
-            <a href="mailto:info@voltum.cl" class="hover:text-gray-300">Contacto</a>
-          </p>
-        </div>
-
+      <!-- CTA VOLTUM -->
+      <div class="bg-gradient-to-r from-purple-600/30 to-pink-600/30 border border-purple-500/30 rounded-2xl p-12 text-center">
+        <h2 class="text-3xl font-bold mb-4">¿Quieres tu Preskit así?</h2>
+        <p class="text-gray-400 mb-8 text-lg">Crea tu preskit profesional en VOLTUM en 5 minutos. Todo centralizado, visual e impactante.</p>
+        <a href="/" class="px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold text-lg inline-block hover:opacity-90 transition">
+          ⚡ Crear Mi Preskit
+        </a>
       </div>
     </div>
   </div>
 
   <script>
-    let currentDJ = null;
-
-    function getUsername() {
-      const path = window.location.pathname;
-      const match = path.match(/\/dj\/([a-zA-Z0-9\-_]+)/);
-      return match ? match[1] : null;
-    }
-
-    function goEditPreskit() {
-      window.location.href = '/dashboard.html';
-    }
+    const SOCIAL_ICONS = {
+      instagram: { icon: 'fab fa-instagram', color: 'from-purple-600 to-pink-600', label: 'Instagram' },
+      whatsapp: { icon: 'fab fa-whatsapp', color: 'from-green-600 to-emerald-600', label: 'WhatsApp' },
+      spotify: { icon: 'fab fa-spotify', color: 'from-green-600 to-lime-600', label: 'Spotify' },
+      email: { icon: 'fas fa-envelope', color: 'from-red-600 to-pink-600', label: 'Email' },
+      youtube: { icon: 'fab fa-youtube', color: 'from-red-600 to-orange-600', label: 'YouTube' },
+      soundcloud: { icon: 'fab fa-soundcloud', color: 'from-orange-600 to-yellow-600', label: 'SoundCloud' }
+    };
 
     function loadPreskit() {
-      const username = getUsername();
-      
-      if (!username) {
-        showNotFound();
-        return;
-      }
+      const params = new URLSearchParams(window.location.search);
+      let username = window.location.pathname.split('/').pop();
 
       const users = JSON.parse(localStorage.getItem('voltum_users') || '[]');
-      const dj = users.find(u => u.username === username && u.role === 'dj');
+      const user = users.find(u => u.username === username);
 
-      if (!dj) {
-        showNotFound();
+      if (!user) {
+        document.body.innerHTML = '<div class="min-h-screen flex items-center justify-center"><div class="text-center"><h1 class="text-4xl font-black text-white mb-4">❌ DJ no encontrado</h1><a href="/" class="text-purple-400 hover:text-purple-300">← Volver al inicio</a></div></div>';
         return;
       }
 
-      currentDJ = dj;
+      const profile = JSON.parse(localStorage.getItem(`profile_${user.id}`) || '{}');
+      const equipment = JSON.parse(localStorage.getItem(`equipment_${user.id}`) || '[]');
+      const eventos = JSON.parse(localStorage.getItem(`eventos_${user.id}`) || '[]');
 
-      // Verificar si el usuario logueado es el dueño del preskit
-      const loggedUser = JSON.parse(localStorage.getItem('voltum_user'));
-      if (loggedUser && loggedUser.id === dj.id) {
+      // Verificar si es el dueño
+      const currentUser = JSON.parse(localStorage.getItem('voltum_user') || 'null');
+      if (currentUser && currentUser.id === user.id) {
         document.getElementById('editBtn').classList.remove('hidden');
       }
 
-      showPreskit(dj);
-    }
+      // Cargar datos
+      document.getElementById('djName').textContent = profile.artist_name || user.artist_name || 'DJ ' + user.username;
+      document.getElementById('djHandle').textContent = '@' + user.username;
+      document.getElementById('djBio').textContent = profile.bio || 'Artista de música electrónica profesional';
 
-    function showPreskit(dj) {
-      document.getElementById('loading').classList.add('hidden');
-      document.getElementById('notFound').classList.add('hidden');
-      document.getElementById('preskit').classList.remove('hidden');
-
-      // Cargar datos del perfil editado
-      const profileData = JSON.parse(localStorage.getItem(`profile_${dj.id}`) || 'null');
-
-      // Nombre artístico y usuario
-      document.getElementById('artistName').textContent = dj.artist_name || dj.username;
-      document.getElementById('djUsername').textContent = '@' + dj.username;
-
-      // Bio/Descripción
-      if (profileData && profileData.bio) {
-        document.getElementById('bioDJ').textContent = profileData.bio;
-      } else {
-        document.getElementById('bioDJ').textContent = 'DJ profesional | Reservas disponibles para eventos privados y públicos';
+      // Foto
+      if (profile.photo) {
+        document.getElementById('djPhoto').src = profile.photo;
+        document.getElementById('djPhoto').classList.remove('hidden');
+        document.getElementById('djIcon').classList.add('hidden');
       }
 
-      // Foto de perfil
-      if (profileData && profileData.photo) {
-        document.getElementById('profilePhoto').innerHTML = `<img src="${profileData.photo}" class="w-full h-full object-cover">`;
-      }
+      // Redes sociales
+      renderSocials(profile);
 
-      // Redes Sociales
-      const socials = [];
-      if (profileData && profileData.social) {
-        if (profileData.social.instagram) socials.push({ icon: 'fab fa-instagram', url: 'https://instagram.com/' + profileData.social.instagram.replace('@', ''), name: 'Instagram', color: 'from-purple-600 to-pink-600' });
-        if (profileData.social.whatsapp) socials.push({ icon: 'fab fa-whatsapp', url: 'https://wa.me/' + profileData.social.whatsapp.replace(/\D/g, ''), name: 'WhatsApp', color: 'from-green-600 to-emerald-600' });
-        if (profileData.social.spotify) socials.push({ icon: 'fab fa-spotify', url: profileData.social.spotify, name: 'Spotify', color: 'from-green-600 to-lime-600' });
-        if (profileData.social.email) socials.push({ icon: 'fas fa-envelope', url: 'mailto:' + profileData.social.email, name: 'Email', color: 'from-red-600 to-pink-600' });
-        if (profileData.social.youtube) socials.push({ icon: 'fab fa-youtube', url: profileData.social.youtube, name: 'YouTube', color: 'from-red-600 to-orange-600' });
-        if (profileData.social.soundcloud) socials.push({ icon: 'fab fa-soundcloud', url: profileData.social.soundcloud, name: 'SoundCloud', color: 'from-orange-600 to-yellow-600' });
-      }
-
-      if (socials.length === 0) {
-        // Redes por defecto
-        socials.push({ icon: 'fab fa-instagram', url: 'https://instagram.com', name: 'Instagram', color: 'from-purple-600 to-pink-600' });
-        socials.push({ icon: 'fab fa-whatsapp', url: 'https://wa.me/56912345678', name: 'WhatsApp', color: 'from-green-600 to-emerald-600' });
-        socials.push({ icon: 'fab fa-spotify', url: 'https://spotify.com', name: 'Spotify', color: 'from-green-600 to-lime-600' });
-        socials.push({ icon: 'fas fa-envelope', url: 'mailto:dj@email.com', name: 'Email', color: 'from-red-600 to-pink-600' });
-        socials.push({ icon: 'fab fa-youtube', url: 'https://youtube.com', name: 'YouTube', color: 'from-red-600 to-orange-600' });
-        socials.push({ icon: 'fab fa-soundcloud', url: 'https://soundcloud.com', name: 'SoundCloud', color: 'from-orange-600 to-yellow-600' });
-      }
-
-      document.getElementById('socialLinks').innerHTML = socials.map(s => `
-        <a href="${s.url}" target="_blank" rel="noopener" class="w-16 h-16 bg-gradient-to-br ${s.color} rounded-full flex items-center justify-center hover:scale-110 transition hover:shadow-lg" title="${s.name}">
-          <i class="${s.icon} text-2xl"></i>
-        </a>
-      `).join('');
-
-      // EQUIPAMIENTO PIONEER
-      const equipment = JSON.parse(localStorage.getItem(`equipment_${dj.id}`) || '[]');
+      // Equipamiento
       if (equipment.length > 0) {
+        renderEquipment(equipment);
         document.getElementById('equipmentSection').classList.remove('hidden');
-        document.getElementById('equipmentList').innerHTML = equipment.map(eq => `
-          <div class="bg-gradient-to-br from-purple-600/30 to-pink-600/30 rounded-lg px-4 py-4 text-center border border-purple-500/30 hover:border-purple-500/60 transition">
-            <div class="text-3xl mb-2">${eq.icon}</div>
-            <div class="font-bold text-sm">${eq.name}</div>
-            <div class="text-xs text-gray-500 mt-1">${eq.category}</div>
-          </div>
-        `).join('');
       }
 
-      // GALERÍA
-      if (profileData && profileData.gallery && profileData.gallery.length > 0) {
+      // Galería
+      if (profile.gallery && profile.gallery.length > 0) {
+        renderGallery(profile.gallery);
         document.getElementById('gallerySection').classList.remove('hidden');
-        document.getElementById('gallery').innerHTML = profileData.gallery.map(photo => `
-          <div class="bg-gradient-to-br from-purple-600/30 to-pink-600/30 rounded-lg overflow-hidden h-48 flex items-center justify-center border border-purple-500/30">
-            <img src="${photo}" class="w-full h-full object-cover">
-          </div>
-        `).join('');
       }
 
-      // PRÓXIMOS EVENTOS
-      const eventos = JSON.parse(localStorage.getItem(`eventos_${dj.id}`) || '[]');
-      
+      // Eventos
       if (eventos.length > 0) {
+        renderEvents(eventos);
         document.getElementById('eventsSection').classList.remove('hidden');
-        document.getElementById('statEvents').textContent = eventos.length;
-        document.getElementById('eventsList').innerHTML = eventos.map(e => `
-          <div class="bg-gradient-to-r from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-6 hover:border-purple-500/60 transition">
-            <div class="flex justify-between items-start mb-4">
-              <div class="flex-1">
-                <h3 class="text-2xl font-bold mb-3">${e.name}</h3>
-                <div class="space-y-2 text-gray-300">
-                  <p><i class="fas fa-calendar text-purple-400 mr-2"></i>${e.date}${e.time ? ' • ' + e.time : ''}</p>
-                  ${e.city ? `<p><i class="fas fa-map-marker-alt text-purple-400 mr-2"></i>${e.city}${e.venue ? ' • ' + e.venue : ''}</p>` : ''}
-                  ${e.description ? `<p class="mt-3 text-gray-400"><i class="fas fa-info-circle text-purple-400 mr-2"></i>${e.description}</p>` : ''}
-                </div>
-              </div>
-            </div>
-            ${e.ticket ? `<a href="${e.ticket}" target="_blank" class="inline-block mt-4 px-6 py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold text-sm hover:opacity-90 transition">🎫 Entradas</a>` : ''}
-          </div>
-        `).join('');
       }
     }
 
-    function showNotFound() {
-      document.getElementById('loading').classList.add('hidden');
-      document.getElementById('preskit').classList.add('hidden');
-      document.getElementById('notFound').classList.remove('hidden');
+    function renderSocials(profile) {
+      const container = document.getElementById('socialLinks');
+      container.innerHTML = '';
+
+      const socials = [
+        { key: 'instagram', url: `https://instagram.com/${profile.instagram?.replace('@', '')}` },
+        { key: 'whatsapp', url: `https://wa.me/${profile.whatsapp?.replace(/\D/g, '')}` },
+        { key: 'spotify', url: profile.spotify },
+        { key: 'email', url: `mailto:${profile.email}` },
+        { key: 'youtube', url: profile.youtube },
+        { key: 'soundcloud', url: profile.soundcloud }
+      ];
+
+      socials.forEach(social => {
+        if (profile[social.key] && social.url) {
+          const icon = SOCIAL_ICONS[social.key];
+          const link = document.createElement('a');
+          link.href = social.url;
+          link.target = '_blank';
+          link.className = `w-16 h-16 bg-gradient-to-br ${icon.color} rounded-full flex items-center justify-center hover:scale-110 transition hover:shadow-lg`;
+          link.title = icon.label;
+          link.innerHTML = `<i class="${icon.icon} text-2xl"></i>`;
+          container.appendChild(link);
+        }
+      });
+    }
+
+    function renderEquipment(equipment) {
+      const list = document.getElementById('equipmentList');
+      list.innerHTML = '';
+      equipment.forEach(eq => {
+        const div = document.createElement('div');
+        div.className = 'bg-gradient-to-br from-purple-600/30 to-pink-600/30 rounded-lg px-4 py-4 text-center border border-purple-500/30';
+        div.innerHTML = `<div class="font-bold text-sm">${eq}</div>`;
+        list.appendChild(div);
+      });
+    }
+
+    function renderGallery(gallery) {
+      const grid = document.getElementById('galleryGrid');
+      grid.innerHTML = '';
+      gallery.forEach(img => {
+        const div = document.createElement('div');
+        div.className = 'overflow-hidden rounded-lg';
+        div.innerHTML = `<img src="${img}" alt="Galería" class="w-full h-48 object-cover hover:scale-105 transition">`;
+        grid.appendChild(div);
+      });
+    }
+
+    function renderEvents(eventos) {
+      const list = document.getElementById('eventsList');
+      list.innerHTML = '';
+      eventos.forEach(ev => {
+        const div = document.createElement('div');
+        div.className = 'bg-gradient-to-r from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-6';
+        div.innerHTML = `
+          <h3 class="text-2xl font-bold mb-3">${ev.name}</h3>
+          <div class="space-y-2 text-gray-300 mb-4">
+            <p><i class="fas fa-calendar text-purple-400 mr-2"></i>${new Date(ev.date).toLocaleString('es-CL')}</p>
+            <p><i class="fas fa-map-marker-alt text-purple-400 mr-2"></i>${ev.location}</p>
+            ${ev.desc ? `<p class="mt-3 text-gray-400">${ev.desc}</p>` : ''}
+          </div>
+          ${ev.link ? `<a href="${ev.link}" target="_blank" class="inline-block px-6 py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold text-sm hover:opacity-90">🎫 Entradas</a>` : ''}
+        `;
+        list.appendChild(div);
+      });
+    }
+
+    function goToDashboard() {
+      window.location.href = '/dashboard.html';
     }
 
     window.addEventListener('load', loadPreskit);
