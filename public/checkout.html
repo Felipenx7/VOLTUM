@@ -13,13 +13,12 @@
       <div class="bg-gray-900/50 border border-purple-500/30 rounded-2xl p-8">
         <div class="text-center mb-8">
           <div class="text-4xl font-black bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent mb-2">⚡ VOLTUM</div>
-          <p class="text-gray-400">Plan PRO - Suscripción Mensual</p>
+          <p class="text-gray-400">Suscripción PRO Mensual</p>
         </div>
 
-        <!-- Resumen -->
         <div class="bg-purple-500/10 border border-purple-500/30 rounded-2xl p-6 mb-8">
           <div class="flex justify-between mb-4">
-            <span class="text-gray-400">Plan PRO Mensual</span>
+            <span class="text-gray-400">Plan PRO</span>
             <span class="font-bold">$10.000</span>
           </div>
           <div class="flex justify-between mb-4">
@@ -32,33 +31,29 @@
           </div>
         </div>
 
-        <!-- Formulario Stripe -->
         <form id="paymentForm" class="space-y-4">
-          <!-- Email -->
           <div>
             <label class="block text-sm text-gray-400 mb-2">Email</label>
             <input type="email" id="email" required class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
           </div>
 
-          <!-- Card Element -->
           <div>
-            <label class="block text-sm text-gray-400 mb-2">Tarjeta de Crédito</label>
+            <label class="block text-sm text-gray-400 mb-2">Tarjeta</label>
             <div id="card-element" class="px-4 py-3 bg-gray-800 border border-purple-500/30 rounded-lg"></div>
             <div id="card-errors" class="text-red-400 text-sm mt-2"></div>
           </div>
 
-          <!-- Botón -->
           <button type="submit" id="submitBtn" class="w-full py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold hover:opacity-90 disabled:opacity-50">
             💳 Pagar $10.000 CLP
           </button>
 
           <p class="text-xs text-gray-500 text-center">
-            Modo prueba: Usa 4242 4242 4242 4242 | Cualquier fecha futura | Cualquier CVC
+            Prueba: 4242 4242 4242 4242 | 12/25 | 123
           </p>
         </form>
 
         <div class="text-center mt-6">
-          <a href="/login.html" class="text-gray-500 hover:text-gray-300">← Volver atrás</a>
+          <a href="/login.html" class="text-gray-500 hover:text-gray-300">← Volver</a>
         </div>
       </div>
     </div>
@@ -81,38 +76,51 @@
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
       submitBtn.disabled = true;
-      submitBtn.textContent = 'Procesando pago...';
+      submitBtn.textContent = 'Procesando...';
 
       const email = document.getElementById('email').value;
 
       try {
-        const { token } = await stripe.createToken(cardElement, { name: email });
+        const { token } = await stripe.createToken(cardElement);
 
-        if (token) {
+        if (token && token.id) {
           const user = JSON.parse(localStorage.getItem('voltum_user'));
+          
           if (user) {
             user.subscription = {
               active: true,
               paid_at: new Date().toISOString(),
-              stripe_customer_id: token.id,
+              stripe_token: token.id,
               status: 'active',
               amount: 10000,
               currency: 'CLP'
             };
             localStorage.setItem('voltum_user', JSON.stringify(user));
+            
+            alert('✅ PAGO EXITOSO!\n\nTu suscripción PRO está activada.\nAcceso completo a tu dashboard.');
+            window.location.href = '/dashboard.html';
+          } else {
+            alert('❌ Error: Usuario no encontrado');
+            submitBtn.disabled = false;
+            submitBtn.textContent = '💳 Pagar $10.000 CLP';
           }
-
-          alert('✅ ¡PAGO EXITOSO!\n\nTu suscripción PRO está activada.\nAcceso completo a tu dashboard.');
-          window.location.href = '/dashboard.html';
-        } else if (token.error) {
-          cardErrors.textContent = token.error.message;
+        } else {
+          cardErrors.textContent = 'Error al procesar tarjeta';
           submitBtn.disabled = false;
           submitBtn.textContent = '💳 Pagar $10.000 CLP';
         }
       } catch (error) {
-        cardErrors.textContent = error.message;
+        cardErrors.textContent = error.message || 'Error en el pago';
         submitBtn.disabled = false;
         submitBtn.textContent = '💳 Pagar $10.000 CLP';
+      }
+    });
+
+    // Proteger página - si no hay usuario, redirigir
+    window.addEventListener('load', () => {
+      const user = localStorage.getItem('voltum_user');
+      if (!user) {
+        window.location.href = '/login.html';
       }
     });
   </script>
