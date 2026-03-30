@@ -3,409 +3,237 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mi Preskit - VOLTUM</title>
+  <title>Demo - DJ Preskit Profesional - VOLTUM</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="bg-gradient-to-b from-black via-purple-900/20 to-black text-white">
   <div class="min-h-screen">
-    <!-- Navbar -->
+    <!-- NAV -->
     <nav class="bg-black/40 backdrop-blur border-b border-purple-500/20 sticky top-0 z-50">
       <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-        <div class="text-2xl font-black bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">⚡ VOLTUM</div>
-        <div class="flex gap-4">
-          <button onclick="toggleEditMode()" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg font-bold text-sm">
-            <span id="editToggle">✏️ Editar</span>
-          </button>
-          <button onclick="downloadPDF()" class="px-4 py-2 border border-purple-500 hover:bg-purple-500/10 rounded-lg font-bold text-sm">
-            📥 PDF
-          </button>
+        <a href="/" class="text-2xl font-black bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">⚡ VOLTUM</a>
+        <div class="text-center flex-1">
+          <p class="text-sm text-purple-400">📋 ESTO ES UNA DEMO - Preskit de Ejemplo</p>
         </div>
+        <a href="/" class="px-4 py-2 border border-purple-500 rounded-lg font-bold text-sm">← Atrás</a>
       </div>
     </nav>
 
-    <!-- Main Content -->
-    <div class="max-w-6xl mx-auto px-4 py-12">
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        
-        <!-- Left: Edit Panel -->
-        <div id="editPanel" class="hidden lg:block lg:max-h-[90vh] lg:overflow-y-auto">
-          <div class="bg-gray-900/50 border border-purple-500/20 rounded-2xl p-6 space-y-4">
-            <h2 class="text-xl font-bold mb-4">✏️ Editar Información</h2>
-            
-            <!-- Foto de Perfil -->
-            <div>
-              <label class="block text-sm text-gray-400 mb-2">📸 Foto de Perfil</label>
-              <input type="file" id="profilePhotoInput" accept="image/*" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white text-sm" onchange="handleProfilePhotoUpload(event)">
-              <div id="profilePhotoPreview" class="mt-3 w-20 h-20 mx-auto rounded-full border-2 border-purple-500 overflow-hidden bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-2xl">
-                🎧
-              </div>
-            </div>
-
-            <!-- Nombre -->
-            <div>
-              <label class="block text-sm text-gray-400 mb-2">Nombre Artístico</label>
-              <input type="text" id="artistName" placeholder="DJ Phoenix" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white" value="DJ Phoenix">
-            </div>
-            
-            <!-- Bio -->
-            <div>
-              <label class="block text-sm text-gray-400 mb-2">Bio</label>
-              <textarea id="artistBio" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white h-20" placeholder="Cuéntanos sobre ti...">Productor y DJ especializado en House y Techno. Residencia en Club Nocturno.</textarea>
-            </div>
-
-            <!-- Géneros -->
-            <div>
-              <label class="block text-sm text-gray-400 mb-2">Géneros (Selecciona múltiples)</label>
-              <div id="genresContainer" class="space-y-2 max-h-32 overflow-y-auto bg-gray-800/30 p-2 rounded border border-purple-500/20">
-                <!-- Se genera dinámicamente -->
-              </div>
-            </div>
-
-            <!-- Subir Imágenes -->
-            <div>
-              <label class="block text-sm text-gray-400 mb-2">📷 Galería (Máx 5 imágenes)</label>
-              <input type="file" id="imageInput" multiple accept="image/*" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white text-sm" onchange="handleImageUpload(event)">
-              <div id="imagePreview" class="grid grid-cols-3 gap-2 mt-3">
-                <!-- Vista previa de imágenes -->
-              </div>
-            </div>
-
-            <!-- Redes Sociales -->
-            <div class="border-t border-purple-500/20 pt-4">
-              <h3 class="font-bold mb-3">🌐 Redes Sociales</h3>
-              
-              <div>
-                <label class="block text-sm text-gray-400 mb-2">📸 Instagram</label>
-                <input type="text" id="instagram" placeholder="@tunombre" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white text-sm" value="@djphoenix">
-              </div>
-
-              <div>
-                <label class="block text-sm text-gray-400 mb-2 mt-3">💬 WhatsApp</label>
-                <input type="text" id="whatsapp" placeholder="+56 9 1234 5678" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white text-sm" value="+56 9 1234 5678">
-              </div>
-
-              <div>
-                <label class="block text-sm text-gray-400 mb-2 mt-3">📧 Correo</label>
-                <input type="email" id="email" placeholder="tu@email.com" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white text-sm" value="dj@example.com">
-              </div>
-
-              <div>
-                <label class="block text-sm text-gray-400 mb-2 mt-3">🎵 Spotify</label>
-                <input type="text" id="spotify" placeholder="spotify.com/artist/..." class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white text-sm" value="spotify.com/artist/djphoenix">
-              </div>
-
-              <div>
-                <label class="block text-sm text-gray-400 mb-2 mt-3">📺 YouTube</label>
-                <input type="text" id="youtube" placeholder="youtube.com/@tunombre" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white text-sm" value="youtube.com/@djphoenix">
-              </div>
-
-              <div>
-                <label class="block text-sm text-gray-400 mb-2 mt-3">☁️ SoundCloud</label>
-                <input type="text" id="soundcloud" placeholder="soundcloud.com/tunombre" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white text-sm" value="soundcloud.com/djphoenix">
-              </div>
-            </div>
-
-            <button onclick="saveChanges()" class="w-full py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold hover:opacity-90 mt-4">
-              💾 Guardar Cambios
-            </button>
-          </div>
+    <div class="max-w-4xl mx-auto px-4 py-12">
+      
+      <!-- HEADER CON FOTO -->
+      <div class="text-center mb-12">
+        <div class="w-56 h-56 rounded-full mx-auto mb-8 bg-gradient-to-br from-purple-600 to-pink-600 overflow-hidden border-4 border-purple-500 flex items-center justify-center">
+          <i class="fas fa-user text-8xl text-white opacity-30"></i>
         </div>
+        
+        <h1 class="text-5xl font-black mb-2 bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">DJ Stellar</h1>
+        <p class="text-gray-400 text-xl mb-6">@djstellar</p>
+        <p class="text-gray-300 max-w-2xl mx-auto text-lg mb-8 leading-relaxed">
+          House • Techno • Minimal | 8 años en la industria electrónica | Experimento con sonidos futuristas | Disponible para eventos corporativos, clubs y festivales internacionales
+        </p>
+      </div>
 
-        <!-- Right: Preskit Preview -->
-        <div class="lg:col-span-2">
-          <div class="bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-purple-500/30 rounded-2xl p-8">
-            
-            <!-- Profile Header -->
-            <div class="text-center mb-8">
-              <div id="displayProfilePhoto" class="w-32 h-32 mx-auto mb-4 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-4xl overflow-hidden border-4 border-purple-500">
-                🎧
-              </div>
-              <h1 id="displayName" class="text-4xl font-black mb-2">DJ Phoenix</h1>
-              <p id="displayBio" class="text-gray-300 mb-4">Productor y DJ especializado en House y Techno. Residencia en Club Nocturno.</p>
-              <div id="displayGenres" class="flex flex-wrap gap-2 justify-center mb-4">
-                <span class="px-3 py-1 bg-purple-500/30 border border-purple-500 rounded-full text-sm">House</span>
-                <span class="px-3 py-1 bg-purple-500/30 border border-purple-500 rounded-full text-sm">Techno</span>
-              </div>
-            </div>
+      <!-- REDES SOCIALES -->
+      <div class="flex justify-center gap-6 mb-16 flex-wrap">
+        <a href="https://instagram.com" target="_blank" class="w-16 h-16 bg-gradient-to-br from-purple-600 to-pink-600 rounded-full flex items-center justify-center hover:scale-110 transition hover:shadow-lg" title="Instagram">
+          <i class="fab fa-instagram text-2xl"></i>
+        </a>
+        <a href="https://wa.me/56912345678" target="_blank" class="w-16 h-16 bg-gradient-to-br from-green-600 to-emerald-600 rounded-full flex items-center justify-center hover:scale-110 transition hover:shadow-lg" title="WhatsApp">
+          <i class="fab fa-whatsapp text-2xl"></i>
+        </a>
+        <a href="https://open.spotify.com/artist/" target="_blank" class="w-16 h-16 bg-gradient-to-br from-green-600 to-lime-600 rounded-full flex items-center justify-center hover:scale-110 transition hover:shadow-lg" title="Spotify">
+          <i class="fab fa-spotify text-2xl"></i>
+        </a>
+        <a href="mailto:djstellar@email.com" class="w-16 h-16 bg-gradient-to-br from-red-600 to-pink-600 rounded-full flex items-center justify-center hover:scale-110 transition hover:shadow-lg" title="Email">
+          <i class="fas fa-envelope text-2xl"></i>
+        </a>
+        <a href="https://youtube.com/@djstellar" target="_blank" class="w-16 h-16 bg-gradient-to-br from-red-600 to-orange-600 rounded-full flex items-center justify-center hover:scale-110 transition hover:shadow-lg" title="YouTube">
+          <i class="fab fa-youtube text-2xl"></i>
+        </a>
+        <a href="https://soundcloud.com/djstellar" target="_blank" class="w-16 h-16 bg-gradient-to-br from-orange-600 to-yellow-600 rounded-full flex items-center justify-center hover:scale-110 transition hover:shadow-lg" title="SoundCloud">
+          <i class="fab fa-soundcloud text-2xl"></i>
+        </a>
+      </div>
 
-            <!-- Social Links -->
-            <div id="socialLinks" class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-8">
-              <!-- Se genera dinámicamente -->
-            </div>
+      <!-- EQUIPAMIENTO PIONEER -->
+      <div class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-8 mb-12">
+        <h2 class="text-3xl font-bold mb-8">🎛️ Mi Equipamiento Pioneer</h2>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div class="bg-gradient-to-br from-purple-600/30 to-pink-600/30 rounded-lg px-4 py-4 text-center border border-purple-500/30 hover:border-purple-500/60 transition">
+            <div class="text-3xl mb-2">🎛️</div>
+            <div class="font-bold text-sm">Pioneer DDJ-FLX6</div>
+            <div class="text-xs text-gray-500 mt-1">Controlador</div>
+          </div>
 
-            <!-- Gallery -->
-            <div id="gallerySection" class="mb-8 hidden">
-              <h2 class="text-2xl font-bold mb-4">📷 Galería</h2>
-              <div id="gallery" class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                <!-- Imágenes se cargan aquí -->
-              </div>
-            </div>
+          <div class="bg-gradient-to-br from-purple-600/30 to-pink-600/30 rounded-lg px-4 py-4 text-center border border-purple-500/30 hover:border-purple-500/60 transition">
+            <div class="text-3xl mb-2">📀</div>
+            <div class="font-bold text-sm">Pioneer CDJ-3000</div>
+            <div class="text-xs text-gray-500 mt-1">Reproductor</div>
+          </div>
 
-            <!-- Featured Section -->
-            <div class="mb-8">
-              <h2 class="text-2xl font-bold mb-4">🎵 Últimas Producciones</h2>
-              <div class="space-y-3">
-                <div class="bg-gray-800/50 p-4 rounded-lg border border-purple-500/20">
-                  <div class="font-bold">Phoenix Rising (Original Mix)</div>
-                  <div class="text-sm text-gray-400">2024 • House</div>
-                </div>
-                <div class="bg-gray-800/50 p-4 rounded-lg border border-purple-500/20">
-                  <div class="font-bold">Midnight Flow (Remix)</div>
-                  <div class="text-sm text-gray-400">2024 • Techno</div>
-                </div>
-              </div>
-            </div>
+          <div class="bg-gradient-to-br from-purple-600/30 to-pink-600/30 rounded-lg px-4 py-4 text-center border border-purple-500/30 hover:border-purple-500/60 transition">
+            <div class="text-3xl mb-2">🎚️</div>
+            <div class="font-bold text-sm">Pioneer DJM-900NXS2</div>
+            <div class="text-xs text-gray-500 mt-1">Mezclador</div>
+          </div>
 
-            <!-- Upcoming Events -->
-            <div class="mb-8">
-              <h2 class="text-2xl font-bold mb-4">📅 Próximas Presentaciones</h2>
-              <div class="space-y-3">
-                <div class="bg-gradient-to-r from-purple-600/20 to-pink-600/20 p-4 rounded-lg border border-purple-500/30">
-                  <div class="flex justify-between items-start">
-                    <div>
-                      <div class="font-bold">Club Nocturno</div>
-                      <div class="text-sm text-gray-400">15 de Abril, 2024</div>
-                    </div>
-                    <button class="px-3 py-1 bg-purple-600 rounded text-sm font-bold hover:bg-purple-700">
-                      Entradas
-                    </button>
-                  </div>
-                </div>
-                <div class="bg-gradient-to-r from-purple-600/20 to-pink-600/20 p-4 rounded-lg border border-purple-500/30">
-                  <div class="flex justify-between items-start">
-                    <div>
-                      <div class="font-bold">Festival Música Electrónica</div>
-                      <div class="text-sm text-gray-400">22 de Mayo, 2024</div>
-                    </div>
-                    <button class="px-3 py-1 bg-purple-600 rounded text-sm font-bold hover:bg-purple-700">
-                      Entradas
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Share Button -->
-            <button onclick="sharePreskit()" class="w-full py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold hover:opacity-90 transition">
-              🔗 Compartir Mi Preskit
-            </button>
+          <div class="bg-gradient-to-br from-purple-600/30 to-pink-600/30 rounded-lg px-4 py-4 text-center border border-purple-500/30 hover:border-purple-500/60 transition">
+            <div class="text-3xl mb-2">🎧</div>
+            <div class="font-bold text-sm">Pioneer HDJ-1500</div>
+            <div class="text-xs text-gray-500 mt-1">Auriculares</div>
           </div>
         </div>
       </div>
+
+      <!-- GALERÍA DE FOTOS -->
+      <div class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-8 mb-12">
+        <h2 class="text-3xl font-bold mb-8">📸 Galería</h2>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div class="bg-gradient-to-br from-purple-600/30 to-pink-600/30 rounded-lg overflow-hidden h-48 flex items-center justify-center border border-purple-500/30">
+            <div class="text-center">
+              <i class="fas fa-image text-4xl text-purple-500 mb-2 block"></i>
+              <p class="text-sm text-gray-400">Evento en Club</p>
+            </div>
+          </div>
+
+          <div class="bg-gradient-to-br from-purple-600/30 to-pink-600/30 rounded-lg overflow-hidden h-48 flex items-center justify-center border border-purple-500/30">
+            <div class="text-center">
+              <i class="fas fa-image text-4xl text-purple-500 mb-2 block"></i>
+              <p class="text-sm text-gray-400">Festival Internacional</p>
+            </div>
+          </div>
+
+          <div class="bg-gradient-to-br from-purple-600/30 to-pink-600/30 rounded-lg overflow-hidden h-48 flex items-center justify-center border border-purple-500/30">
+            <div class="text-center">
+              <i class="fas fa-image text-4xl text-purple-500 mb-2 block"></i>
+              <p class="text-sm text-gray-400">En Estudio</p>
+            </div>
+          </div>
+
+          <div class="bg-gradient-to-br from-purple-600/30 to-pink-600/30 rounded-lg overflow-hidden h-48 flex items-center justify-center border border-purple-500/30">
+            <div class="text-center">
+              <i class="fas fa-image text-4xl text-purple-500 mb-2 block"></i>
+              <p class="text-sm text-gray-400">Presentación Live</p>
+            </div>
+          </div>
+
+          <div class="bg-gradient-to-br from-purple-600/30 to-pink-600/30 rounded-lg overflow-hidden h-48 flex items-center justify-center border border-purple-500/30">
+            <div class="text-center">
+              <i class="fas fa-image text-4xl text-purple-500 mb-2 block"></i>
+              <p class="text-sm text-gray-400">Con Productores</p>
+            </div>
+          </div>
+
+          <div class="bg-gradient-to-br from-purple-600/30 to-pink-600/30 rounded-lg overflow-hidden h-48 flex items-center justify-center border border-purple-500/30">
+            <div class="text-center">
+              <i class="fas fa-image text-4xl text-purple-500 mb-2 block"></i>
+              <p class="text-sm text-gray-400">Tour 2025</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PRÓXIMAS PRESENTACIONES -->
+      <div class="mb-12">
+        <h2 class="text-3xl font-bold mb-8">📅 Próximas Presentaciones</h2>
+        <div class="space-y-4">
+          <!-- Evento 1 -->
+          <div class="bg-gradient-to-r from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-6 hover:border-purple-500/60 transition">
+            <div class="flex justify-between items-start mb-4">
+              <div class="flex-1">
+                <h3 class="text-2xl font-bold mb-3">Festival Electromusic 2025</h3>
+                <div class="space-y-2 text-gray-300">
+                  <p><i class="fas fa-calendar text-purple-400 mr-2"></i>15 de Mayo 2025 • 22:30</p>
+                  <p><i class="fas fa-map-marker-alt text-purple-400 mr-2"></i>Santiago • Club Sentient</p>
+                  <p class="mt-3 text-gray-400"><i class="fas fa-info-circle text-purple-400 mr-2"></i>Cierre de jornada con 2 horas de música en vivo. Esperamos 1.500+ personas.</p>
+                </div>
+              </div>
+            </div>
+            <a href="#" class="inline-block mt-4 px-6 py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold text-sm hover:opacity-90 transition">🎫 Entradas</a>
+          </div>
+
+          <!-- Evento 2 -->
+          <div class="bg-gradient-to-r from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-6 hover:border-purple-500/60 transition">
+            <div class="flex justify-between items-start mb-4">
+              <div class="flex-1">
+                <h3 class="text-2xl font-bold mb-3">Noche Techno - Club Castro</h3>
+                <div class="space-y-2 text-gray-300">
+                  <p><i class="fas fa-calendar text-purple-400 mr-2"></i>22 de Mayo 2025 • 00:00</p>
+                  <p><i class="fas fa-map-marker-alt text-purple-400 mr-2"></i>Santiago • Castro Club</p>
+                  <p class="mt-3 text-gray-400"><i class="fas fa-info-circle text-purple-400 mr-2"></i>Sesión de techno puro. 4 horas de música sin parar.</p>
+                </div>
+              </div>
+            </div>
+            <a href="#" class="inline-block mt-4 px-6 py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold text-sm hover:opacity-90 transition">🎫 Entradas</a>
+          </div>
+
+          <!-- Evento 3 -->
+          <div class="bg-gradient-to-r from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-6 hover:border-purple-500/60 transition">
+            <div class="flex justify-between items-start mb-4">
+              <div class="flex-1">
+                <h3 class="text-2xl font-bold mb-3">Evento Corporativo - Conferencia Tech</h3>
+                <div class="space-y-2 text-gray-300">
+                  <p><i class="fas fa-calendar text-purple-400 mr-2"></i>28 de Mayo 2025 • 19:00</p>
+                  <p><i class="fas fa-map-marker-alt text-purple-400 mr-2"></i>Viña del Mar • Centro de Convenciones</p>
+                  <p class="mt-3 text-gray-400"><i class="fas fa-info-circle text-purple-400 mr-2"></i>Sesión de ambiental y cocktail para 500+ invitados VIP.</p>
+                </div>
+              </div>
+            </div>
+            <a href="#" class="inline-block mt-4 px-6 py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold text-sm hover:opacity-90 transition">🎫 Entradas</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ESTADÍSTICAS -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <div class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-6 text-center">
+          <div class="text-4xl font-black text-pink-400 mb-2">8.420</div>
+          <div class="text-gray-400">Visitas al preskit</div>
+        </div>
+        <div class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-6 text-center">
+          <div class="text-4xl font-black text-pink-400 mb-2">2.150</div>
+          <div class="text-gray-400">Clicks en redes</div>
+        </div>
+        <div class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-6 text-center">
+          <div class="text-4xl font-black text-pink-400 mb-2">3</div>
+          <div class="text-gray-400">Eventos próximos</div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="bg-gradient-to-r from-purple-600/30 to-pink-600/30 border border-purple-500/30 rounded-2xl p-12 text-center mb-8">
+        <h2 class="text-3xl font-bold mb-4">¿Esto te interesa?</h2>
+        <p class="text-gray-400 mb-8 text-lg">Este es un ejemplo de lo que puedes lograr con VOLTUM. Tu preskit profesional, visible, y compartible en un solo link.</p>
+        <a href="/" class="px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold text-lg inline-block hover:opacity-90 transition">
+          ⚡ Crear Mi Preskit
+        </a>
+      </div>
+
+      <!-- INFO VOLTUM -->
+      <div class="text-center text-gray-500 text-sm">
+        <p>Preskit creado con <span class="text-pink-500">❤️</span> en VOLTUM</p>
+        <p class="mt-4">
+          <a href="/" class="hover:text-gray-300">Inicio</a> • 
+          <a href="/login.html" class="hover:text-gray-300">Crear mi cuenta</a> • 
+          <a href="mailto:info@voltum.cl" class="hover:text-gray-300">Contacto</a>
+        </p>
+      </div>
+
     </div>
   </div>
 
   <script>
-    // Lista de géneros
-    const DJ_GENRES = [
-      'House', 'Techno', 'Trance', 'Drum & Bass', 'Dubstep', 'Trap',
-      'Deep House', 'Progressive House', 'Electro House', 'Tech House',
-      'Minimal', 'Industrial', 'Ambient', 'Psytrance', 'Goa Trance',
-      'Hardstyle', 'Hardcore', 'Garage', 'Liquid Funk', 'Downtempo',
-      'Chillout', 'IDM', 'Jungle', 'Breakbeat', 'Acid House',
-      'Chicago House', 'Detroit Techno', 'Berlin Techno', 'UK Garage',
-      'Darkwave', 'Synthwave', 'Techno Pop', 'EBM', 'Industrial Pop',
-      'Future Bass', 'Bass House', 'Witch House', 'Vaporwave', 'UK Bass'
-    ];
-
-    let selectedGenres = ['House', 'Techno'];
-    let uploadedImages = [];
-    let profilePhoto = null;
-
-    // Redes sociales con iconos
-    const SOCIAL_NETWORKS = {
-      instagram: { label: 'Instagram', icon: 'fab fa-instagram', color: 'from-pink-600 to-purple-600' },
-      whatsapp: { label: 'WhatsApp', icon: 'fab fa-whatsapp', color: 'from-green-600 to-emerald-600' },
-      email: { label: 'Correo', icon: 'fas fa-envelope', color: 'from-blue-600 to-cyan-600' },
-      spotify: { label: 'Spotify', icon: 'fab fa-spotify', color: 'from-green-500 to-green-600' },
-      youtube: { label: 'YouTube', icon: 'fab fa-youtube', color: 'from-red-600 to-red-700' },
-      soundcloud: { label: 'SoundCloud', icon: 'fab fa-soundcloud', color: 'from-orange-500 to-orange-600' }
-    };
-
-    function initializeGenres() {
-      const container = document.getElementById('genresContainer');
-      container.innerHTML = '';
-
-      DJ_GENRES.forEach(genre => {
-        const label = document.createElement('label');
-        label.className = 'flex items-center gap-2 cursor-pointer hover:bg-gray-700/50 p-1 rounded text-sm';
-        
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.value = genre;
-        checkbox.checked = selectedGenres.includes(genre);
-        checkbox.className = 'w-3 h-3 rounded border-purple-500 accent-purple-500';
-        checkbox.onchange = () => {
-          if (checkbox.checked) {
-            selectedGenres.push(genre);
-          } else {
-            selectedGenres = selectedGenres.filter(g => g !== genre);
-          }
-        };
-
-        const span = document.createElement('span');
-        span.textContent = genre;
-
-        label.appendChild(checkbox);
-        label.appendChild(span);
-        container.appendChild(label);
-      });
-    }
-
-    function handleProfilePhotoUpload(event) {
-      const file = event.target.files[0];
-      
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          profilePhoto = e.target.result;
-          document.getElementById('profilePhotoPreview').innerHTML = `<img src="${profilePhoto}" class="w-full h-full object-cover">`;
-          updateProfilePhoto();
-        };
-        reader.readAsDataURL(file);
-      }
-    }
-
-    function updateProfilePhoto() {
-      const displayDiv = document.getElementById('displayProfilePhoto');
-      if (profilePhoto) {
-        displayDiv.innerHTML = `<img src="${profilePhoto}" class="w-full h-full object-cover">`;
-      }
-    }
-
-    function handleImageUpload(event) {
-      const files = Array.from(event.target.files);
-      
-      if (uploadedImages.length + files.length > 5) {
-        alert('⚠️ Máximo 5 imágenes permitidas');
-        return;
-      }
-
-      files.forEach(file => {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          uploadedImages.push(e.target.result);
-          updateImagePreview();
-        };
-        reader.readAsDataURL(file);
-      });
-    }
-
-    function updateImagePreview() {
-      const preview = document.getElementById('imagePreview');
-      preview.innerHTML = '';
-
-      uploadedImages.forEach((img, index) => {
-        const div = document.createElement('div');
-        div.className = 'relative group';
-        div.innerHTML = `
-          <img src="${img}" class="w-full h-24 object-cover rounded-lg border border-purple-500/30">
-          <button onclick="removeImage(${index})" class="absolute top-1 right-1 bg-red-600 hover:bg-red-700 rounded-full p-1 opacity-0 group-hover:opacity-100 transition">
-            <i class="fas fa-times text-white text-xs"></i>
-          </button>
-        `;
-        preview.appendChild(div);
-      });
-
-      document.getElementById('gallery').innerHTML = uploadedImages.map(img => `
-        <div class="overflow-hidden rounded-lg border border-purple-500/30">
-          <img src="${img}" class="w-full h-40 object-cover hover:scale-110 transition">
-        </div>
-      `).join('');
-
-      if (uploadedImages.length > 0) {
-        document.getElementById('gallerySection').classList.remove('hidden');
-      }
-    }
-
-    function removeImage(index) {
-      uploadedImages.splice(index, 1);
-      updateImagePreview();
-    }
-
-    function updateSocialLinks() {
-      const container = document.getElementById('socialLinks');
-      container.innerHTML = '';
-
-      const socials = [
-        { key: 'instagram', id: 'instagram' },
-        { key: 'whatsapp', id: 'whatsapp' },
-        { key: 'email', id: 'email' },
-        { key: 'spotify', id: 'spotify' },
-        { key: 'youtube', id: 'youtube' },
-        { key: 'soundcloud', id: 'soundcloud' }
-      ];
-
-      socials.forEach(social => {
-        const value = document.getElementById(social.id).value;
-        if (value) {
-          const network = SOCIAL_NETWORKS[social.key];
-          const button = document.createElement('a');
-          button.href = '#';
-          button.className = `bg-gradient-to-r ${network.color} hover:opacity-80 border border-purple-500 rounded-lg p-3 text-center font-bold transition flex items-center justify-center gap-2`;
-          button.innerHTML = `<i class="${network.icon}"></i> ${network.label}`;
-          container.appendChild(button);
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
         }
       });
-    }
-
-    let isEditMode = false;
-
-    function toggleEditMode() {
-      isEditMode = !isEditMode;
-      const editPanel = document.getElementById('editPanel');
-      const toggle = document.getElementById('editToggle');
-      
-      if (isEditMode) {
-        editPanel.classList.remove('hidden');
-        toggle.textContent = '👁️ Ver';
-      } else {
-        editPanel.classList.add('hidden');
-        toggle.textContent = '✏️ Editar';
-      }
-    }
-
-    function saveChanges() {
-      const name = document.getElementById('artistName').value;
-      const bio = document.getElementById('artistBio').value;
-
-      document.getElementById('displayName').textContent = name;
-      document.getElementById('displayBio').textContent = bio;
-      
-      const genreHTML = selectedGenres.map(g => `<span class="px-3 py-1 bg-purple-500/30 border border-purple-500 rounded-full text-sm">${g}</span>`).join('');
-      document.getElementById('displayGenres').innerHTML = genreHTML;
-
-      updateSocialLinks();
-      updateProfilePhoto();
-
-      alert('✅ Cambios guardados correctamente');
-    }
-
-    function downloadPDF() {
-      alert('📥 Descargando preskit como PDF...\n(Función disponible en Plan Pro)');
-    }
-
-    function sharePreskit() {
-      const url = window.location.href;
-      const text = `Mira mi preskit profesional en VOLTUM 🎸⚡\n${url}`;
-      
-      if (navigator.share) {
-        navigator.share({
-          title: 'Mi Preskit VOLTUM',
-          text: text,
-          url: url
-        });
-      } else {
-        alert('🔗 Enlace copiado!\n' + url);
-        navigator.clipboard.writeText(url);
-      }
-    }
-
-    // Inicializar
-    window.addEventListener('load', () => {
-      initializeGenres();
-      updateSocialLinks();
     });
   </script>
 </body>
