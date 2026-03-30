@@ -23,6 +23,48 @@
     <div class="max-w-6xl mx-auto px-4 py-12">
       <h1 class="text-4xl font-black mb-8">📊 Mi Dashboard</h1>
       
+      <!-- PERFIL EDITABLE -->
+      <div class="bg-gray-900/50 border border-purple-500/20 rounded-2xl p-8 mb-12">
+        <div class="flex justify-between items-center mb-8">
+          <h2 class="text-3xl font-bold">👤 Mi Perfil</h2>
+          <button class="px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg font-bold text-sm" onclick="openProfileModal()">✏️ Editar Perfil</button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Foto de Perfil -->
+          <div class="text-center">
+            <div id="profilePhotoDisplay" class="w-48 h-48 rounded-full mx-auto mb-4 bg-gradient-to-br from-purple-600 to-pink-600 overflow-hidden border-4 border-purple-500 flex items-center justify-center">
+              <i class="fas fa-user text-7xl text-white opacity-50"></i>
+            </div>
+            <p class="text-gray-400 text-sm">Foto de Perfil</p>
+          </div>
+
+          <!-- Info del Perfil -->
+          <div class="md:col-span-2">
+            <h3 id="profileArtistName" class="text-3xl font-bold mb-2">DJ Name</h3>
+            <p id="profileUsername" class="text-gray-400 text-lg mb-6">@username</p>
+            <p id="profileBio" class="text-gray-300 mb-8 leading-relaxed">Sin descripción aún</p>
+
+            <!-- Redes Sociales -->
+            <div class="mb-6">
+              <p class="text-sm text-gray-400 mb-3">Redes Sociales:</p>
+              <div id="socialMediaDisplay" class="flex gap-3 flex-wrap">
+                <!-- Se llena dinámicamente -->
+              </div>
+            </div>
+
+            <!-- Galería Preview -->
+            <div>
+              <p class="text-sm text-gray-400 mb-3">Galería (<span id="galleryCount">0</span>/5):</p>
+              <div id="galleryPreview" class="grid grid-cols-3 gap-2">
+                <!-- Se llena dinámicamente -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ESTADÍSTICAS -->
       <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
         <div class="bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-2xl p-6">
           <div class="text-gray-400 text-sm">Visitas</div>
@@ -72,6 +114,85 @@
     </div>
   </div>
 
+  <!-- MODAL PERFIL -->
+  <div id="profileModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur flex items-center justify-center z-50 p-4">
+    <div class="bg-gray-900 border border-purple-500/30 rounded-2xl p-8 max-w-2xl w-full max-h-[95vh] overflow-y-auto">
+      <h2 class="text-2xl font-bold mb-6">✏️ Editar Mi Perfil</h2>
+
+      <!-- Foto de Perfil -->
+      <div class="mb-8">
+        <label class="block text-sm text-gray-400 mb-4">Foto de Perfil</label>
+        <div class="flex gap-4 items-start">
+          <div id="profilePhotoPreview" class="w-32 h-32 rounded-full bg-gradient-to-br from-purple-600 to-pink-600 overflow-hidden border-4 border-purple-500 flex items-center justify-center flex-shrink-0">
+            <i class="fas fa-user text-5xl text-white opacity-50"></i>
+          </div>
+          <div class="flex-1">
+            <input type="file" id="profilePhotoInput" accept="image/*" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white text-sm mb-2" onchange="handleProfilePhotoChange()">
+            <p class="text-xs text-gray-500">JPG, PNG. Máx 5MB. Se mostrará circular.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Descripción/Bio -->
+      <div class="mb-8">
+        <label class="block text-sm text-gray-400 mb-2">Descripción / Bio</label>
+        <textarea id="profileBioInput" placeholder="Cuéntale a los productores quién eres, qué género tocas, etc..." class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white h-24" maxlength="200"></textarea>
+        <p class="text-xs text-gray-500 mt-1"><span id="bioCharCount">0</span>/200 caracteres</p>
+      </div>
+
+      <!-- Redes Sociales -->
+      <div class="mb-8">
+        <label class="block text-sm text-gray-400 mb-4">Redes Sociales</label>
+        <div class="space-y-3">
+          <div>
+            <label class="text-xs text-gray-500">Instagram</label>
+            <input type="text" id="socialInstagram" placeholder="@tunombre" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white text-sm">
+          </div>
+          <div>
+            <label class="text-xs text-gray-500">WhatsApp</label>
+            <input type="tel" id="socialWhatsapp" placeholder="+56912345678" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white text-sm">
+          </div>
+          <div>
+            <label class="text-xs text-gray-500">Email de Contacto</label>
+            <input type="email" id="socialEmail" placeholder="contacto@email.com" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white text-sm">
+          </div>
+          <div>
+            <label class="text-xs text-gray-500">Spotify</label>
+            <input type="url" id="socialSpotify" placeholder="https://open.spotify.com/artist/..." class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white text-sm">
+          </div>
+          <div>
+            <label class="text-xs text-gray-500">YouTube</label>
+            <input type="url" id="socialYoutube" placeholder="https://youtube.com/@..." class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white text-sm">
+          </div>
+          <div>
+            <label class="text-xs text-gray-500">SoundCloud</label>
+            <input type="url" id="socialSoundcloud" placeholder="https://soundcloud.com/..." class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white text-sm">
+          </div>
+        </div>
+      </div>
+
+      <!-- Galería de Fotos -->
+      <div class="mb-8">
+        <label class="block text-sm text-gray-400 mb-4">Galería de Fotos (<span id="galleryUploadCount">0</span>/5)</label>
+        <div class="grid grid-cols-3 gap-3 mb-4" id="galleryUploadPreview">
+          <!-- Se llena dinámicamente -->
+        </div>
+        <div id="addPhotoButton" class="text-center">
+          <input type="file" id="galleryPhotosInput" accept="image/*" multiple class="hidden" onchange="handleGalleryPhotosChange()">
+          <button type="button" onclick="document.getElementById('galleryPhotosInput').click()" class="px-4 py-2 border border-purple-500 rounded-lg font-bold text-sm hover:bg-purple-500/10">
+            + Agregar Fotos
+          </button>
+        </div>
+      </div>
+
+      <!-- Botones -->
+      <div class="flex gap-3">
+        <button onclick="closeProfileModal()" class="flex-1 px-4 py-2 border border-purple-500 rounded-lg font-bold">Cancelar</button>
+        <button onclick="saveProfile()" class="flex-1 px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold">Guardar Cambios</button>
+      </div>
+    </div>
+  </div>
+
   <!-- MODAL EVENTOS -->
   <div id="modal" class="hidden fixed inset-0 bg-black/50 backdrop-blur flex items-center justify-center z-50 p-4">
     <div class="bg-gray-900 border border-purple-500/30 rounded-2xl p-8 max-w-md w-full">
@@ -95,28 +216,34 @@
     let user = null;
     let eventos = [];
     let equipmentSelected = [];
+    let profileData = {
+      photo: null,
+      bio: '',
+      social: {
+        instagram: '',
+        whatsapp: '',
+        email: '',
+        spotify: '',
+        youtube: '',
+        soundcloud: ''
+      },
+      gallery: []
+    };
 
     const EQUIPOS_PIONEER = [
-      // CONTROLADORES DJ
       { id: 1, name: 'Pioneer DDJ-1000', category: 'Controlador', icon: '🎛️' },
       { id: 2, name: 'Pioneer DDJ-800', category: 'Controlador', icon: '🎛️' },
       { id: 3, name: 'Pioneer DDJ-400', category: 'Controlador', icon: '🎛️' },
       { id: 4, name: 'Pioneer DDJ-200', category: 'Controlador', icon: '🎛️' },
       { id: 5, name: 'Pioneer DDJ-FLX6', category: 'Controlador', icon: '🎛️' },
       { id: 6, name: 'Pioneer DDJ-SR2', category: 'Controlador', icon: '🎛️' },
-      
-      // CDJ
       { id: 7, name: 'Pioneer CDJ-3000', category: 'Reproductor', icon: '📀' },
       { id: 8, name: 'Pioneer CDJ-2000NXS2', category: 'Reproductor', icon: '📀' },
       { id: 9, name: 'Pioneer CDJ-900NXS', category: 'Reproductor', icon: '📀' },
-      
-      // MEZCLADORES
       { id: 10, name: 'Pioneer DJM-900NXS2', category: 'Mezclador', icon: '🎚️' },
       { id: 11, name: 'Pioneer DJM-750MK2', category: 'Mezclador', icon: '🎚️' },
       { id: 12, name: 'Pioneer DJM-450', category: 'Mezclador', icon: '🎚️' },
       { id: 13, name: 'Pioneer DJM-250MK2', category: 'Mezclador', icon: '🎚️' },
-      
-      // ACCESORIOS
       { id: 14, name: 'Pioneer DVS (Vinyl)', category: 'Accesorio', icon: '💿' },
       { id: 15, name: 'Pioneer HDJ-1500 (Auriculares)', category: 'Accesorio', icon: '🎧' },
       { id: 16, name: 'Pioneer HDJ-X5 (Auriculares)', category: 'Accesorio', icon: '🎧' },
@@ -140,13 +267,207 @@
       
       document.getElementById('userName').textContent = user.artist_name || user.username;
       
+      // Cargar datos del perfil
+      loadProfileData();
+      
       const stored = localStorage.getItem(`eventos_${user.id}`);
       eventos = stored ? JSON.parse(stored) : [];
       renderEventos();
       
       loadEquipment();
+      renderProfile();
     }
 
+    function loadProfileData() {
+      const stored = localStorage.getItem(`profile_${user.id}`);
+      if (stored) {
+        profileData = JSON.parse(stored);
+      } else {
+        profileData = {
+          photo: null,
+          bio: '',
+          social: {
+            instagram: '',
+            whatsapp: '',
+            email: '',
+            spotify: '',
+            youtube: '',
+            soundcloud: ''
+          },
+          gallery: []
+        };
+      }
+    }
+
+    function renderProfile() {
+      document.getElementById('profileArtistName').textContent = user.artist_name || user.username;
+      document.getElementById('profileUsername').textContent = '@' + user.username;
+      document.getElementById('profileBio').textContent = profileData.bio || 'Sin descripción aún';
+
+      // Foto de perfil
+      if (profileData.photo) {
+        document.getElementById('profilePhotoDisplay').innerHTML = `<img src="${profileData.photo}" class="w-full h-full object-cover">`;
+      }
+
+      // Redes sociales
+      const socials = [
+        { key: 'instagram', icon: 'fab fa-instagram', name: 'Instagram' },
+        { key: 'whatsapp', icon: 'fab fa-whatsapp', name: 'WhatsApp' },
+        { key: 'spotify', icon: 'fab fa-spotify', name: 'Spotify' },
+        { key: 'email', icon: 'fas fa-envelope', name: 'Email' },
+        { key: 'youtube', icon: 'fab fa-youtube', name: 'YouTube' },
+        { key: 'soundcloud', icon: 'fab fa-soundcloud', name: 'SoundCloud' }
+      ];
+
+      const socialDisplay = document.getElementById('socialMediaDisplay');
+      socialDisplay.innerHTML = socials
+        .filter(s => profileData.social[s.key])
+        .map(s => `
+          <a href="${s.key === 'instagram' ? 'https://instagram.com/' + profileData.social[s.key].replace('@', '') : s.key === 'whatsapp' ? 'https://wa.me/' + profileData.social[s.key].replace(/\D/g, '') : s.key === 'email' ? 'mailto:' + profileData.social[s.key] : profileData.social[s.key]}" target="_blank" class="inline-block">
+            <i class="${s.icon} text-2xl text-purple-400 hover:text-pink-400 transition"></i>
+          </a>
+        `).join('');
+
+      // Galería
+      document.getElementById('galleryCount').textContent = profileData.gallery.length;
+      const galleryPreview = document.getElementById('galleryPreview');
+      galleryPreview.innerHTML = profileData.gallery.map((photo, i) => `
+        <div class="relative group">
+          <img src="${photo}" class="w-full aspect-square rounded-lg object-cover">
+          <button onclick="removeGalleryPhoto(${i})" class="absolute top-1 right-1 bg-red-600 rounded-full w-6 h-6 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition text-xs">✕</button>
+        </div>
+      `).join('');
+    }
+
+    function openProfileModal() {
+      document.getElementById('profileModal').classList.remove('hidden');
+      
+      // Cargar valores actuales
+      document.getElementById('profileBioInput').value = profileData.bio;
+      document.getElementById('socialInstagram').value = profileData.social.instagram;
+      document.getElementById('socialWhatsapp').value = profileData.social.whatsapp;
+      document.getElementById('socialEmail').value = profileData.social.email;
+      document.getElementById('socialSpotify').value = profileData.social.spotify;
+      document.getElementById('socialYoutube').value = profileData.social.youtube;
+      document.getElementById('socialSoundcloud').value = profileData.social.soundcloud;
+
+      // Mostrar galería actual
+      document.getElementById('galleryUploadCount').textContent = profileData.gallery.length;
+      const galleryPreview = document.getElementById('galleryUploadPreview');
+      galleryPreview.innerHTML = profileData.gallery.map((photo, i) => `
+        <div class="relative group">
+          <img src="${photo}" class="w-full aspect-square rounded-lg object-cover">
+          <button type="button" onclick="removeGalleryPhoto(${i})" class="absolute top-1 right-1 bg-red-600 rounded-full w-6 h-6 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition text-xs">✕</button>
+        </div>
+      `).join('');
+
+      // Mostrar botón agregar si hay espacio
+      if (profileData.gallery.length >= 5) {
+        document.getElementById('addPhotoButton').innerHTML = '<p class="text-xs text-gray-500">Máximo 5 fotos alcanzado</p>';
+      }
+
+      // Mostrar foto de perfil
+      if (profileData.photo) {
+        document.getElementById('profilePhotoPreview').innerHTML = `<img src="${profileData.photo}" class="w-full h-full object-cover">`;
+      }
+    }
+
+    function closeProfileModal() {
+      document.getElementById('profileModal').classList.add('hidden');
+    }
+
+    function handleProfilePhotoChange() {
+      const input = document.getElementById('profilePhotoInput');
+      const file = input.files[0];
+
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          profileData.photo = e.target.result;
+          document.getElementById('profilePhotoPreview').innerHTML = `<img src="${e.target.result}" class="w-full h-full object-cover">`;
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function handleGalleryPhotosChange() {
+      const input = document.getElementById('galleryPhotosInput');
+      const files = Array.from(input.files);
+      const remaining = 5 - profileData.gallery.length;
+
+      if (files.length > remaining) {
+        alert(`Solo puedes agregar ${remaining} foto(s) más`);
+        return;
+      }
+
+      let loaded = 0;
+      files.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          profileData.gallery.push(e.target.result);
+          loaded++;
+
+          if (loaded === files.length) {
+            document.getElementById('galleryUploadCount').textContent = profileData.gallery.length;
+            
+            const galleryPreview = document.getElementById('galleryUploadPreview');
+            galleryPreview.innerHTML = profileData.gallery.map((photo, i) => `
+              <div class="relative group">
+                <img src="${photo}" class="w-full aspect-square rounded-lg object-cover">
+                <button type="button" onclick="removeGalleryPhoto(${i})" class="absolute top-1 right-1 bg-red-600 rounded-full w-6 h-6 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition text-xs">✕</button>
+              </div>
+            `).join('');
+
+            if (profileData.gallery.length >= 5) {
+              document.getElementById('addPhotoButton').innerHTML = '<p class="text-xs text-gray-500">Máximo 5 fotos alcanzado</p>';
+            }
+          }
+        };
+        reader.readAsDataURL(file);
+      });
+
+      input.value = '';
+    }
+
+    function removeGalleryPhoto(index) {
+      profileData.gallery.splice(index, 1);
+      document.getElementById('galleryUploadCount').textContent = profileData.gallery.length;
+
+      const galleryPreview = document.getElementById('galleryUploadPreview');
+      galleryPreview.innerHTML = profileData.gallery.map((photo, i) => `
+        <div class="relative group">
+          <img src="${photo}" class="w-full aspect-square rounded-lg object-cover">
+          <button type="button" onclick="removeGalleryPhoto(${i})" class="absolute top-1 right-1 bg-red-600 rounded-full w-6 h-6 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition text-xs">✕</button>
+        </div>
+      `).join('');
+
+      if (profileData.gallery.length < 5) {
+        document.getElementById('addPhotoButton').innerHTML = `
+          <input type="file" id="galleryPhotosInput" accept="image/*" multiple class="hidden" onchange="handleGalleryPhotosChange()">
+          <button type="button" onclick="document.getElementById('galleryPhotosInput').click()" class="px-4 py-2 border border-purple-500 rounded-lg font-bold text-sm hover:bg-purple-500/10">
+            + Agregar Fotos
+          </button>
+        `;
+      }
+    }
+
+    function saveProfile() {
+      profileData.bio = document.getElementById('profileBioInput').value;
+      profileData.social.instagram = document.getElementById('socialInstagram').value;
+      profileData.social.whatsapp = document.getElementById('socialWhatsapp').value;
+      profileData.social.email = document.getElementById('socialEmail').value;
+      profileData.social.spotify = document.getElementById('socialSpotify').value;
+      profileData.social.youtube = document.getElementById('socialYoutube').value;
+      profileData.social.soundcloud = document.getElementById('socialSoundcloud').value;
+
+      localStorage.setItem(`profile_${user.id}`, JSON.stringify(profileData));
+      
+      closeProfileModal();
+      renderProfile();
+      alert('✅ Perfil actualizado correctamente');
+    }
+
+    // EVENTOS
     function renderEventos() {
       const list = document.getElementById('eventsList');
       const empty = document.getElementById('emptyState');
@@ -197,7 +518,6 @@
       closeModal();
       renderEventos();
       
-      // Limpiar formulario
       document.getElementById('eventName').value = '';
       document.getElementById('eventDate').value = '';
       document.getElementById('eventTime').value = '';
@@ -215,6 +535,7 @@
       renderEventos();
     }
 
+    // EQUIPOS
     function loadEquipment() {
       const stored = localStorage.getItem(`equipment_${user.id}`);
       equipmentSelected = stored ? JSON.parse(stored) : [];
@@ -334,6 +655,16 @@
       localStorage.removeItem('voltum_user');
       window.location.replace('/login.html');
     }
+
+    // Event listener para bio character count
+    document.addEventListener('DOMContentLoaded', () => {
+      const bioInput = document.getElementById('profileBioInput');
+      if (bioInput) {
+        bioInput.addEventListener('input', () => {
+          document.getElementById('bioCharCount').textContent = bioInput.value.length;
+        });
+      }
+    });
 
     window.addEventListener('load', initDashboard);
   </script>
