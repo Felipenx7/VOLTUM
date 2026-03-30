@@ -6,6 +6,7 @@
   <title>Dashboard - VOLTUM</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body class="bg-gradient-to-b from-black via-purple-900/20 to-black text-white">
   <div class="min-h-screen">
@@ -13,8 +14,9 @@
       <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
         <div class="text-2xl font-black bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">⚡ VOLTUM</div>
         <div class="flex gap-4 items-center">
-          <span class="text-sm">Bienvenido, <span class="font-bold">DJ Phoenix</span></span>
+          <span class="text-sm" id="userName">DJ</span>
           <a href="/preskit-demo.html" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg font-bold text-sm">👁️ Ver Preskit</a>
+          <button onclick="logout()" class="px-4 py-2 border border-purple-500 rounded-lg font-bold text-sm hover:bg-purple-500/10">Salir</button>
         </div>
       </div>
     </nav>
@@ -62,17 +64,17 @@
       <div class="mb-12">
         <div class="flex justify-between items-center mb-8">
           <h2 class="text-3xl font-bold">📅 Mis Presentaciones</h2>
-          <button class="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold hover:opacity-90 transition" onclick="mostrarModal()">
+          <button class="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold hover:opacity-90 transition" onclick="abrirModal()">
             + Agregar Evento
           </button>
         </div>
 
-        <div id="listaEventos" class="space-y-4"></div>
+        <div id="eventsList" class="space-y-4"></div>
 
-        <div id="estadoVacio" class="bg-gray-900/50 border border-purple-500/20 rounded-2xl p-12 text-center">
+        <div id="emptyState" class="bg-gray-900/50 border border-purple-500/20 rounded-2xl p-12 text-center">
           <i class="fas fa-calendar text-6xl text-purple-500 mb-4 block"></i>
           <p class="text-gray-400 mb-4">No tienes presentaciones programadas aún</p>
-          <button class="px-6 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg font-bold" onclick="mostrarModal()">
+          <button class="px-6 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg font-bold" onclick="abrirModal()">
             Agregar primera presentación
           </button>
         </div>
@@ -80,162 +82,61 @@
     </div>
   </div>
 
-  <div id="miModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur flex items-center justify-center z-50 p-4">
+  <div id="modal" class="hidden fixed inset-0 bg-black/50 backdrop-blur flex items-center justify-center z-50 p-4">
     <div class="bg-gray-900 border border-purple-500/30 rounded-2xl p-8 max-w-md w-full max-h-[90vh] overflow-y-auto">
       <h2 class="text-2xl font-bold mb-6">📅 Agregar Presentación</h2>
 
       <div class="space-y-4">
-        <div>
-          <label class="block text-sm text-gray-400 mb-2">Nombre del Lugar *</label>
-          <input type="text" id="inputNombre" placeholder="Club Nocturno" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
-        </div>
-
-        <div>
-          <label class="block text-sm text-gray-400 mb-2">Fecha *</label>
-          <input type="date" id="inputFecha" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
-        </div>
-
-        <div>
-          <label class="block text-sm text-gray-400 mb-2">Hora</label>
-          <input type="time" id="inputHora" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
-        </div>
-
-        <div>
-          <label class="block text-sm text-gray-400 mb-2">Ciudad</label>
-          <input type="text" id="inputCiudad" placeholder="Santiago" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
-        </div>
-
-        <div>
-          <label class="block text-sm text-gray-400 mb-2">Lugar (Venue)</label>
-          <input type="text" id="inputLugar" placeholder="Av. Principal 123" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
-        </div>
-
-        <div>
-          <label class="block text-sm text-gray-400 mb-2">Link de Entradas</label>
-          <input type="url" id="inputEntradas" placeholder="https://eventbrite.com/..." class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white text-sm">
-        </div>
-
-        <div>
-          <label class="block text-sm text-gray-400 mb-2">Descripción</label>
-          <textarea id="inputDesc" placeholder="Describe tu presentación..." class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white h-20"></textarea>
-        </div>
+        <input type="text" id="eventName" placeholder="Nombre del Lugar" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
+        <input type="date" id="eventDate" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
+        <input type="time" id="eventTime" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
+        <input type="text" id="eventCity" placeholder="Ciudad" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
+        <input type="text" id="eventVenue" placeholder="Lugar (Venue)" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
+        <input type="url" id="eventTicket" placeholder="Link de Entradas" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white text-sm">
+        <textarea id="eventDesc" placeholder="Descripción..." class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white h-20"></textarea>
 
         <div class="flex gap-3 pt-4">
-          <button onclick="ocultarModal()" class="flex-1 px-4 py-2 border border-purple-500 rounded-lg font-bold hover:bg-purple-500/10 transition">
-            Cancelar
-          </button>
-          <button onclick="guardarNuevoEvento()" class="flex-1 px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold hover:opacity-90 transition">
-            Guardar
-          </button>
+          <button onclick="cerrarModal()" class="flex-1 px-4 py-2 border border-purple-500 rounded-lg font-bold hover:bg-purple-500/10 transition">Cancelar</button>
+          <button onclick="guardarEvento()" class="flex-1 px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold hover:opacity-90 transition">Guardar</button>
         </div>
       </div>
     </div>
   </div>
 
   <script>
-    let misEventos = [];
+    const sbURL = 'https://btwrbjqvnwxxsyhipjta.supabase.co';
+    const sbKEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ0d3JianF2bnd4eHN5aGlwanRhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ4NTc1NDgsImV4cCI6MjA5MDQzMzU0OH0.ZFItnsTbRkVSz4Ut7JH7iccOZZPxiycsK36KgYEG7Tk';
+    const supabase = window.supabase.createClient(sbURL, sbKEY);
 
-    // Cargar eventos del localStorage
-    function cargarDatos() {
-      const datos = localStorage.getItem('voltum_eventos');
-      misEventos = datos ? JSON.parse(datos) : [];
-      actualizarUI();
-    }
+    let user = null;
+    let eventos = [];
 
-    // Guardar eventos en localStorage
-    function guardarDatos() {
-      localStorage.setItem('voltum_eventos', JSON.stringify(misEventos));
-    }
-
-    // Mostrar modal
-    function mostrarModal() {
-      document.getElementById('miModal').classList.remove('hidden');
-      limpiarCampos();
-    }
-
-    // Ocultar modal
-    function ocultarModal() {
-      document.getElementById('miModal').classList.add('hidden');
-    }
-
-    // Limpiar campos
-    function limpiarCampos() {
-      document.getElementById('inputNombre').value = '';
-      document.getElementById('inputFecha').value = '';
-      document.getElementById('inputHora').value = '';
-      document.getElementById('inputCiudad').value = '';
-      document.getElementById('inputLugar').value = '';
-      document.getElementById('inputEntradas').value = '';
-      document.getElementById('inputDesc').value = '';
-    }
-
-    // Guardar nuevo evento
-    function guardarNuevoEvento() {
-      const nombre = document.getElementById('inputNombre').value.trim();
-      const fecha = document.getElementById('inputFecha').value;
-      const hora = document.getElementById('inputHora').value;
-      const ciudad = document.getElementById('inputCiudad').value.trim();
-      const lugar = document.getElementById('inputLugar').value.trim();
-      const entradas = document.getElementById('inputEntradas').value.trim();
-      const desc = document.getElementById('inputDesc').value.trim();
-
-      if (!nombre) {
-        alert('⚠️ Ingresa el nombre del lugar');
-        return;
+    async function cargarEventos() {
+      try {
+        const { data, error } = await supabase.from('events').select('*').eq('user_id', user.id).order('event_date', { ascending: true });
+        if (error) throw error;
+        eventos = data || [];
+        mostrarEventos();
+      } catch (e) {
+        console.error('Error:', e);
       }
-
-      if (!fecha) {
-        alert('⚠️ Ingresa la fecha');
-        return;
-      }
-
-      const nuevoEvento = {
-        id: Date.now(),
-        event_name: nombre,
-        event_date: fecha,
-        event_time: hora || '',
-        city: ciudad,
-        venue: lugar,
-        ticket_link: entradas,
-        description: desc
-      };
-
-      misEventos.push(nuevoEvento);
-      guardarDatos();
-      ocultarModal();
-      actualizarUI();
-      alert('✅ Evento agregado correctamente');
     }
 
-    // Eliminar evento
-    function eliminarUnEvento(id) {
-      if (!confirm('¿Estás seguro de que quieres eliminar este evento?')) {
-        return;
-      }
+    function mostrarEventos() {
+      const lista = document.getElementById('eventsList');
+      const vacio = document.getElementById('emptyState');
 
-      misEventos = misEventos.filter(e => e.id !== id);
-      guardarDatos();
-      actualizarUI();
-      alert('✅ Evento eliminado correctamente');
-    }
-
-    // Actualizar UI
-    function actualizarUI() {
-      const lista = document.getElementById('listaEventos');
-      const vacio = document.getElementById('estadoVacio');
-      const contador = document.getElementById('eventCount');
-
-      if (misEventos.length === 0) {
+      if (eventos.length === 0) {
         lista.innerHTML = '';
         vacio.classList.remove('hidden');
-        contador.textContent = '0';
+        document.getElementById('eventCount').textContent = '0';
         return;
       }
 
       vacio.classList.add('hidden');
-      contador.textContent = misEventos.length;
+      document.getElementById('eventCount').textContent = eventos.length;
 
-      lista.innerHTML = misEventos.map(evt => `
+      lista.innerHTML = eventos.map(evt => `
         <div class="bg-gradient-to-r from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-6">
           <div class="flex justify-between items-start mb-4">
             <div class="flex-1">
@@ -246,17 +147,87 @@
                 ${evt.description ? `<p>ℹ️ ${evt.description}</p>` : ''}
               </div>
             </div>
-            <button onclick="eliminarUnEvento(${evt.id})" class="px-2 py-1 bg-red-600 hover:bg-red-700 rounded text-xs font-bold ml-2">
-              🗑️
-            </button>
+            <button onclick="eliminarEvento('${evt.id}')" class="px-2 py-1 bg-red-600 hover:bg-red-700 rounded text-xs font-bold ml-2">🗑️</button>
           </div>
           ${evt.ticket_link ? `<a href="${evt.ticket_link}" target="_blank" class="inline-block px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg font-bold text-sm">🎫 Entradas</a>` : ''}
         </div>
       `).join('');
     }
 
-    // Inicializar al cargar la página
-    document.addEventListener('DOMContentLoaded', cargarDatos);
+    function abrirModal() {
+      document.getElementById('modal').classList.remove('hidden');
+      limpiarFormulario();
+    }
+
+    function cerrarModal() {
+      document.getElementById('modal').classList.add('hidden');
+    }
+
+    function limpiarFormulario() {
+      document.getElementById('eventName').value = '';
+      document.getElementById('eventDate').value = '';
+      document.getElementById('eventTime').value = '';
+      document.getElementById('eventCity').value = '';
+      document.getElementById('eventVenue').value = '';
+      document.getElementById('eventTicket').value = '';
+      document.getElementById('eventDesc').value = '';
+    }
+
+    async function guardarEvento() {
+      const nombre = document.getElementById('eventName').value.trim();
+      const fecha = document.getElementById('eventDate').value;
+
+      if (!nombre || !fecha) {
+        alert('⚠️ Rellena nombre y fecha');
+        return;
+      }
+
+      try {
+        await supabase.from('events').insert([{
+          user_id: user.id,
+          event_name: nombre,
+          event_date: fecha,
+          event_time: document.getElementById('eventTime').value || null,
+          city: document.getElementById('eventCity').value.trim(),
+          venue: document.getElementById('eventVenue').value.trim(),
+          ticket_link: document.getElementById('eventTicket').value.trim(),
+          description: document.getElementById('eventDesc').value.trim()
+        }]);
+
+        cerrarModal();
+        cargarEventos();
+        alert('✅ Evento agregado');
+      } catch (e) {
+        alert('❌ Error: ' + e.message);
+      }
+    }
+
+    async function eliminarEvento(id) {
+      if (!confirm('¿Eliminar evento?')) return;
+
+      try {
+        await supabase.from('events').delete().eq('id', id);
+        cargarEventos();
+      } catch (e) {
+        alert('❌ Error');
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem('voltum_user');
+      window.location.href = '/login.html';
+    }
+
+    // Proteger página
+    window.addEventListener('load', () => {
+      user = JSON.parse(localStorage.getItem('voltum_user'));
+      if (!user) {
+        window.location.href = '/login.html';
+        return;
+      }
+      document.getElementById('userName').textContent = user.artist_name || user.username;
+      cargarEventos();
+    });
   </script>
 </body>
 </html>
