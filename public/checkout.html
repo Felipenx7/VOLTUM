@@ -101,7 +101,6 @@
       submitBtn.textContent = 'Procesando...';
 
       const email = document.getElementById('email').value;
-
       const { token, error } = await stripe.createToken(cardElement);
 
       if (error) {
@@ -126,14 +125,9 @@
         }
 
         alert('✅ ¡PAGO EXITOSO!\n\nTu suscripción PRO está ACTIVADA.\nAcceso completo a tu dashboard.');
-        window.location.href = '/dashboard.html';
-      }
-    });
-
-    window.addEventListener('load', () => {
-      const user = JSON.parse(localStorage.getItem('voltum_user'));
-      if (user && user.subscription && user.subscription.active) {
-        window.location.href = '/dashboard.html';
+        setTimeout(() => {
+          window.location.href = '/dashboard.html';
+        }, 100);
       }
     });
   </script>
