@@ -17,25 +17,27 @@
 
         <div id="loginTab" class="space-y-4">
           <div class="flex gap-2 mb-6">
-            <button class="flex-1 py-2 bg-purple-600 rounded-lg font-bold" onclick="tab('login')">Ingresar</button>
-            <button class="flex-1 py-2 border border-purple-500 rounded-lg font-bold" onclick="tab('signup')">Crear</button>
+            <button id="btnLogin" class="flex-1 py-2 bg-purple-600 rounded-lg font-bold" onclick="showTab('login')">Ingresar</button>
+            <button id="btnSignup" class="flex-1 py-2 border border-purple-500 rounded-lg font-bold" onclick="showTab('signup')">Crear</button>
           </div>
           <input type="email" id="email" placeholder="Email" class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
           <input type="password" id="pass" placeholder="Contraseña" class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
-          <button onclick="login()" class="w-full py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold">Ingresar</button>
+          <div id="loginError" class="text-red-400 text-sm hidden"></div>
+          <button onclick="login()" class="w-full py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold hover:opacity-90">Ingresar</button>
         </div>
 
         <div id="signupTab" class="space-y-4 hidden">
           <div class="flex gap-2 mb-6">
-            <button class="flex-1 py-2 border border-purple-500 rounded-lg font-bold" onclick="tab('login')">Ingresar</button>
-            <button class="flex-1 py-2 bg-purple-600 rounded-lg font-bold" onclick="tab('signup')">Crear</button>
+            <button id="btnLogin2" class="flex-1 py-2 border border-purple-500 rounded-lg font-bold" onclick="showTab('login')">Ingresar</button>
+            <button id="btnSignup2" class="flex-1 py-2 bg-purple-600 rounded-lg font-bold" onclick="showTab('signup')">Crear</button>
           </div>
           <input type="email" id="signEmail" placeholder="Email" class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
-          <input type="text" id="signUser" placeholder="Usuario (ej: dj-phoenix)" class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
+          <input type="text" id="signUser" placeholder="Usuario (dj-nombre)" class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
           <input type="text" id="signArtist" placeholder="Nombre artístico" class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
-          <input type="password" id="signPass" placeholder="Contraseña" class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
-          <p class="text-xs text-gray-500">Suscripción: $10.000 CLP/mes</p>
-          <button onclick="signup()" class="w-full py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold">Crear Cuenta</button>
+          <input type="password" id="signPass" placeholder="Contraseña (mín 6)" class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
+          <p class="text-xs text-gray-500">Plan: $10.000 CLP/mes</p>
+          <div id="signupError" class="text-red-400 text-sm hidden"></div>
+          <button onclick="signup()" class="w-full py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold hover:opacity-90">Crear Cuenta</button>
         </div>
 
         <div class="mt-8 pt-8 border-t border-purple-500/20">
@@ -47,58 +49,109 @@
   </div>
 
   <script>
-    function tab(t) {
-      document.getElementById('loginTab').classList.toggle('hidden', t !== 'login');
-      document.getElementById('signupTab').classList.toggle('hidden', t !== 'signup');
+    function showTab(t) {
+      if (t === 'login') {
+        document.getElementById('loginTab').classList.remove('hidden');
+        document.getElementById('signupTab').classList.add('hidden');
+        document.getElementById('btnLogin').classList.add('bg-purple-600');
+        document.getElementById('btnLogin').classList.remove('border', 'border-purple-500');
+        document.getElementById('btnSignup').classList.remove('bg-purple-600');
+        document.getElementById('btnSignup').classList.add('border', 'border-purple-500');
+      } else {
+        document.getElementById('signupTab').classList.remove('hidden');
+        document.getElementById('loginTab').classList.add('hidden');
+        document.getElementById('btnSignup2').classList.add('bg-purple-600');
+        document.getElementById('btnSignup2').classList.remove('border', 'border-purple-500');
+        document.getElementById('btnLogin2').classList.remove('bg-purple-600');
+        document.getElementById('btnLogin2').classList.add('border', 'border-purple-500');
+      }
     }
 
     function login() {
-      const email = document.getElementById('email').value;
+      const email = document.getElementById('email').value.trim();
       const pass = document.getElementById('pass').value;
-      if (!email || !pass) { alert('Rellena todo'); return; }
+      const errorDiv = document.getElementById('loginError');
+
+      if (!email || !pass) {
+        errorDiv.textContent = '⚠️ Rellena todos los campos';
+        errorDiv.classList.remove('hidden');
+        return;
+      }
 
       const users = JSON.parse(localStorage.getItem('voltum_users') || '[]');
       const user = users.find(u => u.email === email && u.password === pass);
       
-      if (!user) { alert('Credenciales incorrectas'); return; }
+      if (!user) {
+        errorDiv.textContent = '❌ Email o contraseña incorrectos';
+        errorDiv.classList.remove('hidden');
+        return;
+      }
+
       localStorage.setItem('voltum_user', JSON.stringify(user));
-      window.location.href = '/dashboard.html';
+      setTimeout(() => {
+        window.location.href = '/dashboard.html';
+      }, 100);
     }
 
     function signup() {
-      const email = document.getElementById('signEmail').value;
-      const user = document.getElementById('signUser').value;
-      const artist = document.getElementById('signArtist').value;
+      const email = document.getElementById('signEmail').value.trim();
+      const user = document.getElementById('signUser').value.trim().toLowerCase();
+      const artist = document.getElementById('signArtist').value.trim();
       const pass = document.getElementById('signPass').value;
+      const errorDiv = document.getElementById('signupError');
 
-      if (!email || !user || !artist || !pass) { alert('Rellena todo'); return; }
-      if (pass.length < 6) { alert('Contraseña mínimo 6 caracteres'); return; }
+      if (!email || !user || !artist || !pass) {
+        errorDiv.textContent = '⚠️ Rellena todos los campos';
+        errorDiv.classList.remove('hidden');
+        return;
+      }
+
+      if (pass.length < 6) {
+        errorDiv.textContent = '⚠️ Contraseña mínimo 6 caracteres';
+        errorDiv.classList.remove('hidden');
+        return;
+      }
+
+      if (!/^[a-z0-9\-]+$/.test(user)) {
+        errorDiv.textContent = '⚠️ Usuario: solo letras, números y guiones';
+        errorDiv.classList.remove('hidden');
+        return;
+      }
 
       const users = JSON.parse(localStorage.getItem('voltum_users') || '[]');
-      if (users.find(u => u.email === email)) { alert('Email ya existe'); return; }
+      
+      if (users.find(u => u.email === email)) {
+        errorDiv.textContent = '⚠️ Email ya existe';
+        errorDiv.classList.remove('hidden');
+        return;
+      }
 
-      const newUser = { 
-        id: Date.now(), 
-        email, 
-        username: user, 
-        artist_name: artist, 
-        password: pass, 
-        role: 'dj', 
+      if (users.find(u => u.username === user)) {
+        errorDiv.textContent = '⚠️ Usuario ya existe';
+        errorDiv.classList.remove('hidden');
+        return;
+      }
+
+      const newUser = {
+        id: Date.now(),
+        email,
+        username: user,
+        artist_name: artist,
+        password: pass,
+        role: 'dj',
         created: new Date().toISOString(),
         subscription: null
       };
-      
+
       users.push(newUser);
       localStorage.setItem('voltum_users', JSON.stringify(users));
       localStorage.setItem('voltum_user', JSON.stringify(newUser));
       
-      console.log('Usuario creado:', newUser);
-      console.log('Redirigiendo a checkout...');
-      
-      window.location.href = '/checkout.html';
+      alert('✅ Cuenta creada correctamente\n\nAhora irás a pagar tu suscripción...');
+      setTimeout(() => {
+        window.location.href = '/checkout.html';
+      }, 100);
     }
-
-    if (localStorage.getItem('voltum_user')) window.location.href = '/dashboard.html';
   </script>
 </body>
 </html>
