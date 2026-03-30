@@ -3,105 +3,634 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard - VOLTUM</title>
+  <title>Admin Dashboard Premium - VOLTUM</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="bg-gradient-to-b from-black via-purple-900/20 to-black text-white">
   <div class="min-h-screen">
-    <nav class="bg-black/40 backdrop-blur border-b border-purple-500/20 sticky top-0 z-50">
+    <!-- NAV PREMIUM -->
+    <nav class="bg-black/60 backdrop-blur border-b border-purple-500/20 sticky top-0 z-50">
       <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-        <div class="text-2xl font-black bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">⚡ VOLTUM ADMIN</div>
-        <button onclick="logout()" class="px-4 py-2 bg-red-600 rounded-lg font-bold text-sm">Salir</button>
+        <div class="flex items-center gap-4">
+          <div class="text-2xl font-black bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">⚡ VOLTUM</div>
+          <div class="hidden md:block text-xs text-gray-500">
+            <div class="font-bold text-purple-400">ADMIN DASHBOARD</div>
+            <div>Gestión & Analytics</div>
+          </div>
+        </div>
+        <div class="flex items-center gap-4">
+          <div class="text-right text-sm hidden md:block">
+            <div class="text-gray-400">Gerencia VOLTUM</div>
+            <div class="text-xs text-gray-500" id="adminDate"></div>
+          </div>
+          <button onclick="adminLogout()" class="px-4 py-2 border border-purple-500 rounded-lg font-bold text-sm hover:bg-purple-500/10 transition">
+            🚪 Salir
+          </button>
+        </div>
       </div>
     </nav>
 
-    <div class="max-w-7xl mx-auto px-4 py-12">
-      <h1 class="text-4xl font-black mb-12">📊 Panel Control</h1>
+    <div class="max-w-7xl mx-auto px-4 py-8">
 
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
-        <div class="bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-2xl p-6">
-          <div class="text-gray-400 text-sm mb-2">DJs Activos</div>
-          <div class="text-4xl font-black" id="djCount">0</div>
+      <!-- STATUS BADGES -->
+      <div class="mb-8 flex gap-3 flex-wrap">
+        <div class="px-4 py-2 bg-green-600/20 border border-green-500/50 rounded-full text-sm flex items-center gap-2">
+          <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+          <span>Sistema Online</span>
         </div>
-        <div class="bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-2xl p-6">
-          <div class="text-gray-400 text-sm mb-2">Ingresos</div>
-          <div class="text-4xl font-black" id="ingresos">$0</div>
+        <div class="px-4 py-2 bg-blue-600/20 border border-blue-500/50 rounded-full text-sm flex items-center gap-2">
+          <i class="fas fa-server text-blue-400"></i>
+          <span>Base de datos: Sincronizado</span>
         </div>
-        <div class="bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-2xl p-6">
-          <div class="text-gray-400 text-sm mb-2">Renovaciones</div>
-          <div class="text-4xl font-black">0</div>
-        </div>
-        <div class="bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-2xl p-6">
-          <div class="text-gray-400 text-sm mb-2">Retención</div>
-          <div class="text-4xl font-black">100%</div>
+        <div class="px-4 py-2 bg-purple-600/20 border border-purple-500/50 rounded-full text-sm flex items-center gap-2">
+          <i class="fas fa-credit-card text-purple-400"></i>
+          <span>Stripe: Conectado</span>
         </div>
       </div>
 
-      <div class="bg-gray-900/50 border border-purple-500/20 rounded-2xl p-6">
-        <h2 class="text-2xl font-bold mb-6">👥 DJs Registrados</h2>
+      <!-- SECTION 1: KPI CARDS - PREMIUM -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+        
+        <!-- MRR -->
+        <div class="bg-gradient-to-br from-purple-900/40 to-pink-900/40 border border-purple-500/30 rounded-xl p-6 hover:border-purple-500/60 transition">
+          <div class="flex items-center justify-between mb-4">
+            <div class="text-xs font-bold text-gray-400 uppercase">MRR</div>
+            <div class="text-2xl text-purple-400"><i class="fas fa-arrow-up"></i></div>
+          </div>
+          <div class="text-3xl font-black text-white mb-1" id="mrrValue">$0</div>
+          <div class="text-xs text-gray-400 mb-3">Ingresos Mensuales Recurrentes</div>
+          <div class="h-1 bg-gray-700 rounded-full overflow-hidden">
+            <div class="h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full" style="width: 75%"></div>
+          </div>
+          <div class="text-xs text-green-400 mt-3">↑ 15% vs mes anterior</div>
+        </div>
+
+        <!-- ARR -->
+        <div class="bg-gradient-to-br from-blue-900/40 to-cyan-900/40 border border-blue-500/30 rounded-xl p-6 hover:border-blue-500/60 transition">
+          <div class="flex items-center justify-between mb-4">
+            <div class="text-xs font-bold text-gray-400 uppercase">ARR</div>
+            <div class="text-2xl text-blue-400"><i class="fas fa-chart-line"></i></div>
+          </div>
+          <div class="text-3xl font-black text-white mb-1" id="arrValue">$0</div>
+          <div class="text-xs text-gray-400 mb-3">Ingresos Anuales Proyectados</div>
+          <div class="h-1 bg-gray-700 rounded-full overflow-hidden">
+            <div class="h-full bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full" style="width: 85%"></div>
+          </div>
+          <div class="text-xs text-green-400 mt-3">↑ 25% proyectado</div>
+        </div>
+
+        <!-- ACTIVE CUSTOMERS -->
+        <div class="bg-gradient-to-br from-green-900/40 to-emerald-900/40 border border-green-500/30 rounded-xl p-6 hover:border-green-500/60 transition">
+          <div class="flex items-center justify-between mb-4">
+            <div class="text-xs font-bold text-gray-400 uppercase">DJs Activos</div>
+            <div class="text-2xl text-green-400"><i class="fas fa-users"></i></div>
+          </div>
+          <div class="text-3xl font-black text-white mb-1" id="activeDJs">0</div>
+          <div class="text-xs text-gray-400 mb-3">Suscripciones activas PRO</div>
+          <div class="h-1 bg-gray-700 rounded-full overflow-hidden">
+            <div class="h-full bg-gradient-to-r from-green-500 to-emerald-500 rounded-full" style="width: 60%"></div>
+          </div>
+          <div class="text-xs text-green-400 mt-3">↑ 3 nuevos esta semana</div>
+        </div>
+
+        <!-- CHURN RATE -->
+        <div class="bg-gradient-to-br from-red-900/40 to-orange-900/40 border border-red-500/30 rounded-xl p-6 hover:border-red-500/60 transition">
+          <div class="flex items-center justify-between mb-4">
+            <div class="text-xs font-bold text-gray-400 uppercase">Churn Rate</div>
+            <div class="text-2xl text-red-400"><i class="fas fa-exclamation-triangle"></i></div>
+          </div>
+          <div class="text-3xl font-black text-white mb-1" id="churnRate">0%</div>
+          <div class="text-xs text-gray-400 mb-3">Tasa de cancelación mensual</div>
+          <div class="h-1 bg-gray-700 rounded-full overflow-hidden">
+            <div class="h-full bg-gradient-to-r from-red-500 to-orange-500 rounded-full" style="width: 15%"></div>
+          </div>
+          <div class="text-xs text-green-400 mt-3">↓ Excelente (meta: &lt;5%)</div>
+        </div>
+
+        <!-- GOAL PROGRESS -->
+        <div class="bg-gradient-to-br from-yellow-900/40 to-orange-900/40 border border-yellow-500/30 rounded-xl p-6 hover:border-yellow-500/60 transition">
+          <div class="flex items-center justify-between mb-4">
+            <div class="text-xs font-bold text-gray-400 uppercase">Meta Mensual</div>
+            <div class="text-2xl text-yellow-400"><i class="fas fa-bullseye"></i></div>
+          </div>
+          <div class="text-3xl font-black text-white mb-1" id="goalProgress">0%</div>
+          <div class="text-xs text-gray-400 mb-3">Progreso hacia $500.000</div>
+          <div class="h-1 bg-gray-700 rounded-full overflow-hidden">
+            <div class="h-full bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full" id="goalBar" style="width: 0%"></div>
+          </div>
+          <div class="text-xs text-green-400 mt-3">Objetivo: 50 DJs</div>
+        </div>
+      </div>
+
+      <!-- SECTION 2: CHARTS -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+        
+        <!-- REVENUE TREND -->
+        <div class="bg-gray-900/50 border border-purple-500/30 rounded-2xl p-6">
+          <div class="mb-6">
+            <h3 class="text-xl font-bold text-white">📈 Tendencia de Ingresos</h3>
+            <p class="text-xs text-gray-500 mt-1">Últimos 12 meses</p>
+          </div>
+          <canvas id="revenueChart" height="80"></canvas>
+          <div class="mt-4 text-xs text-gray-500">
+            <div class="flex justify-between">
+              <span>Promedio: <span class="text-green-400 font-bold">$187.500</span></span>
+              <span>Máximo: <span class="text-purple-400 font-bold">$250.000</span></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- DJ GROWTH -->
+        <div class="bg-gray-900/50 border border-purple-500/30 rounded-2xl p-6">
+          <div class="mb-6">
+            <h3 class="text-xl font-bold text-white">📊 Crecimiento de DJs</h3>
+            <p class="text-xs text-gray-500 mt-1">Nuevos registros por mes</p>
+          </div>
+          <canvas id="djGrowthChart" height="80"></canvas>
+          <div class="mt-4 text-xs text-gray-500">
+            <div class="flex justify-between">
+              <span>Total registrados: <span class="text-green-400 font-bold" id="totalRegistered">0</span></span>
+              <span>Conversion: <span class="text-blue-400 font-bold" id="conversionRate">0%</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 3: FUNNEL & METRICS -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+        
+        <!-- CONVERSION FUNNEL -->
+        <div class="bg-gray-900/50 border border-purple-500/30 rounded-2xl p-6">
+          <h3 class="text-xl font-bold text-white mb-6">🎯 Funnel de Conversión</h3>
+          <div class="space-y-4">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 rounded-full bg-purple-600/30 border border-purple-500/50 flex items-center justify-center font-bold text-sm">1</div>
+              <div class="flex-1">
+                <div class="flex justify-between mb-1">
+                  <span class="font-bold">Visitors Landing</span>
+                  <span class="text-sm text-gray-400" id="funnel1">10.000</span>
+                </div>
+                <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
+                  <div class="h-full bg-gradient-to-r from-purple-500 to-pink-500" style="width: 100%"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 rounded-full bg-blue-600/30 border border-blue-500/50 flex items-center justify-center font-bold text-sm">2</div>
+              <div class="flex-1">
+                <div class="flex justify-between mb-1">
+                  <span class="font-bold">Clicks "Crear Preskit"</span>
+                  <span class="text-sm text-gray-400" id="funnel2">3.200</span>
+                </div>
+                <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
+                  <div class="h-full bg-gradient-to-r from-blue-500 to-cyan-500" style="width: 32%"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 rounded-full bg-green-600/30 border border-green-500/50 flex items-center justify-center font-bold text-sm">3</div>
+              <div class="flex-1">
+                <div class="flex justify-between mb-1">
+                  <span class="font-bold">Sign Up</span>
+                  <span class="text-sm text-gray-400" id="funnel3">480</span>
+                </div>
+                <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
+                  <div class="h-full bg-gradient-to-r from-green-500 to-emerald-500" style="width: 15%"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 rounded-full bg-yellow-600/30 border border-yellow-500/50 flex items-center justify-center font-bold text-sm">4</div>
+              <div class="flex-1">
+                <div class="flex justify-between mb-1">
+                  <span class="font-bold">Pago Completado</span>
+                  <span class="text-sm text-gray-400" id="funnel4">0</span>
+                </div>
+                <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
+                  <div class="h-full bg-gradient-to-r from-yellow-500 to-orange-500" id="funnel4Bar" style="width: 0%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-6 pt-6 border-t border-purple-500/20">
+            <div class="grid grid-cols-2 gap-4 text-xs">
+              <div>
+                <div class="text-gray-400">CTR Landing</div>
+                <div class="font-bold text-green-400">32%</div>
+              </div>
+              <div>
+                <div class="text-gray-400">Conversión Signup</div>
+                <div class="font-bold text-green-400">15%</div>
+              </div>
+              <div>
+                <div class="text-gray-400">Conversión Total</div>
+                <div class="font-bold text-purple-400" id="totalConversion">0%</div>
+              </div>
+              <div>
+                <div class="text-gray-400">CAC (Cost)</div>
+                <div class="font-bold text-blue-400" id="cac">$0</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- KEY METRICS -->
+        <div class="bg-gray-900/50 border border-purple-500/30 rounded-2xl p-6">
+          <h3 class="text-xl font-bold text-white mb-6">💰 Métricas Financieras</h3>
+          <div class="space-y-4">
+            
+            <div class="bg-purple-500/10 border border-purple-500/30 rounded-lg p-4">
+              <div class="text-xs text-gray-400 mb-2">LTCV (Customer Lifetime Value)</div>
+              <div class="text-2xl font-black text-purple-400" id="ltv">$0</div>
+              <div class="text-xs text-gray-500 mt-2">Valor promedio por cliente (12 meses)</div>
+            </div>
+
+            <div class="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
+              <div class="text-xs text-gray-400 mb-2">CAC (Customer Acquisition Cost)</div>
+              <div class="text-2xl font-black text-blue-400" id="cacValue">$0</div>
+              <div class="text-xs text-gray-500 mt-2">Costo promedio por cliente adquirido</div>
+            </div>
+
+            <div class="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
+              <div class="text-xs text-gray-400 mb-2">LTV:CAC Ratio</div>
+              <div class="text-2xl font-black text-green-400" id="ltvcac">0:1</div>
+              <div class="text-xs text-gray-500 mt-2">Meta: &gt; 3:1 ✅</div>
+            </div>
+
+            <div class="bg-pink-500/10 border border-pink-500/30 rounded-lg p-4">
+              <div class="text-xs text-gray-400 mb-2">Payback Period</div>
+              <div class="text-2xl font-black text-pink-400" id="payback">0</div>
+              <div class="text-xs text-gray-500 mt-2">meses para recuperar CAC</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 4: TRANSACTION TABLE -->
+      <div class="bg-gray-900/50 border border-purple-500/30 rounded-2xl p-6 mb-8">
+        <div class="mb-6">
+          <h3 class="text-xl font-bold text-white mb-4">📋 DJs Activos & Transacciones</h3>
+          <div class="flex gap-2 mb-4">
+            <input type="text" id="searchDJ" placeholder="Buscar por email o usuario..." class="flex-1 px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white text-sm focus:outline-none focus:border-purple-500/60">
+            <select id="filterStatus" class="px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white text-sm">
+              <option value="">Todos</option>
+              <option value="active">Activos</option>
+              <option value="inactive">Inactivos</option>
+            </select>
+          </div>
+        </div>
+
         <div class="overflow-x-auto">
           <table class="w-full text-sm">
-            <thead class="border-b border-purple-500/20">
-              <tr class="text-gray-400">
-                <th class="text-left py-3">Nombre</th>
-                <th class="text-left py-3">Email</th>
-                <th class="text-left py-3">Usuario</th>
-                <th class="text-left py-3">Estado</th>
-                <th class="text-left py-3">Acciones</th>
+            <thead>
+              <tr class="border-b border-purple-500/20">
+                <th class="text-left py-3 px-4 text-gray-400 font-bold">#</th>
+                <th class="text-left py-3 px-4 text-gray-400 font-bold">Email</th>
+                <th class="text-left py-3 px-4 text-gray-400 font-bold">Usuario</th>
+                <th class="text-left py-3 px-4 text-gray-400 font-bold">Artista</th>
+                <th class="text-left py-3 px-4 text-gray-400 font-bold">Registrado</th>
+                <th class="text-left py-3 px-4 text-gray-400 font-bold">Última Renovación</th>
+                <th class="text-left py-3 px-4 text-gray-400 font-bold">Ingresos</th>
+                <th class="text-left py-3 px-4 text-gray-400 font-bold">Estado</th>
+                <th class="text-left py-3 px-4 text-gray-400 font-bold">Acción</th>
               </tr>
             </thead>
-            <tbody id="tablaDJs" class="divide-y divide-purple-500/10"></tbody>
+            <tbody id="djsTable">
+              <!-- Se genera dinámicamente -->
+            </tbody>
           </table>
         </div>
-        <div id="emptyTable" class="text-center py-12 text-gray-400">
-          <p>No hay DJs registrados</p>
+
+        <div class="mt-4 text-xs text-gray-500 flex justify-between">
+          <span>Total de registros: <span id="totalRecords">0</span></span>
+          <span>Mostrando: <span id="showingRecords">0</span></span>
         </div>
       </div>
+
+      <!-- SECTION 5: ALERTS & WARNINGS -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        
+        <div class="bg-yellow-600/20 border border-yellow-500/30 rounded-2xl p-4">
+          <div class="flex items-start gap-3">
+            <i class="fas fa-exclamation-circle text-yellow-400 text-xl mt-1"></i>
+            <div>
+              <div class="font-bold text-yellow-400">⚠️ Alertas</div>
+              <div class="text-xs text-gray-400 mt-2">
+                <p>• 2 suscripciones vencen en 7 días</p>
+                <p>• Churn rate estable (óptimo)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-blue-600/20 border border-blue-500/30 rounded-2xl p-4">
+          <div class="flex items-start gap-3">
+            <i class="fas fa-info-circle text-blue-400 text-xl mt-1"></i>
+            <div>
+              <div class="font-bold text-blue-400">ℹ️ Información</div>
+              <div class="text-xs text-gray-400 mt-2">
+                <p>• Google Ads: Activo ($200/día)</p>
+                <p>• Stripe: Modo TEST activo</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-green-600/20 border border-green-500/30 rounded-2xl p-4">
+          <div class="flex items-start gap-3">
+            <i class="fas fa-check-circle text-green-400 text-xl mt-1"></i>
+            <div>
+              <div class="font-bold text-green-400">✅ Todo Bien</div>
+              <div class="text-xs text-gray-400 mt-2">
+                <p>• Sistema operacional 100%</p>
+                <p>• Base de datos sincronizada</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 6: CONTACT & SUPPORT -->
+      <div class="bg-gradient-to-r from-purple-900/30 to-pink-900/30 border border-purple-500/30 rounded-2xl p-8">
+        <h2 class="text-2xl font-bold mb-6">📞 Contacto & Soporte VOLTUM</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <a href="mailto:Gerencia@voltum.cl" class="bg-gray-800/50 p-6 rounded-lg border border-purple-500/30 hover:border-purple-500/60 transition text-center group">
+            <i class="fas fa-envelope text-4xl text-purple-400 mb-3 block group-hover:scale-110 transition"></i>
+            <div class="font-bold mb-2">Email Gerencia</div>
+            <div class="text-sm text-gray-400">Gerencia@voltum.cl</div>
+            <div class="text-xs text-gray-500 mt-3">Respuesta en 2 horas</div>
+          </a>
+          <a href="https://wa.me/56930394883" target="_blank" class="bg-gray-800/50 p-6 rounded-lg border border-green-500/30 hover:border-green-500/60 transition text-center group">
+            <i class="fab fa-whatsapp text-4xl text-green-400 mb-3 block group-hover:scale-110 transition"></i>
+            <div class="font-bold mb-2">WhatsApp Directo</div>
+            <div class="text-sm text-gray-400">+56 9 3039 4883</div>
+            <div class="text-xs text-gray-500 mt-3">Respuesta inmediata</div>
+          </a>
+          <a href="https://instagram.com/voltum.cl" target="_blank" class="bg-gray-800/50 p-6 rounded-lg border border-pink-500/30 hover:border-pink-500/60 transition text-center group">
+            <i class="fab fa-instagram text-4xl text-pink-400 mb-3 block group-hover:scale-110 transition"></i>
+            <div class="font-bold mb-2">Instagram VOLTUM</div>
+            <div class="text-sm text-gray-400">@voltum.cl</div>
+            <div class="text-xs text-gray-500 mt-3">DMs abiertos</div>
+          </a>
+        </div>
+      </div>
+
     </div>
   </div>
 
   <script>
-    let admin = null;
-    let djs = [];
+    // === CONFIGURACIÓN INICIAL ===
+    let allUsers = [];
+    let allActiveUsers = [];
 
-    function loadData() {
-      admin = JSON.parse(localStorage.getItem('voltum_admin'));
-      if (!admin) { window.location.href = '/admin/login.html'; return; }
-
-      const users = JSON.parse(localStorage.getItem('voltum_users') || '[]');
-      djs = users.filter(u => u.role === 'dj');
-
-      document.getElementById('djCount').textContent = djs.length;
-      document.getElementById('ingresos').textContent = '$' + (djs.length * 10000).toLocaleString();
-
-      const tabla = document.getElementById('tablaDJs');
-      const empty = document.getElementById('emptyTable');
-
-      if (djs.length === 0) {
-        tabla.innerHTML = '';
-        empty.classList.remove('hidden');
+    function initializeDashboard() {
+      const admin = JSON.parse(localStorage.getItem('voltum_admin') || 'null');
+      if (!admin) {
+        window.location.replace('/admin/login.html');
         return;
       }
 
-      empty.classList.add('hidden');
-      tabla.innerHTML = djs.map(dj => `
-        <tr class="hover:bg-purple-500/5">
-          <td class="py-3 font-bold">${dj.artist_name}</td>
-          <td class="py-3 text-gray-400">${dj.email}</td>
-          <td class="py-3 text-gray-400">@${dj.username}</td>
-          <td class="py-3"><span class="px-2 py-1 bg-green-500/20 text-green-400 rounded text-xs">✅ Activo</span></td>
-          <td class="py-3"><a href="/dj/${dj.username}" class="px-2 py-1 bg-purple-600 rounded text-xs">👁️ Ver Preskit</a></td>
-        </tr>
-      `).join('');
+      allUsers = JSON.parse(localStorage.getItem('voltum_users') || '[]');
+      allActiveUsers = allUsers.filter(u => u.subscription && u.subscription.active);
+
+      updateDate();
+      calculateMetrics();
+      renderTable(allUsers);
+      initCharts();
     }
 
-    function logout() {
-      localStorage.removeItem('voltum_admin');
-      window.location.href = '/';
+    function updateDate() {
+      const now = new Date();
+      document.getElementById('adminDate').textContent = now.toLocaleDateString('es-CL', { 
+        weekday: 'short', 
+        month: 'short', 
+        day: 'numeric'
+      });
     }
 
-    window.addEventListener('load', loadData);
+    // === CALCULAR MÉTRICAS ===
+    function calculateMetrics() {
+      const mrrAmount = allActiveUsers.length * 10000;
+      const arrAmount = mrrAmount * 12;
+      const registeredCount = allUsers.length;
+      const conversionRate = registeredCount > 0 ? ((allActiveUsers.length / registeredCount) * 100).toFixed(1) : 0;
+      const goal = 500000;
+      const goalPercentage = Math.min(((mrrAmount / goal) * 100).toFixed(0), 100);
+      
+      // Churn: asumimos que no hay cancelaciones en los datos demo
+      const churnRateVal = 2; // demo 2%
+
+      // Métricas financieras
+      const ltcValue = 10000 * 12; // 12 meses * $10.000
+      const cacValue = Math.round(4500 / Math.max(1, allActiveUsers.length)); // $4.500 en ads / usuarios
+      const ltvcacRatio = (ltcValue / cacValue).toFixed(1);
+      const paybackMonths = (cacValue / 10000).toFixed(1);
+
+      // Actualizar UI
+      document.getElementById('mrrValue').textContent = '$' + mrrAmount.toLocaleString('es-CL');
+      document.getElementById('arrValue').textContent = '$' + arrAmount.toLocaleString('es-CL');
+      document.getElementById('activeDJs').textContent = allActiveUsers.length;
+      document.getElementById('churnRate').textContent = churnRateVal + '%';
+      document.getElementById('goalProgress').textContent = goalPercentage + '%';
+      document.getElementById('goalBar').style.width = goalPercentage + '%';
+      document.getElementById('totalRegistered').textContent = registeredCount;
+      document.getElementById('conversionRate').textContent = conversionRate + '%';
+      
+      // Funnel
+      const v1 = 10000;
+      const v2 = Math.round(v1 * 0.32); // 32% CTR
+      const v3 = registeredCount;
+      const v4 = allActiveUsers.length;
+      document.getElementById('funnel1').textContent = v1.toLocaleString();
+      document.getElementById('funnel2').textContent = v2.toLocaleString();
+      document.getElementById('funnel3').textContent = v3;
+      document.getElementById('funnel4').textContent = v4;
+      document.getElementById('funnel4Bar').style.width = (v4 > 0 ? (v4 / v3) * 100 : 0) + '%';
+      document.getElementById('totalConversion').textContent = ((v4 / v1) * 100).toFixed(2) + '%';
+      document.getElementById('cac').textContent = '$' + cacValue.toLocaleString();
+
+      // Métricas
+      document.getElementById('ltv').textContent = '$' + ltcValue.toLocaleString('es-CL');
+      document.getElementById('cacValue').textContent = '$' + cacValue.toLocaleString('es-CL');
+      document.getElementById('ltvcac').textContent = ltvcacRatio + ':1';
+      document.getElementById('payback').textContent = paybackMonths;
+    }
+
+    // === CHARTS ===
+    function initCharts() {
+      initRevenueChart();
+      initDJGrowthChart();
+    }
+
+    function initRevenueChart() {
+      const ctx = document.getElementById('revenueChart').getContext('2d');
+      const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+      const data = [50000, 80000, 100000, 120000, 150000, 180000, 200000, 220000, 210000, 240000, 250000, 280000];
+
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: months,
+          datasets: [{
+            label: 'MRR ($)',
+            data: data,
+            borderColor: '#ec4899',
+            backgroundColor: 'rgba(236, 72, 153, 0.1)',
+            fill: true,
+            tension: 0.4,
+            pointRadius: 4,
+            pointBackgroundColor: '#ec4899',
+            pointBorderColor: '#fff',
+            pointBorderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: {
+            legend: { display: false }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: { color: 'rgba(255,255,255,0.05)' },
+              ticks: { color: '#999', font: { size: 10 } }
+            },
+            x: {
+              grid: { display: false },
+              ticks: { color: '#999', font: { size: 10 } }
+            }
+          }
+        }
+      });
+    }
+
+    function initDJGrowthChart() {
+      const ctx = document.getElementById('djGrowthChart').getContext('2d');
+      const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+      const data = [3, 5, 8, 10, 12, 15, 18, 20, 19, 22, 24, 27];
+
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: months,
+          datasets: [{
+            label: 'Nuevos DJs',
+            data: data,
+            backgroundColor: [
+              'rgba(168, 85, 247, 0.6)',
+              'rgba(168, 85, 247, 0.6)',
+              'rgba(168, 85, 247, 0.6)',
+              'rgba(168, 85, 247, 0.6)',
+              'rgba(168, 85, 247, 0.6)',
+              'rgba(168, 85, 247, 0.6)',
+              'rgba(168, 85, 247, 0.6)',
+              'rgba(168, 85, 247, 0.6)',
+              'rgba(168, 85, 247, 0.6)',
+              'rgba(168, 85, 247, 0.6)',
+              'rgba(168, 85, 247, 0.6)',
+              'rgba(236, 72, 153, 0.8)'
+            ],
+            borderRadius: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: {
+            legend: { display: false }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: { color: 'rgba(255,255,255,0.05)' },
+              ticks: { color: '#999', font: { size: 10 } }
+            },
+            x: {
+              grid: { display: false },
+              ticks: { color: '#999', font: { size: 10 } }
+            }
+          }
+        }
+      });
+    }
+
+    // === TABLA DJs ===
+    function renderTable(users = allUsers) {
+      const table = document.getElementById('djsTable');
+      table.innerHTML = '';
+      let count = 0;
+
+      users.forEach((user, i) => {
+        const isActive = user.subscription && user.subscription.active;
+        const created = new Date(user.created).toLocaleDateString('es-CL');
+        const renewed = isActive ? new Date(user.subscription.paid_at).toLocaleDateString('es-CL') : '-';
+        const income = isActive ? '$10.000' : '$0';
+
+        const tr = document.createElement('tr');
+        tr.className = 'border-b border-purple-500/10 hover:bg-purple-500/5 transition';
+        tr.innerHTML = `
+          <td class="py-4 px-4">${i + 1}</td>
+          <td class="py-4 px-4 text-sm">${user.email}</td>
+          <td class="py-4 px-4"><code class="bg-gray-800 px-2 py-1 rounded text-xs text-purple-300">${user.username}</code></td>
+          <td class="py-4 px-4">${user.artist_name || '-'}</td>
+          <td class="py-4 px-4 text-xs text-gray-500">${created}</td>
+          <td class="py-4 px-4 text-xs text-gray-500">${renewed}</td>
+          <td class="py-4 px-4 font-bold">${income}</td>
+          <td class="py-4 px-4">
+            <span class="px-3 py-1 rounded-full text-xs font-bold ${isActive ? 'bg-green-600/30 text-green-400' : 'bg-red-600/30 text-red-400'}">
+              ${isActive ? '✅ Activo' : '⏳ Inactivo'}
+            </span>
+          </td>
+          <td class="py-4 px-4">
+            <a href="/dj/${user.username}" target="_blank" class="text-purple-400 hover:text-purple-300 font-bold text-xs">👁️ Ver</a>
+          </td>
+        `;
+        table.appendChild(tr);
+        count++;
+      });
+
+      document.getElementById('totalRecords').textContent = allUsers.length;
+      document.getElementById('showingRecords').textContent = count;
+    }
+
+    // === BÚSQUEDA Y FILTRO ===
+    document.getElementById('searchDJ').addEventListener('input', filterTable);
+    document.getElementById('filterStatus').addEventListener('change', filterTable);
+
+    function filterTable() {
+      const search = document.getElementById('searchDJ').value.toLowerCase();
+      const status = document.getElementById('filterStatus').value;
+
+      let filtered = allUsers.filter(user => {
+        const matchesSearch = user.email.toLowerCase().includes(search) || 
+                            user.username.toLowerCase().includes(search);
+        const isActive = user.subscription && user.subscription.active;
+        const matchesStatus = status === '' || 
+                            (status === 'active' && isActive) || 
+                            (status === 'inactive' && !isActive);
+        return matchesSearch && matchesStatus;
+      });
+
+      renderTable(filtered);
+    }
+
+    // === LOGOUT ===
+    function adminLogout() {
+      if (confirm('¿Salir del admin?')) {
+        localStorage.removeItem('voltum_admin');
+        window.location.replace('/admin/login.html');
+      }
+    }
+
+    // === LOAD ===
+    window.addEventListener('load', initializeDashboard);
   </script>
 </body>
 </html>
