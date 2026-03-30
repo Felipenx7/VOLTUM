@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pago - VOLTUM</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body class="bg-gradient-to-b from-black via-purple-900/20 to-black text-white">
   <div class="min-h-screen flex items-center justify-center p-4">
@@ -15,158 +16,122 @@
           <p class="text-gray-400">Plan PRO - Suscripción Mensual</p>
         </div>
 
-        <!-- Resumen -->
         <div class="bg-purple-500/10 border border-purple-500/30 rounded-2xl p-6 mb-8">
           <div class="flex justify-between mb-4">
             <span class="text-gray-400">Plan PRO Mensual</span>
-            <span class="font-bold">$10.000 CLP</span>
+            <span class="font-bold">$10.000</span>
           </div>
           <div class="flex justify-between mb-4">
             <span class="text-gray-400">Renovación</span>
             <span class="font-bold">Automática</span>
           </div>
           <div class="border-t border-purple-500/20 pt-4 flex justify-between">
-            <span class="text-lg font-bold">Total a pagar</span>
+            <span class="text-lg font-bold">Total</span>
             <span class="text-2xl font-black text-pink-400">$10.000 CLP</span>
           </div>
         </div>
 
-        <!-- Formulario -->
-        <form onsubmit="procesarPago(event)" class="space-y-4">
-          <!-- Email -->
+        <form id="paymentForm" class="space-y-4">
           <div>
-            <label class="block text-sm text-gray-400 mb-2">Email de facturación</label>
+            <label class="block text-sm text-gray-400 mb-2">Email</label>
             <input type="email" id="email" placeholder="tu@email.com" required class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
           </div>
 
-          <!-- Nombre titular -->
           <div>
-            <label class="block text-sm text-gray-400 mb-2">Nombre en la tarjeta</label>
-            <input type="text" id="cardName" placeholder="Tu nombre completo" required class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
+            <label class="block text-sm text-gray-400 mb-2">Tarjeta de Crédito</label>
+            <div id="card-element" class="px-4 py-3 bg-gray-800 border border-purple-500/30 rounded-lg"></div>
           </div>
 
-          <!-- Tarjeta -->
-          <div>
-            <label class="block text-sm text-gray-400 mb-2">Número de tarjeta</label>
-            <input type="text" id="cardNumber" placeholder="4242 4242 4242 4242" maxlength="19" required class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white" oninput="formatCard(this)">
-          </div>
+          <div id="card-errors" class="text-red-400 text-sm"></div>
 
-          <!-- Fecha y CVC -->
-          <div class="grid grid-cols-2 gap-4">
-            <div>
-              <label class="block text-sm text-gray-400 mb-2">Vencimiento</label>
-              <input type="text" id="expiry" placeholder="MM/YY" maxlength="5" required class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white" oninput="formatExpiry(this)">
-            </div>
-            <div>
-              <label class="block text-sm text-gray-400 mb-2">CVC</label>
-              <input type="text" id="cvc" placeholder="123" maxlength="4" required class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
-            </div>
-          </div>
-
-          <!-- Errores -->
-          <div id="error" class="text-red-400 text-sm hidden"></div>
-
-          <!-- Botón -->
-          <button type="submit" id="btnPagar" class="w-full py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold hover:opacity-90 disabled:opacity-50 transition">
+          <button type="submit" id="submitBtn" class="w-full py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold hover:opacity-90 disabled:opacity-50 transition">
             💳 Pagar $10.000 CLP
           </button>
 
-          <!-- Info -->
           <p class="text-xs text-gray-500 text-center">
-            Tarjeta de prueba: 4242 4242 4242 4242 | 12/30 | 123
+            Modo prueba: 4242 4242 4242 4242 | 12/30 | 123
           </p>
         </form>
 
-        <!-- Volver -->
         <div class="text-center mt-6">
-          <a href="/login.html" class="text-gray-500 hover:text-gray-300">← Volver atrás</a>
+          <a href="/login.html" class="text-gray-500 hover:text-gray-300">← Volver</a>
         </div>
       </div>
     </div>
   </div>
 
   <script>
-    function formatCard(el) {
-      let value = el.value.replace(/\s/g, '').replace(/[^0-9]/g, '');
-      let formatted = value.replace(/(\d{4})/g, '$1 ').trim();
-      el.value = formatted;
-    }
-
-    function formatExpiry(el) {
-      let value = el.value.replace(/\D/g, '');
-      if (value.length >= 2) {
-        value = value.slice(0, 2) + '/' + value.slice(2, 4);
+    const stripe = Stripe('pk_test_51TGe6iPRTSKOzouuFUqmaO9vvr55JE2nm5IrhbW1BGSWWFXg1sqlHPgEAf8oOmN8gT8hv6L9Iz7nPyHBQcLO3oni00o26Plnul');
+    const elements = stripe.elements();
+    const cardElement = elements.create('card', {
+      style: {
+        base: {
+          color: '#fff',
+          fontFamily: 'sans-serif',
+          fontSmoothing: 'antialiased',
+          fontSize: '16px',
+          '::placeholder': {
+            color: '#888'
+          }
+        },
+        invalid: {
+          color: '#ef5350',
+          iconColor: '#ef5350'
+        }
       }
-      el.value = value;
-    }
+    });
 
-    function procesarPago(event) {
+    cardElement.mount('#card-element');
+
+    const cardErrors = document.getElementById('card-errors');
+    const form = document.getElementById('paymentForm');
+    const submitBtn = document.getElementById('submitBtn');
+
+    cardElement.addEventListener('change', (event) => {
+      if (event.error) {
+        cardErrors.textContent = event.error.message;
+      } else {
+        cardErrors.textContent = '';
+      }
+    });
+
+    form.addEventListener('submit', async (event) => {
       event.preventDefault();
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Procesando...';
 
-      const email = document.getElementById('email').value.trim();
-      const cardName = document.getElementById('cardName').value.trim();
-      const cardNumber = document.getElementById('cardNumber').value.replace(/\s/g, '');
-      const expiry = document.getElementById('expiry').value;
-      const cvc = document.getElementById('cvc').value;
-      const error = document.getElementById('error');
-      const btnPagar = document.getElementById('btnPagar');
+      const email = document.getElementById('email').value;
 
-      // Validaciones
-      if (!email || !cardName || !cardNumber || !expiry || !cvc) {
-        error.textContent = '⚠️ Rellena todos los campos';
-        error.classList.remove('hidden');
+      const { token, error } = await stripe.createToken(cardElement);
+
+      if (error) {
+        cardErrors.textContent = error.message;
+        submitBtn.disabled = false;
+        submitBtn.textContent = '💳 Pagar $10.000 CLP';
         return;
       }
 
-      if (cardNumber.length !== 16) {
-        error.textContent = '⚠️ Número de tarjeta inválido';
-        error.classList.remove('hidden');
-        return;
-      }
-
-      if (!expiry.includes('/') || expiry.split('/')[0].length !== 2) {
-        error.textContent = '⚠️ Formato de vencimiento inválido (MM/YY)';
-        error.classList.remove('hidden');
-        return;
-      }
-
-      if (cvc.length !== 3 && cvc.length !== 4) {
-        error.textContent = '⚠️ CVC inválido';
-        error.classList.remove('hidden');
-        return;
-      }
-
-      // Procesar
-      btnPagar.disabled = true;
-      btnPagar.textContent = 'Procesando pago...';
-      error.classList.add('hidden');
-
-      // Simular procesamiento (en producción iría a backend)
-      setTimeout(() => {
+      if (token) {
         const user = JSON.parse(localStorage.getItem('voltum_user'));
-        
         if (user) {
           user.subscription = {
             active: true,
+            stripe_token: token.id,
             paid_at: new Date().toISOString(),
             status: 'active',
             amount: 10000,
-            currency: 'CLP',
-            last_4_digits: cardNumber.slice(-4),
-            next_billing: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
+            currency: 'CLP'
           };
           localStorage.setItem('voltum_user', JSON.stringify(user));
         }
 
-        alert('✅ ¡PAGO EXITOSO!\n\nTu suscripción PRO está ACTIVADA.\n\nYa tienes acceso a:\n• Dashboard completo\n• Gestor de eventos\n• Analytics\n• URL pública de preskit');
-        
+        alert('✅ ¡PAGO EXITOSO!\n\nTu suscripción PRO está ACTIVADA.\nAcceso completo a tu dashboard.');
         window.location.href = '/dashboard.html';
-      }, 1500);
-    }
+      }
+    });
 
-    // Protección: si ya está pagado, ir al dashboard
     window.addEventListener('load', () => {
-      const user = JSON.parse(localStorage.getItem('voltum_user') || 'null');
+      const user = JSON.parse(localStorage.getItem('voltum_user'));
       if (user && user.subscription && user.subscription.active) {
         window.location.href = '/dashboard.html';
       }
