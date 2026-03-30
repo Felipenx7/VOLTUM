@@ -119,6 +119,10 @@
     <div class="bg-gray-900 border border-purple-500/30 rounded-2xl p-8 max-w-2xl w-full max-h-[95vh] overflow-y-auto">
       <h2 class="text-2xl font-bold mb-6">✏️ Editar Mi Perfil</h2>
 
+      <div id="savingMessage" class="hidden mb-4 p-3 bg-blue-600/30 border border-blue-500/30 rounded-lg text-blue-300 text-sm">
+        ⏳ Guardando...
+      </div>
+
       <!-- Foto de Perfil -->
       <div class="mb-8">
         <label class="block text-sm text-gray-400 mb-4">Foto de Perfil</label>
@@ -128,7 +132,7 @@
           </div>
           <div class="flex-1">
             <input type="file" id="profilePhotoInput" accept="image/*" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white text-sm mb-2" onchange="handleProfilePhotoChange()">
-            <p class="text-xs text-gray-500">JPG, PNG. Máx 5MB. Se mostrará circular.</p>
+            <p class="text-xs text-gray-500">JPG, PNG. Máx 2MB. Se redimensionará automáticamente.</p>
           </div>
         </div>
       </div>
@@ -188,7 +192,7 @@
       <!-- Botones -->
       <div class="flex gap-3">
         <button onclick="closeProfileModal()" class="flex-1 px-4 py-2 border border-purple-500 rounded-lg font-bold">Cancelar</button>
-        <button onclick="saveProfile()" class="flex-1 px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold">Guardar Cambios</button>
+        <button onclick="saveProfile()" id="saveProfileBtn" class="flex-1 px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold">Guardar Cambios</button>
       </div>
     </div>
   </div>
@@ -251,6 +255,37 @@
       { id: 18, name: 'Pioneer EFX-1000 (Efectos)', category: 'Accesorio', icon: '⚙️' },
     ];
 
+    // Función para comprimir imagen
+    function compressImage(file, callback) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (e) => {
+        const img = new Image();
+        img.src = e.target.result;
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+
+          // Reducir tamaño
+          if (width > 800) {
+            height = (height * 800) / width;
+            width = 800;
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+
+          // Comprimir JPEG
+          const compressed = canvas.toDataURL('image/jpeg', 0.7);
+          callback(compressed);
+        };
+      };
+    }
+
     function initDashboard() {
       user = JSON.parse(localStorage.getItem('voltum_user') || 'null');
       
@@ -267,7 +302,6 @@
       
       document.getElementById('userName').textContent = user.artist_name || user.username;
       
-      // Cargar datos del perfil
       loadProfileData();
       
       const stored = localStorage.getItem(`eventos_${user.id}`);
@@ -304,12 +338,10 @@
       document.getElementById('profileUsername').textContent = '@' + user.username;
       document.getElementById('profileBio').textContent = profileData.bio || 'Sin descripción aún';
 
-      // Foto de perfil
       if (profileData.photo) {
         document.getElementById('profilePhotoDisplay').innerHTML = `<img src="${profileData.photo}" class="w-full h-full object-cover">`;
       }
 
-      // Redes sociales
       const socials = [
         { key: 'instagram', icon: 'fab fa-instagram', name: 'Instagram' },
         { key: 'whatsapp', icon: 'fab fa-whatsapp', name: 'WhatsApp' },
@@ -328,7 +360,6 @@
           </a>
         `).join('');
 
-      // Galería
       document.getElementById('galleryCount').textContent = profileData.gallery.length;
       const galleryPreview = document.getElementById('galleryPreview');
       galleryPreview.innerHTML = profileData.gallery.map((photo, i) => `
@@ -342,7 +373,6 @@
     function openProfileModal() {
       document.getElementById('profileModal').classList.remove('hidden');
       
-      // Cargar valores actuales
       document.getElementById('profileBioInput').value = profileData.bio;
       document.getElementById('socialInstagram').value = profileData.social.instagram;
       document.getElementById('socialWhatsapp').value = profileData.social.whatsapp;
@@ -351,7 +381,6 @@
       document.getElementById('socialYoutube').value = profileData.social.youtube;
       document.getElementById('socialSoundcloud').value = profileData.social.soundcloud;
 
-      // Mostrar galería actual
       document.getElementById('galleryUploadCount').textContent = profileData.gallery.length;
       const galleryPreview = document.getElementById('galleryUploadPreview');
       galleryPreview.innerHTML = profileData.gallery.map((photo, i) => `
@@ -361,12 +390,10 @@
         </div>
       `).join('');
 
-      // Mostrar botón agregar si hay espacio
       if (profileData.gallery.length >= 5) {
         document.getElementById('addPhotoButton').innerHTML = '<p class="text-xs text-gray-500">Máximo 5 fotos alcanzado</p>';
       }
 
-      // Mostrar foto de perfil
       if (profileData.photo) {
         document.getElementById('profilePhotoPreview').innerHTML = `<img src="${profileData.photo}" class="w-full h-full object-cover">`;
       }
@@ -381,12 +408,15 @@
       const file = input.files[0];
 
       if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          profileData.photo = e.target.result;
-          document.getElementById('profilePhotoPreview').innerHTML = `<img src="${e.target.result}" class="w-full h-full object-cover">`;
-        };
-        reader.readAsDataURL(file);
+        if (file.size > 2 * 1024 * 1024) {
+          alert('⚠️ La imagen es muy grande. Máximo 2MB');
+          return;
+        }
+
+        compressImage(file, (compressed) => {
+          profileData.photo = compressed;
+          document.getElementById('profilePhotoPreview').innerHTML = `<img src="${compressed}" class="w-full h-full object-cover">`;
+        });
       }
     }
 
@@ -402,9 +432,13 @@
 
       let loaded = 0;
       files.forEach(file => {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          profileData.gallery.push(e.target.result);
+        if (file.size > 2 * 1024 * 1024) {
+          alert(`⚠️ ${file.name} es muy grande. Máximo 2MB`);
+          return;
+        }
+
+        compressImage(file, (compressed) => {
+          profileData.gallery.push(compressed);
           loaded++;
 
           if (loaded === files.length) {
@@ -422,8 +456,7 @@
               document.getElementById('addPhotoButton').innerHTML = '<p class="text-xs text-gray-500">Máximo 5 fotos alcanzado</p>';
             }
           }
-        };
-        reader.readAsDataURL(file);
+        });
       });
 
       input.value = '';
@@ -460,11 +493,33 @@
       profileData.social.youtube = document.getElementById('socialYoutube').value;
       profileData.social.soundcloud = document.getElementById('socialSoundcloud').value;
 
-      localStorage.setItem(`profile_${user.id}`, JSON.stringify(profileData));
+      const savingMessage = document.getElementById('savingMessage');
+      const saveBtn = document.getElementById('saveProfileBtn');
       
-      closeProfileModal();
-      renderProfile();
-      alert('✅ Perfil actualizado correctamente');
+      savingMessage.classList.remove('hidden');
+      saveBtn.disabled = true;
+
+      try {
+        localStorage.setItem(`profile_${user.id}`, JSON.stringify(profileData));
+        
+        setTimeout(() => {
+          savingMessage.classList.add('hidden');
+          saveBtn.disabled = false;
+          closeProfileModal();
+          renderProfile();
+          alert('✅ Perfil actualizado correctamente');
+        }, 500);
+      } catch (error) {
+        if (error.name === 'QuotaExceededError') {
+          alert('❌ Error: localStorage lleno\n\nIntenta eliminar algunas fotos de la galería');
+          savingMessage.classList.add('hidden');
+          saveBtn.disabled = false;
+        } else {
+          alert('❌ Error al guardar: ' + error.message);
+          savingMessage.classList.add('hidden');
+          saveBtn.disabled = false;
+        }
+      }
     }
 
     // EVENTOS
@@ -656,7 +711,6 @@
       window.location.replace('/login.html');
     }
 
-    // Event listener para bio character count
     document.addEventListener('DOMContentLoaded', () => {
       const bioInput = document.getElementById('profileBioInput');
       if (bioInput) {
