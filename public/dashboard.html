@@ -31,28 +31,24 @@
         <h1 class="text-4xl font-black mb-8">📊 Mi Dashboard</h1>
         
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <!-- Card 1: Total Visitas -->
           <div class="bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-2xl p-6">
             <div class="text-gray-400 text-sm mb-2">Total de Visitas</div>
             <div class="text-4xl font-black mb-2" id="totalVisits">1250</div>
             <div class="text-green-400 text-sm">↑ 12% esta semana</div>
           </div>
 
-          <!-- Card 2: Visitantes Únicos -->
           <div class="bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-2xl p-6">
             <div class="text-gray-400 text-sm mb-2">Visitantes Únicos</div>
             <div class="text-4xl font-black mb-2" id="uniqueVisitors">342</div>
             <div class="text-green-400 text-sm">↑ 8% esta semana</div>
           </div>
 
-          <!-- Card 3: Clicks en Redes -->
           <div class="bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-2xl p-6">
             <div class="text-gray-400 text-sm mb-2">Clicks en Redes</div>
             <div class="text-4xl font-black mb-2" id="socialClicks">156</div>
             <div class="text-green-400 text-sm">↑ 5 hoy</div>
           </div>
 
-          <!-- Card 4: Presentaciones -->
           <div class="bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-2xl p-6">
             <div class="text-gray-400 text-sm mb-2">Próximas Presentaciones</div>
             <div class="text-4xl font-black mb-2" id="eventCount">0</div>
@@ -60,7 +56,6 @@
           </div>
         </div>
 
-        <!-- Gráfico Analytics (simulado) -->
         <div class="bg-gray-900/50 border border-purple-500/20 rounded-2xl p-6 mb-8">
           <h2 class="text-2xl font-bold mb-4">📈 Últimos 30 días</h2>
           <div class="h-48 bg-gray-800/30 rounded-lg border border-purple-500/20 flex items-center justify-center">
@@ -82,12 +77,10 @@
           </button>
         </div>
 
-        <!-- Events List -->
         <div id="eventsList" class="space-y-4">
           <!-- Los eventos se cargan aquí -->
         </div>
 
-        <!-- Empty State -->
         <div id="emptyState" class="bg-gray-900/50 border border-purple-500/20 rounded-2xl p-12 text-center">
           <i class="fas fa-calendar text-6xl text-purple-500 mb-4 block"></i>
           <p class="text-gray-400 mb-4">No tienes presentaciones programadas aún</p>
@@ -106,14 +99,14 @@
         <span id="modalTitle">Agregar Presentación</span>
       </h2>
 
-      <form onsubmit="saveEvent(event)" class="space-y-4">
+      <form onsubmit="handleSaveEvent(event)" class="space-y-4">
         <div>
-          <label class="block text-sm text-gray-400 mb-2">Nombre del Lugar</label>
+          <label class="block text-sm text-gray-400 mb-2">Nombre del Lugar *</label>
           <input type="text" id="eventName" placeholder="Club Nocturno" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white" required>
         </div>
 
         <div>
-          <label class="block text-sm text-gray-400 mb-2">Fecha</label>
+          <label class="block text-sm text-gray-400 mb-2">Fecha *</label>
           <input type="date" id="eventDate" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white" required>
         </div>
 
@@ -146,7 +139,7 @@
           <button type="button" onclick="closeEventModal()" class="flex-1 px-4 py-2 border border-purple-500 rounded-lg font-bold hover:bg-purple-500/10 transition">
             Cancelar
           </button>
-          <button type="submit" class="flex-1 px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold hover:opacity-90 transition">
+          <button type="submit" id="submitBtn" class="flex-1 px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold hover:opacity-90 transition">
             Guardar
           </button>
         </div>
@@ -155,52 +148,53 @@
   </div>
 
   <script>
-    // Supabase Config
     const SUPABASE_URL = 'https://btwrbjqvnwxxsyhipjta.supabase.co';
-    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ0d3JianF2bnd4eHN5aGlwanRhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc0MDk1MjYsImV4cCI6MjA5Mjk4NTUyNn0.PwQW47h0BflM0JVQc0HKJ-8t3NjXTiY-9H_QD7k-R7A';
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ0d3JianF2bnd4eHN5aGlwanRhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc0MDk1MjYsImV4cCI6MjA5Mjk4NTUyNn0.PwQW47h0BflM0JVQc0HKJ-8t3NjXTiY-9H_QD7k-R7A';
+    
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     let events = [];
     let editingEventId = null;
 
-    // Cargar eventos
     async function loadEvents() {
       try {
+        console.log('Cargando eventos...');
         const { data, error } = await supabase
           .from('events')
           .select('*')
           .order('event_date', { ascending: true });
 
-        if (error) throw error;
-        
+        if (error) {
+          console.error('Error Supabase:', error);
+          throw error;
+        }
+
+        console.log('Eventos cargados:', data);
         events = data || [];
         renderEvents();
         updateEventCount();
       } catch (error) {
-        console.error('Error cargando eventos:', error);
-        renderEvents();
-        updateEventCount();
+        console.error('Error al cargar eventos:', error);
+        alert('⚠️ Error cargando eventos: ' + error.message);
       }
-
-      loadAnalytics();
     }
 
     function renderEvents() {
       const list = document.getElementById('eventsList');
       const empty = document.getElementById('emptyState');
 
-      if (events.length === 0) {
+      if (!events || events.length === 0) {
         list.innerHTML = '';
         empty.classList.remove('hidden');
         return;
       }
 
       empty.classList.add('hidden');
-      list.innerHTML = events.map(event => `
+      list.innerHTML = events.map((event, idx) => `
         <div class="bg-gradient-to-r from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-6">
           <div class="flex justify-between items-start mb-4">
             <div>
-              <h3 class="text-xl font-bold mb-2">${event.event_name}</h3>
+              <h3 class="text-xl font-bold mb-2">${event.event_name || 'Sin nombre'}</h3>
               <div class="space-y-1 text-gray-300">
                 <p><i class="fas fa-calendar-alt w-4"></i> ${event.event_date}${event.event_time ? ' • ' + event.event_time : ''}</p>
                 <p><i class="fas fa-map-marker-alt w-4"></i> ${event.city || 'N/A'}${event.venue ? ' • ' + event.venue : ''}</p>
@@ -208,7 +202,7 @@
               </div>
             </div>
             <div class="flex gap-2">
-              <button onclick="editEvent('${event.id}')" class="px-3 py-1 bg-purple-600 hover:bg-purple-700 rounded text-sm">
+              <button onclick="openEditEvent('${event.id}')" class="px-3 py-1 bg-purple-600 hover:bg-purple-700 rounded text-sm">
                 ✏️
               </button>
               <button onclick="deleteEvent('${event.id}')" class="px-3 py-1 bg-red-600 hover:bg-red-700 rounded text-sm">
@@ -229,13 +223,6 @@
       document.getElementById('eventCount').textContent = events.length;
     }
 
-    function loadAnalytics() {
-      // Los datos vienen de la base de datos
-      document.getElementById('totalVisits').textContent = '1250';
-      document.getElementById('uniqueVisitors').textContent = '342';
-      document.getElementById('socialClicks').textContent = '156';
-    }
-
     function openEventModal() {
       editingEventId = null;
       document.getElementById('modalTitle').textContent = 'Agregar Presentación';
@@ -246,69 +233,98 @@
       document.getElementById('eventVenue').value = '';
       document.getElementById('eventTicketLink').value = '';
       document.getElementById('eventDescription').value = '';
+      document.getElementById('submitBtn').textContent = 'Guardar';
       document.getElementById('eventModal').classList.remove('hidden');
     }
 
-    function closeEventModal() {
-      document.getElementById('eventModal').classList.add('hidden');
-    }
-
-    function editEvent(id) {
+    function openEditEvent(id) {
       const event = events.find(e => e.id === id);
-      if (!event) return;
+      if (!event) {
+        alert('Evento no encontrado');
+        return;
+      }
 
       editingEventId = id;
       document.getElementById('modalTitle').textContent = 'Editar Presentación';
-      document.getElementById('eventName').value = event.event_name;
-      document.getElementById('eventDate').value = event.event_date;
+      document.getElementById('eventName').value = event.event_name || '';
+      document.getElementById('eventDate').value = event.event_date || '';
       document.getElementById('eventTime').value = event.event_time || '';
       document.getElementById('eventCity').value = event.city || '';
       document.getElementById('eventVenue').value = event.venue || '';
       document.getElementById('eventTicketLink').value = event.ticket_link || '';
       document.getElementById('eventDescription').value = event.description || '';
+      document.getElementById('submitBtn').textContent = 'Actualizar';
       document.getElementById('eventModal').classList.remove('hidden');
     }
 
-    async function saveEvent(e) {
+    function closeEventModal() {
+      document.getElementById('eventModal').classList.add('hidden');
+      editingEventId = null;
+    }
+
+    async function handleSaveEvent(e) {
       e.preventDefault();
 
       const eventData = {
-        event_name: document.getElementById('eventName').value,
+        event_name: document.getElementById('eventName').value.trim(),
         event_date: document.getElementById('eventDate').value,
         event_time: document.getElementById('eventTime').value || null,
-        city: document.getElementById('eventCity').value,
-        venue: document.getElementById('eventVenue').value,
-        ticket_link: document.getElementById('eventTicketLink').value,
-        description: document.getElementById('eventDescription').value
+        city: document.getElementById('eventCity').value.trim(),
+        venue: document.getElementById('eventVenue').value.trim(),
+        ticket_link: document.getElementById('eventTicketLink').value.trim(),
+        description: document.getElementById('eventDescription').value.trim()
       };
 
+      // Validaciones
+      if (!eventData.event_name) {
+        alert('❌ El nombre del lugar es requerido');
+        return;
+      }
+      if (!eventData.event_date) {
+        alert('❌ La fecha es requerida');
+        return;
+      }
+
       try {
+        const submitBtn = document.getElementById('submitBtn');
+        submitBtn.disabled = true;
+        submitBtn.textContent = '⏳ Guardando...';
+
         if (editingEventId) {
+          console.log('Actualizando evento:', editingEventId);
           const { error } = await supabase
             .from('events')
             .update(eventData)
             .eq('id', editingEventId);
           
           if (error) throw error;
+          console.log('Evento actualizado');
         } else {
-          const { error } = await supabase
+          console.log('Creando nuevo evento');
+          const { data, error } = await supabase
             .from('events')
-            .insert([eventData]);
+            .insert([eventData])
+            .select();
           
           if (error) throw error;
+          console.log('Evento creado:', data);
         }
 
         closeEventModal();
-        loadEvents();
+        await loadEvents();
         alert('✅ Evento guardado correctamente');
       } catch (error) {
-        console.error('Error:', error);
-        alert('❌ Error al guardar el evento: ' + error.message);
+        console.error('Error al guardar:', error);
+        alert('❌ Error: ' + (error.message || 'Error desconocido'));
+      } finally {
+        const submitBtn = document.getElementById('submitBtn');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Guardar';
       }
     }
 
     async function deleteEvent(id) {
-      if (!confirm('¿Estás seguro de que quieres eliminar este evento?')) return;
+      if (!confirm('¿Eliminar este evento?')) return;
 
       try {
         const { error } = await supabase
@@ -318,11 +334,11 @@
 
         if (error) throw error;
         
-        loadEvents();
+        await loadEvents();
         alert('✅ Evento eliminado');
       } catch (error) {
         console.error('Error:', error);
-        alert('❌ Error al eliminar el evento');
+        alert('❌ Error al eliminar');
       }
     }
 
@@ -330,8 +346,10 @@
       window.location.href = '/preskit-demo.html';
     }
 
-    // Inicializar
-    window.addEventListener('load', loadEvents);
+    window.addEventListener('load', () => {
+      console.log('Dashboard cargado');
+      loadEvents();
+    });
   </script>
 </body>
 </html>
