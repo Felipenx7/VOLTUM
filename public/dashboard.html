@@ -3,102 +3,188 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard - VOLTUM</title>
+  <title>Mi Preskit - VOLTUM</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="bg-gradient-to-b from-black via-purple-900/20 to-black text-white">
   <div class="min-h-screen">
+    <!-- NAV -->
     <nav class="bg-black/40 backdrop-blur border-b border-purple-500/20 sticky top-0 z-50">
-      <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+      <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
         <div class="text-2xl font-black bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">⚡ VOLTUM</div>
-        <div class="flex gap-4 items-center">
-          <span class="text-sm" id="userName">DJ</span>
+        <div class="flex gap-4">
           <a href="#" onclick="verPreskit()" class="px-4 py-2 bg-purple-600 rounded-lg font-bold text-sm">👁️ Ver Preskit</a>
-          <button onclick="logout()" class="px-4 py-2 border border-purple-500 rounded-lg font-bold text-sm hover:bg-purple-500/10">Salir</button>
+          <button onclick="logout()" class="px-4 py-2 border border-purple-500 rounded-lg font-bold text-sm">Salir</button>
         </div>
       </div>
     </nav>
 
-    <div class="max-w-6xl mx-auto px-4 py-12">
-      <h1 class="text-4xl font-black mb-8">📊 Mi Dashboard</h1>
-      
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        <div class="bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-2xl p-6">
-          <div class="text-gray-400 text-sm">Visitas</div>
-          <div class="text-4xl font-black">1.250</div>
-        </div>
-        <div class="bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-2xl p-6">
-          <div class="text-gray-400 text-sm">Visitantes</div>
-          <div class="text-4xl font-black">342</div>
-        </div>
-        <div class="bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-2xl p-6">
-          <div class="text-gray-400 text-sm">Clicks</div>
-          <div class="text-4xl font-black">156</div>
-        </div>
-        <div class="bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-2xl p-6">
-          <div class="text-gray-400 text-sm">Eventos</div>
-          <div class="text-4xl font-black" id="eventCount">0</div>
-        </div>
-      </div>
+    <div class="max-w-5xl mx-auto px-4 py-12">
+      <h1 class="text-4xl font-black mb-2">✏️ Edita tu Preskit</h1>
+      <p class="text-gray-400 mb-8">Todo lo que necesitas para que las productoras te contraten</p>
 
-      <!-- EQUIPOS -->
-      <div class="mb-12">
-        <div class="flex justify-between items-center mb-6">
-          <h2 class="text-3xl font-bold">🎧 Equipos Donde Toco</h2>
-          <button class="px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg font-bold text-sm" onclick="openEquipmentModal()">+ Agregar</button>
-        </div>
+      <!-- FORM PRINCIPAL -->
+      <form id="prestikForm" class="space-y-8">
 
-        <div id="equipmentList" class="grid grid-cols-2 md:grid-cols-3 gap-4"></div>
+        <!-- SECCIÓN 1: FOTO DE PERFIL -->
+        <div class="bg-gray-900/50 border border-purple-500/20 rounded-2xl p-8">
+          <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+            <i class="fas fa-user-circle text-purple-400"></i> Tu Foto de Perfil
+          </h2>
+          
+          <div class="flex gap-8 items-start">
+            <div class="flex-shrink-0">
+              <div id="profilePreview" class="w-40 h-40 rounded-full bg-gradient-to-br from-purple-600 to-pink-600 overflow-hidden border-4 border-purple-500 flex items-center justify-center">
+                <i class="fas fa-user text-6xl text-white opacity-50"></i>
+              </div>
+            </div>
 
-        <div id="emptyEquipment" class="bg-gray-900/50 border border-purple-500/20 rounded-2xl p-8 text-center">
-          <i class="fas fa-headphones text-6xl text-purple-500 mb-4 block"></i>
-          <p class="text-gray-400 mb-4">Sin equipos seleccionados</p>
-          <button class="px-6 py-2 bg-purple-600 rounded-lg font-bold" onclick="openEquipmentModal()">Agregar equipos</button>
-        </div>
-      </div>
-
-      <!-- EVENTOS -->
-      <div class="mb-12">
-        <div class="flex justify-between items-center mb-8">
-          <h2 class="text-3xl font-bold">📅 Mis Presentaciones</h2>
-          <button class="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold" onclick="showModal()">+ Agregar</button>
+            <div class="flex-1">
+              <label class="block mb-4">
+                <span class="text-sm text-gray-400 mb-2 block">Sube tu foto (JPG, PNG)</span>
+                <input type="file" id="profilePhoto" accept="image/*" class="block w-full px-4 py-3 bg-gray-800 border border-purple-500/30 rounded-lg text-white cursor-pointer">
+              </label>
+              <p class="text-xs text-gray-500">Tamaño recomendado: 500x500px</p>
+            </div>
+          </div>
         </div>
 
-        <div id="eventsList" class="space-y-4"></div>
+        <!-- SECCIÓN 2: INFO BÁSICA -->
+        <div class="bg-gray-900/50 border border-purple-500/20 rounded-2xl p-8">
+          <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+            <i class="fas fa-info-circle text-purple-400"></i> Información Básica
+          </h2>
 
-        <div id="emptyState" class="bg-gray-900/50 border border-purple-500/20 rounded-2xl p-12 text-center">
-          <i class="fas fa-calendar text-6xl text-purple-500 mb-4 block"></i>
-          <p class="text-gray-400 mb-4">Sin presentaciones</p>
-          <button class="px-6 py-2 bg-purple-600 rounded-lg font-bold" onclick="showModal()">Agregar</button>
-        </div>
-      </div>
-    </div>
-  </div>
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm text-gray-400 mb-2">Nombre Artístico</label>
+              <input type="text" id="artistName" placeholder="DJ Phoenix" class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
+            </div>
 
-  <!-- MODAL EVENTOS -->
-  <div id="modal" class="hidden fixed inset-0 bg-black/50 backdrop-blur flex items-center justify-center z-50 p-4">
-    <div class="bg-gray-900 border border-purple-500/30 rounded-2xl p-8 max-w-md w-full">
-      <h2 class="text-2xl font-bold mb-6">Agregar Evento</h2>
-      <div class="space-y-4">
-        <input type="text" id="eventName" placeholder="Nombre" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
-        <input type="date" id="eventDate" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
-        <input type="time" id="eventTime" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
-        <input type="text" id="eventCity" placeholder="Ciudad" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
-        <input type="text" id="eventVenue" placeholder="Lugar" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
-        <input type="url" id="eventTicket" placeholder="Link entradas" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white text-sm">
-        <div class="flex gap-3">
-          <button onclick="closeModal()" class="flex-1 px-4 py-2 border border-purple-500 rounded-lg font-bold">Cancelar</button>
-          <button onclick="saveEvent()" class="flex-1 px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold">Guardar</button>
+            <div>
+              <label class="block text-sm text-gray-400 mb-2">Usuario (para tu URL)</label>
+              <div class="flex gap-2">
+                <span class="px-4 py-2 bg-gray-700 border border-purple-500/30 rounded-lg text-gray-400">voltum.cl/dj/</span>
+                <input type="text" id="username" placeholder="dj-phoenix" disabled class="flex-1 px-4 py-2 bg-gray-700 border border-purple-500/30 rounded-lg text-gray-400">
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-sm text-gray-400 mb-2">Tu Bio / Descripción</label>
+              <textarea id="bio" placeholder="House • Techno • Minimal | 10 años de experiencia..." rows="4" class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white"></textarea>
+            </div>
+          </div>
         </div>
-      </div>
+
+        <!-- SECCIÓN 3: GÉNEROS -->
+        <div class="bg-gray-900/50 border border-purple-500/20 rounded-2xl p-8">
+          <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+            <i class="fas fa-music text-purple-400"></i> Géneros que Tocas
+          </h2>
+
+          <div id="genresList" class="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <!-- Se llena con JS -->
+          </div>
+        </div>
+
+        <!-- SECCIÓN 4: REDES SOCIALES -->
+        <div class="bg-gray-900/50 border border-purple-500/20 rounded-2xl p-8">
+          <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+            <i class="fas fa-share-alt text-purple-400"></i> Tus Redes Sociales
+          </h2>
+
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm text-gray-400 mb-2">📱 Instagram</label>
+              <input type="url" id="instagram" placeholder="https://instagram.com/tuusuario" class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
+            </div>
+
+            <div>
+              <label class="block text-sm text-gray-400 mb-2">💬 WhatsApp</label>
+              <input type="tel" id="whatsapp" placeholder="569 1234 5678" class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
+            </div>
+
+            <div>
+              <label class="block text-sm text-gray-400 mb-2">🎵 Spotify</label>
+              <input type="url" id="spotify" placeholder="https://open.spotify.com/artist/..." class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
+            </div>
+
+            <div>
+              <label class="block text-sm text-gray-400 mb-2">🎬 YouTube</label>
+              <input type="url" id="youtube" placeholder="https://youtube.com/@tucanal" class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
+            </div>
+
+            <div>
+              <label class="block text-sm text-gray-400 mb-2">☁️ SoundCloud</label>
+              <input type="url" id="soundcloud" placeholder="https://soundcloud.com/tuusuario" class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
+            </div>
+          </div>
+        </div>
+
+        <!-- SECCIÓN 5: EQUIPOS DONDE TOCA -->
+        <div class="bg-gray-900/50 border border-purple-500/20 rounded-2xl p-8">
+          <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+            <i class="fas fa-headphones text-purple-400"></i> Equipos Donde Toco
+          </h2>
+
+          <button type="button" onclick="openEquipmentSelector()" class="mb-6 px-6 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg font-bold">+ Seleccionar Equipos</button>
+
+          <div id="equipmentSelected" class="grid grid-cols-2 md:grid-cols-3 gap-3">
+            <!-- Se llena con JS -->
+          </div>
+
+          <div id="emptyEquipment" class="text-center py-8 text-gray-400">
+            <i class="fas fa-plus text-4xl mb-3 block"></i>
+            <p>Selecciona los equipos donde tocas</p>
+          </div>
+        </div>
+
+        <!-- SECCIÓN 6: GALERÍA DE FOTOS -->
+        <div class="bg-gray-900/50 border border-purple-500/20 rounded-2xl p-8">
+          <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+            <i class="fas fa-images text-purple-400"></i> Galería (máximo 5 fotos)
+          </h2>
+
+          <button type="button" id="addPhotoBtn" onclick="addPhotoInput()" class="mb-6 px-6 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg font-bold">+ Agregar Foto</button>
+
+          <div id="photosList" class="space-y-3">
+            <!-- Se llena con JS -->
+          </div>
+        </div>
+
+        <!-- SECCIÓN 7: EVENTOS / PRESENTACIONES -->
+        <div class="bg-gray-900/50 border border-purple-500/20 rounded-2xl p-8">
+          <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+            <i class="fas fa-calendar-alt text-purple-400"></i> Mis Presentaciones
+          </h2>
+
+          <button type="button" onclick="addEventForm()" class="mb-6 px-6 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg font-bold">+ Agregar Presentación</button>
+
+          <div id="eventsList" class="space-y-4">
+            <!-- Se llena con JS -->
+          </div>
+        </div>
+
+        <!-- BOTÓN GUARDAR -->
+        <div class="flex gap-4">
+          <button type="submit" class="flex-1 py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold text-lg hover:opacity-90 transition">
+            💾 Guardar Cambios
+          </button>
+          <a href="#" onclick="verPreskit()" class="flex-1 py-3 border border-purple-500 rounded-lg font-bold text-lg text-center hover:bg-purple-500/10 transition">
+            👁️ Ver Preskit
+          </a>
+        </div>
+      </form>
+
     </div>
   </div>
 
   <script>
-    let user = null;
-    let eventos = [];
-    let equipmentSelected = [];
+    const GENEROS_DISPONIBLES = [
+      'House', 'Techno', 'Minimal', 'Deep House', 'Tech House', 'Electro',
+      'Trance', 'Progressive House', 'Ambient', 'Industrial', 'Drum & Bass', 'Dubstep'
+    ];
 
     const EQUIPOS_DISPONIBLES = [
       { id: 1, name: 'Blondie', city: 'Santiago', icon: '🎪' },
@@ -119,142 +205,100 @@
       { id: 16, name: 'Festival', city: 'Varios', icon: '🎪' },
     ];
 
-    function loadData() {
+    let user = null;
+    let preskit = {};
+    let photoCount = 0;
+    let eventCount = 0;
+
+    function init() {
       user = JSON.parse(localStorage.getItem('voltum_user'));
       if (!user) { 
         window.location.href = '/login.html'; 
         return; 
       }
-      
+
       if (!user.subscription || !user.subscription.active) {
-        alert('⚠️ Necesitas pagar tu suscripción para acceder');
+        alert('⚠️ Necesitas pagar tu suscripción');
         window.location.href = '/checkout.html';
         return;
       }
-      
-      document.getElementById('userName').textContent = user.artist_name || user.username;
-      
-      const stored = localStorage.getItem(`eventos_${user.id}`);
-      eventos = stored ? JSON.parse(stored) : [];
-      renderEventos();
-      
-      loadEquipment();
+
+      document.getElementById('username').value = user.username;
+      document.getElementById('artistName').value = user.artist_name || '';
+
+      loadPreskit();
+      renderGenres();
+      renderEventsList();
+      renderEquipmentList();
+      renderPhotosList();
+      renderEventsList();
+
+      document.getElementById('profilePhoto').addEventListener('change', previewProfilePhoto);
+      document.getElementById('prestikForm').addEventListener('submit', savePreskit);
     }
 
-    function renderEventos() {
-      const list = document.getElementById('eventsList');
-      const empty = document.getElementById('emptyState');
+    function loadPreskit() {
+      const stored = localStorage.getItem(`preskit_${user.id}`);
+      preskit = stored ? JSON.parse(stored) : {};
 
-      if (eventos.length === 0) {
-        list.innerHTML = '';
-        empty.classList.remove('hidden');
-        document.getElementById('eventCount').textContent = '0';
-        return;
+      document.getElementById('bio').value = preskit.bio || '';
+      document.getElementById('instagram').value = preskit.instagram || '';
+      document.getElementById('whatsapp').value = preskit.whatsapp || '';
+      document.getElementById('spotify').value = preskit.spotify || '';
+      document.getElementById('youtube').value = preskit.youtube || '';
+      document.getElementById('soundcloud').value = preskit.soundcloud || '';
+    }
+
+    function previewProfilePhoto(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          document.getElementById('profilePreview').innerHTML = `<img src="${event.target.result}" class="w-full h-full object-cover">`;
+          preskit.profilePhoto = event.target.result;
+        };
+        reader.readAsDataURL(file);
       }
+    }
 
-      empty.classList.add('hidden');
-      document.getElementById('eventCount').textContent = eventos.length;
+    function renderGenres() {
+      const list = document.getElementById('genresList');
+      const selected = preskit.genres || [];
 
-      list.innerHTML = eventos.map((e, i) => `
-        <div class="bg-gradient-to-r from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-6">
-          <div class="flex justify-between">
-            <div>
-              <h3 class="text-xl font-bold">${e.name}</h3>
-              <p class="text-gray-400 text-sm">📅 ${e.date}${e.time ? ' ' + e.time : ''}</p>
-              <p class="text-gray-400 text-sm">📍 ${e.city || 'N/A'}</p>
-            </div>
-            <button onclick="deleteEvent(${i})" class="px-2 py-1 bg-red-600 rounded text-xs">🗑️</button>
-          </div>
-        </div>
+      list.innerHTML = GENEROS_DISPONIBLES.map(g => `
+        <label class="flex items-center gap-2 p-3 bg-gray-800 border border-purple-500/30 rounded-lg hover:bg-purple-500/20 cursor-pointer transition">
+          <input type="checkbox" value="${g}" ${selected.includes(g) ? 'checked' : ''} onchange="updateGenres()">
+          <span>🎵 ${g}</span>
+        </label>
       `).join('');
     }
 
-    function showModal() { document.getElementById('modal').classList.remove('hidden'); }
-    function closeModal() { document.getElementById('modal').classList.add('hidden'); }
-
-    function saveEvent() {
-      const name = document.getElementById('eventName').value;
-      const date = document.getElementById('eventDate').value;
-
-      if (!name || !date) { alert('Rellena nombre y fecha'); return; }
-
-      eventos.push({
-        name,
-        date,
-        time: document.getElementById('eventTime').value,
-        city: document.getElementById('eventCity').value,
-        venue: document.getElementById('eventVenue').value,
-        ticket: document.getElementById('eventTicket').value
-      });
-
-      localStorage.setItem(`eventos_${user.id}`, JSON.stringify(eventos));
-      closeModal();
-      renderEventos();
-      alert('✅ Evento agregado');
+    function updateGenres() {
+      const checkboxes = document.querySelectorAll('#genresList input[type="checkbox"]:checked');
+      preskit.genres = Array.from(checkboxes).map(c => c.value);
     }
 
-    function deleteEvent(i) {
-      if (!confirm('¿Eliminar?')) return;
-      eventos.splice(i, 1);
-      localStorage.setItem(`eventos_${user.id}`, JSON.stringify(eventos));
-      renderEventos();
-    }
-
-    function loadEquipment() {
-      const stored = localStorage.getItem(`equipment_${user.id}`);
-      equipmentSelected = stored ? JSON.parse(stored) : [];
-      renderEquipment();
-    }
-
-    function renderEquipment() {
-      const list = document.getElementById('equipmentList');
-      const empty = document.getElementById('emptyEquipment');
-
-      if (equipmentSelected.length === 0) {
-        list.innerHTML = '';
-        empty.classList.remove('hidden');
-        return;
-      }
-
-      empty.classList.add('hidden');
-      list.innerHTML = equipmentSelected.map(eq => `
-        <div class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-xl p-4 flex items-center justify-between hover:border-purple-500/60 transition">
-          <div class="flex-1">
-            <div class="text-3xl mb-2">${eq.icon}</div>
-            <div class="font-bold text-sm">${eq.name}</div>
-            <div class="text-xs text-gray-500">${eq.city}</div>
-          </div>
-          <button onclick="removeEquipment(${eq.id})" class="text-red-400 hover:text-red-500 text-xl">✕</button>
-        </div>
-      `).join('');
-    }
-
-    function openEquipmentModal() {
+    function openEquipmentSelector() {
+      const selected = preskit.equipment || [];
       const html = `
         <div class="fixed inset-0 bg-black/50 backdrop-blur flex items-center justify-center z-50 p-4">
-          <div class="bg-gray-900 border border-purple-500/30 rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <h2 class="text-2xl font-bold mb-6">Selecciona tus Equipos</h2>
-            
-            <div class="mb-6">
-              <input type="text" id="searchEquipo" placeholder="Buscar equipo..." class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white" onkeyup="filterEquipos()">
-            </div>
+          <div class="bg-gray-900 border border-purple-500/30 rounded-2xl p-8 max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+            <h2 class="text-2xl font-bold mb-4">Selecciona tus Equipos</h2>
+            <input type="text" id="searchEq" placeholder="Buscar..." class="w-full px-4 py-2 bg-gray-800 border border-purple-500/30 rounded-lg mb-4 text-white" onkeyup="filterEquipos()">
 
-            <div id="equipoList" class="grid grid-cols-2 gap-3 mb-8">
+            <div id="equipoCheckList" class="grid grid-cols-2 gap-3 mb-6">
               ${EQUIPOS_DISPONIBLES.map(eq => `
-                <label class="flex items-center gap-3 p-3 bg-gray-800 border border-purple-500/30 rounded-lg hover:bg-purple-500/20 cursor-pointer transition">
-                  <input type="checkbox" value="${eq.id}" onchange="toggleEquipo(${eq.id}, '${eq.name}', '${eq.city}', '${eq.icon}')" class="w-4 h-4" ${equipmentSelected.find(e => e.id === eq.id) ? 'checked' : ''}>
+                <label class="flex items-center gap-2 p-3 bg-gray-800 border border-purple-500/30 rounded-lg hover:bg-purple-500/20 cursor-pointer">
+                  <input type="checkbox" data-id="${eq.id}" data-name="${eq.name}" data-city="${eq.city}" data-icon="${eq.icon}" ${selected.find(e => e.id === eq.id) ? 'checked' : ''}>
                   <div class="flex-1">
-                    <div class="text-lg">${eq.icon} ${eq.name}</div>
+                    <div>${eq.icon} ${eq.name}</div>
                     <div class="text-xs text-gray-500">${eq.city}</div>
                   </div>
                 </label>
               `).join('')}
             </div>
 
-            <div class="flex gap-3">
-              <button onclick="closeEquipmentModal()" class="flex-1 px-4 py-2 border border-purple-500 rounded-lg font-bold">Cancelar</button>
-              <button onclick="closeEquipmentModal()" class="flex-1 px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold">Guardar</button>
-            </div>
+            <button onclick="saveEquipmentSelection()" class="w-full px-4 py-2 bg-purple-600 rounded-lg font-bold">Guardar</button>
           </div>
         </div>
       `;
@@ -266,38 +310,174 @@
     }
 
     function filterEquipos() {
-      const search = document.getElementById('searchEquipo').value.toLowerCase();
-      const items = document.querySelectorAll('#equipoList label');
-      items.forEach(item => {
-        const text = item.textContent.toLowerCase();
-        item.style.display = text.includes(search) ? 'flex' : 'none';
+      const search = document.getElementById('searchEq').value.toLowerCase();
+      document.querySelectorAll('#equipoCheckList label').forEach(label => {
+        label.style.display = label.textContent.toLowerCase().includes(search) ? 'flex' : 'none';
       });
     }
 
-    function toggleEquipo(id, name, city, icon) {
-      const exists = equipmentSelected.find(e => e.id === id);
-      if (exists) {
-        equipmentSelected = equipmentSelected.filter(e => e.id !== id);
-      } else {
-        equipmentSelected.push({ id, name, city, icon });
+    function saveEquipmentSelection() {
+      const checkboxes = document.querySelectorAll('#equipoCheckList input:checked');
+      preskit.equipment = Array.from(checkboxes).map(c => ({
+        id: parseInt(c.dataset.id),
+        name: c.dataset.name,
+        city: c.dataset.city,
+        icon: c.dataset.icon
+      }));
+
+      document.getElementById('equipmentModal').remove();
+      renderEquipmentList();
+    }
+
+    function renderEquipmentList() {
+      const list = document.getElementById('equipmentSelected');
+      const empty = document.getElementById('emptyEquipment');
+      const equipment = preskit.equipment || [];
+
+      if (equipment.length === 0) {
+        list.innerHTML = '';
+        empty.classList.remove('hidden');
+        return;
       }
-      localStorage.setItem(`equipment_${user.id}`, JSON.stringify(equipmentSelected));
+
+      empty.classList.add('hidden');
+      list.innerHTML = equipment.map(eq => `
+        <div class="bg-purple-600/20 border border-purple-500/30 rounded-lg p-3 flex items-center justify-between">
+          <div>
+            <div class="text-2xl">${eq.icon}</div>
+            <div class="font-bold text-sm">${eq.name}</div>
+            <div class="text-xs text-gray-500">${eq.city}</div>
+          </div>
+          <button type="button" onclick="removeEquipment('${eq.id}')" class="text-red-400 hover:text-red-500">✕</button>
+        </div>
+      `).join('');
     }
 
     function removeEquipment(id) {
-      equipmentSelected = equipmentSelected.filter(e => e.id !== id);
-      localStorage.setItem(`equipment_${user.id}`, JSON.stringify(equipmentSelected));
-      renderEquipment();
+      preskit.equipment = preskit.equipment.filter(e => e.id != id);
+      renderEquipmentList();
     }
 
-    function closeEquipmentModal() {
-      const modal = document.getElementById('equipmentModal');
-      if (modal) modal.remove();
-      loadEquipment();
+    function addPhotoInput() {
+      if (photoCount >= 5) {
+        alert('⚠️ Máximo 5 fotos');
+        return;
+      }
+
+      const html = `
+        <div id="photo-${photoCount}" class="bg-gray-800 border border-purple-500/30 rounded-lg p-4 flex gap-4 items-center">
+          <input type="file" accept="image/*" onchange="handlePhotoChange(${photoCount})" class="flex-1 px-3 py-2 bg-gray-700 border border-purple-500/20 rounded text-white text-sm">
+          <button type="button" onclick="removePhoto(${photoCount})" class="px-3 py-2 bg-red-600 hover:bg-red-700 rounded text-sm">Eliminar</button>
+        </div>
+      `;
+
+      document.getElementById('photosList').insertAdjacentHTML('beforeend', html);
+      photoCount++;
+      updatePhotoButtonState();
+    }
+
+    function handlePhotoChange(index) {
+      const input = document.querySelector(`#photo-${index} input`);
+      const file = input.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          if (!preskit.photos) preskit.photos = [];
+          preskit.photos[index] = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function removePhoto(index) {
+      document.getElementById(`photo-${index}`).remove();
+      if (preskit.photos) delete preskit.photos[index];
+      updatePhotoButtonState();
+    }
+
+    function updatePhotoButtonState() {
+      const photoInputs = document.querySelectorAll('#photosList > div').length;
+      document.getElementById('addPhotoBtn').disabled = photoInputs >= 5;
+    }
+
+    function renderPhotosList() {
+      const photos = preskit.photos || [];
+      if (photos.length === 0) {
+        document.getElementById('photosList').innerHTML = '<p class="text-gray-500 text-center py-8">Sin fotos agregadas</p>';
+        return;
+      }
+
+      document.getElementById('photosList').innerHTML = photos.map((p, i) => `
+        <div id="photo-${i}" class="bg-gray-800 border border-purple-500/30 rounded-lg p-4 flex gap-4 items-center">
+          <div class="w-16 h-16 rounded bg-gray-700 overflow-hidden">
+            <img src="${p}" class="w-full h-full object-cover">
+          </div>
+          <button type="button" onclick="removePhoto(${i})" class="px-3 py-2 bg-red-600 rounded text-sm">Eliminar</button>
+        </div>
+      `).join('');
+    }
+
+    function addEventForm() {
+      const html = `
+        <div id="event-${eventCount}" class="bg-gray-800 border border-purple-500/30 rounded-lg p-6">
+          <div class="grid grid-cols-2 gap-4 mb-4">
+            <input type="text" placeholder="Nombre evento" class="px-3 py-2 bg-gray-700 border border-purple-500/20 rounded text-white event-name">
+            <input type="date" class="px-3 py-2 bg-gray-700 border border-purple-500/20 rounded text-white event-date">
+          </div>
+          <div class="grid grid-cols-2 gap-4 mb-4">
+            <input type="time" class="px-3 py-2 bg-gray-700 border border-purple-500/20 rounded text-white event-time">
+            <input type="text" placeholder="Ciudad" class="px-3 py-2 bg-gray-700 border border-purple-500/20 rounded text-white event-city">
+          </div>
+          <div class="grid grid-cols-2 gap-4 mb-4">
+            <input type="text" placeholder="Lugar" class="px-3 py-2 bg-gray-700 border border-purple-500/20 rounded text-white event-venue">
+            <input type="url" placeholder="Link entradas" class="px-3 py-2 bg-gray-700 border border-purple-500/20 rounded text-white event-ticket">
+          </div>
+          <button type="button" onclick="removeEvent(${eventCount})" class="px-4 py-2 bg-red-600 rounded text-sm">Eliminar</button>
+        </div>
+      `;
+
+      document.getElementById('eventsList').insertAdjacentHTML('beforeend', html);
+      eventCount++;
+    }
+
+    function removeEvent(index) {
+      document.getElementById(`event-${index}`).remove();
+    }
+
+    function renderEventsList() {
+      const eventos = preskit.eventos || [];
+      if (eventos.length === 0) {
+        document.getElementById('eventsList').innerHTML = '<p class="text-gray-500 text-center py-8">Sin eventos agregados</p>';
+        return;
+      }
+    }
+
+    function savePreskit(e) {
+      e.preventDefault();
+
+      preskit.artistName = document.getElementById('artistName').value;
+      preskit.bio = document.getElementById('bio').value;
+      preskit.instagram = document.getElementById('instagram').value;
+      preskit.whatsapp = document.getElementById('whatsapp').value;
+      preskit.spotify = document.getElementById('spotify').value;
+      preskit.youtube = document.getElementById('youtube').value;
+      preskit.soundcloud = document.getElementById('soundcloud').value;
+
+      const eventForms = document.querySelectorAll('#eventsList > div[id^="event-"]');
+      preskit.eventos = Array.from(eventForms).map(form => ({
+        name: form.querySelector('.event-name').value,
+        date: form.querySelector('.event-date').value,
+        time: form.querySelector('.event-time').value,
+        city: form.querySelector('.event-city').value,
+        venue: form.querySelector('.event-venue').value,
+        ticket: form.querySelector('.event-ticket').value
+      })).filter(e => e.name && e.date);
+
+      localStorage.setItem(`preskit_${user.id}`, JSON.stringify(preskit));
+      alert('✅ Preskit guardado correctamente');
     }
 
     function verPreskit() {
-      if (!user) return;
       window.location.href = '/dj/' + user.username;
     }
 
@@ -306,7 +486,7 @@
       window.location.href = '/login.html';
     }
 
-    window.addEventListener('load', loadData);
+    window.addEventListener('load', init);
   </script>
 </body>
 </html>
