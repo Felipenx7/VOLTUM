@@ -10,6 +10,7 @@
 </head>
 <body class="bg-gradient-to-b from-black via-purple-900/20 to-black text-white">
   <div class="min-h-screen">
+    <!-- Navbar -->
     <nav class="bg-black/40 backdrop-blur border-b border-purple-500/20 sticky top-0 z-50">
       <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
         <div class="text-2xl font-black bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">⚡ VOLTUM</div>
@@ -23,6 +24,7 @@
     <div class="max-w-6xl mx-auto px-4 py-12">
       <h1 class="text-4xl font-black mb-8">📊 Mi Dashboard</h1>
       
+      <!-- Analytics Cards -->
       <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
         <div class="bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-2xl p-6">
           <div class="text-gray-400 text-sm mb-2">Total de Visitas</div>
@@ -49,6 +51,7 @@
         </div>
       </div>
 
+      <!-- Chart -->
       <div class="bg-gray-900/50 border border-purple-500/20 rounded-2xl p-6 mb-12">
         <h2 class="text-2xl font-bold mb-4">📈 Últimos 30 días</h2>
         <div class="h-48 bg-gray-800/30 rounded-lg border border-purple-500/20 flex items-center justify-center">
@@ -60,10 +63,11 @@
         </div>
       </div>
 
+      <!-- Events Section -->
       <div class="mb-12">
         <div class="flex justify-between items-center mb-8">
           <h2 class="text-3xl font-bold">📅 Mis Presentaciones</h2>
-          <button class="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold hover:opacity-90" onclick="document.getElementById('modalForm').classList.remove('hidden')">
+          <button class="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold hover:opacity-90 transition" onclick="abrirModal()">
             + Agregar Evento
           </button>
         </div>
@@ -73,7 +77,7 @@
         <div id="emptyState" class="bg-gray-900/50 border border-purple-500/20 rounded-2xl p-12 text-center">
           <i class="fas fa-calendar text-6xl text-purple-500 mb-4 block"></i>
           <p class="text-gray-400 mb-4">No tienes presentaciones programadas aún</p>
-          <button class="px-6 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg font-bold" onclick="document.getElementById('modalForm').classList.remove('hidden')">
+          <button class="px-6 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg font-bold" onclick="abrirModal()">
             Agregar primera presentación
           </button>
         </div>
@@ -82,51 +86,51 @@
   </div>
 
   <!-- Modal -->
-  <div id="modalForm" class="hidden fixed inset-0 bg-black/50 backdrop-blur flex items-center justify-center z-50 p-4">
+  <div id="modal" class="hidden fixed inset-0 bg-black/50 backdrop-blur flex items-center justify-center z-50 p-4">
     <div class="bg-gray-900 border border-purple-500/30 rounded-2xl p-8 max-w-md w-full max-h-[90vh] overflow-y-auto">
       <h2 class="text-2xl font-bold mb-6">📅 Agregar Presentación</h2>
 
       <div class="space-y-4">
         <div>
           <label class="block text-sm text-gray-400 mb-2">Nombre del Lugar *</label>
-          <input type="text" id="inputEventName" placeholder="Club Nocturno" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white" required>
+          <input type="text" id="eventName" placeholder="Club Nocturno" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
         </div>
 
         <div>
           <label class="block text-sm text-gray-400 mb-2">Fecha *</label>
-          <input type="date" id="inputEventDate" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white" required>
+          <input type="date" id="eventDate" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
         </div>
 
         <div>
           <label class="block text-sm text-gray-400 mb-2">Hora</label>
-          <input type="time" id="inputEventTime" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
+          <input type="time" id="eventTime" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
         </div>
 
         <div>
           <label class="block text-sm text-gray-400 mb-2">Ciudad</label>
-          <input type="text" id="inputEventCity" placeholder="Santiago" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
+          <input type="text" id="eventCity" placeholder="Santiago" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
         </div>
 
         <div>
           <label class="block text-sm text-gray-400 mb-2">Lugar (Venue)</label>
-          <input type="text" id="inputEventVenue" placeholder="Av. Principal 123" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
+          <input type="text" id="eventVenue" placeholder="Av. Principal 123" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
         </div>
 
         <div>
           <label class="block text-sm text-gray-400 mb-2">Link de Entradas</label>
-          <input type="url" id="inputEventTicket" placeholder="https://eventbrite.com/..." class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white text-sm">
+          <input type="url" id="eventTicket" placeholder="https://eventbrite.com/..." class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white text-sm">
         </div>
 
         <div>
           <label class="block text-sm text-gray-400 mb-2">Descripción</label>
-          <textarea id="inputEventDesc" placeholder="Describe tu presentación..." class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white h-20"></textarea>
+          <textarea id="eventDesc" placeholder="Describe tu presentación..." class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white h-20"></textarea>
         </div>
 
         <div class="flex gap-3 pt-4">
-          <button onclick="document.getElementById('modalForm').classList.add('hidden')" class="flex-1 px-4 py-2 border border-purple-500 rounded-lg font-bold hover:bg-purple-500/10">
+          <button onclick="cerrarModal()" class="flex-1 px-4 py-2 border border-purple-500 rounded-lg font-bold hover:bg-purple-500/10 transition">
             Cancelar
           </button>
-          <button onclick="guardarEvento()" class="flex-1 px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold hover:opacity-90">
+          <button onclick="guardarEvento()" class="flex-1 px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold hover:opacity-90 transition">
             Guardar
           </button>
         </div>
@@ -135,33 +139,41 @@
   </div>
 
   <script>
+    // ===== CONFIGURACIÓN SUPABASE =====
     const sbURL = 'https://btwrbjqvnwxxsyhipjta.supabase.co';
     const sbKEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ0d3JianF2bnd4eHN5aGlwanRhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ4NTc1NDgsImV4cCI6MjA5MDQzMzU0OH0.ZFItnsTbRkVSz4Ut7JH7iccOZZPxiycsK36KgYEG7Tk';
     
-    const sb = window.supabase.createClient(sbURL, sbKEY);
-    let allEvents = [];
+    const supabase = window.supabase.createClient(sbURL, sbKEY);
+    let eventos = [];
 
+    // ===== CARGAR EVENTOS =====
     async function cargarEventos() {
       try {
-        const { data, error } = await sb.from('events').select('*').order('event_date', { ascending: true });
-        
+        console.log('Cargando eventos...');
+        const { data, error } = await supabase
+          .from('events')
+          .select('*')
+          .order('event_date', { ascending: true });
+
         if (error) {
-          console.error('Error:', error);
-          return;
+          console.error('Error Supabase:', error);
+          throw error;
         }
 
-        allEvents = data || [];
+        eventos = data || [];
+        console.log('Eventos cargados:', eventos);
         mostrarEventos();
-      } catch (e) {
-        console.error('Error:', e);
+      } catch (error) {
+        console.error('Error:', error);
       }
     }
 
+    // ===== MOSTRAR EVENTOS =====
     function mostrarEventos() {
       const lista = document.getElementById('eventsList');
       const vacio = document.getElementById('emptyState');
 
-      if (allEvents.length === 0) {
+      if (eventos.length === 0) {
         lista.innerHTML = '';
         vacio.classList.remove('hidden');
         document.getElementById('eventCount').textContent = '0';
@@ -169,12 +181,12 @@
       }
 
       vacio.classList.add('hidden');
-      document.getElementById('eventCount').textContent = allEvents.length;
+      document.getElementById('eventCount').textContent = eventos.length;
 
-      lista.innerHTML = allEvents.map(evt => `
+      lista.innerHTML = eventos.map(evt => `
         <div class="bg-gradient-to-r from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-6">
           <div class="flex justify-between items-start mb-4">
-            <div>
+            <div class="flex-1">
               <h3 class="text-xl font-bold mb-2">${evt.event_name}</h3>
               <div class="space-y-1 text-gray-300 text-sm">
                 <p>📅 ${evt.event_date}${evt.event_time ? ' • ' + evt.event_time : ''}</p>
@@ -182,61 +194,119 @@
                 ${evt.description ? `<p>ℹ️ ${evt.description}</p>` : ''}
               </div>
             </div>
-            <button onclick="eliminarEvento('${evt.id}')" class="px-2 py-1 bg-red-600 hover:bg-red-700 rounded text-xs">🗑️</button>
+            <button onclick="eliminarEvento('${evt.id}')" class="px-2 py-1 bg-red-600 hover:bg-red-700 rounded text-xs font-bold ml-2">
+              🗑️
+            </button>
           </div>
           ${evt.ticket_link ? `<a href="${evt.ticket_link}" target="_blank" class="inline-block px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg font-bold text-sm">🎫 Entradas</a>` : ''}
         </div>
       `).join('');
     }
 
-    async function guardarEvento() {
-      const nombre = document.getElementById('inputEventName').value.trim();
-      const fecha = document.getElementById('inputEventDate').value;
-      const hora = document.getElementById('inputEventTime').value || null;
-      const ciudad = document.getElementById('inputEventCity').value.trim();
-      const lugar = document.getElementById('inputEventVenue').value.trim();
-      const ticket = document.getElementById('inputEventTicket').value.trim();
-      const desc = document.getElementById('inputEventDesc').value.trim();
+    // ===== ABRIR MODAL =====
+    function abrirModal() {
+      document.getElementById('modal').classList.remove('hidden');
+      limpiarFormulario();
+    }
 
-      if (!nombre || !fecha) {
-        alert('Rellena nombre y fecha');
+    // ===== CERRAR MODAL =====
+    function cerrarModal() {
+      document.getElementById('modal').classList.add('hidden');
+      limpiarFormulario();
+    }
+
+    // ===== LIMPIAR FORMULARIO =====
+    function limpiarFormulario() {
+      document.getElementById('eventName').value = '';
+      document.getElementById('eventDate').value = '';
+      document.getElementById('eventTime').value = '';
+      document.getElementById('eventCity').value = '';
+      document.getElementById('eventVenue').value = '';
+      document.getElementById('eventTicket').value = '';
+      document.getElementById('eventDesc').value = '';
+    }
+
+    // ===== GUARDAR EVENTO =====
+    async function guardarEvento() {
+      const nombre = document.getElementById('eventName').value.trim();
+      const fecha = document.getElementById('eventDate').value;
+      const hora = document.getElementById('eventTime').value || null;
+      const ciudad = document.getElementById('eventCity').value.trim();
+      const lugar = document.getElementById('eventVenue').value.trim();
+      const ticket = document.getElementById('eventTicket').value.trim();
+      const desc = document.getElementById('eventDesc').value.trim();
+
+      if (!nombre) {
+        alert('⚠️ Ingresa el nombre del lugar');
+        return;
+      }
+
+      if (!fecha) {
+        alert('⚠️ Ingresa la fecha');
         return;
       }
 
       try {
-        const { error } = await sb.from('events').insert([{
-          event_name: nombre,
-          event_date: fecha,
-          event_time: hora,
-          city: ciudad,
-          venue: lugar,
-          ticket_link: ticket,
-          description: desc
-        }]);
+        console.log('Guardando evento:', { nombre, fecha, hora, ciudad, lugar, ticket, desc });
 
-        if (error) throw error;
+        const { data, error } = await supabase
+          .from('events')
+          .insert([{
+            event_name: nombre,
+            event_date: fecha,
+            event_time: hora,
+            city: ciudad,
+            venue: lugar,
+            ticket_link: ticket,
+            description: desc
+          }])
+          .select();
 
-        document.getElementById('modalForm').classList.add('hidden');
-        cargarEventos();
-        alert('✅ Evento agregado');
-      } catch (e) {
-        alert('❌ Error: ' + e.message);
+        if (error) {
+          console.error('Error Supabase:', error);
+          throw error;
+        }
+
+        console.log('Evento guardado:', data);
+        cerrarModal();
+        await cargarEventos();
+        alert('✅ Evento agregado correctamente');
+      } catch (error) {
+        console.error('Error al guardar:', error);
+        alert('❌ Error: ' + (error.message || 'Error desconocido'));
       }
     }
 
+    // ===== ELIMINAR EVENTO =====
     async function eliminarEvento(id) {
-      if (!confirm('¿Eliminar?')) return;
+      if (!confirm('¿Estás seguro de que quieres eliminar este evento?')) {
+        return;
+      }
 
       try {
-        const { error } = await sb.from('events').delete().eq('id', id);
-        if (error) throw error;
-        cargarEventos();
-      } catch (e) {
-        alert('Error');
+        console.log('Eliminando evento con ID:', id);
+
+        const { error } = await supabase
+          .from('events')
+          .delete()
+          .eq('id', id);
+
+        if (error) {
+          console.error('Error Supabase:', error);
+          throw error;
+        }
+
+        console.log('Evento eliminado correctamente');
+        await cargarEventos();
+        alert('✅ Evento eliminado correctamente');
+      } catch (error) {
+        console.error('Error al eliminar:', error);
+        alert('❌ Error: ' + (error.message || 'Error desconocido'));
       }
     }
 
-    cargarEventos();
+    // ===== INICIALIZAR =====
+    document.addEventListener('DOMContentLoaded', cargarEventos);
   </script>
 </body>
 </html>
