@@ -3,426 +3,398 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VOLTUM - Preskit Profesional para DJs | Showcase tu Equipamiento</title>
-  <meta name="description" content="Crea tu preskit profesional en minutos. Muestra tu equipamiento Pioneer, eventos y contacto. Plataforma especializada para DJs profesionales.">
+  <title>VOLTUM - Tu Preskit Profesional para DJs</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-black text-white">
-  <!-- NAV -->
-  <nav class="fixed w-full top-0 z-50 bg-black/80 backdrop-blur border-b border-purple-500/20">
+<body class="bg-gradient-to-b from-black via-purple-900/20 to-black text-white">
+
+  <!-- NAVBAR -->
+  <nav class="bg-black/40 backdrop-blur border-b border-purple-500/20 sticky top-0 z-50">
     <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-      <div class="text-2xl font-black bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">⚡ VOLTUM</div>
-      <div class="flex gap-4">
-        <a href="/demo.html" class="text-gray-400 hover:text-white transition">Demo</a>
-        <a href="/login.html" class="px-6 py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold hover:opacity-90 transition">Ingresar</a>
+      <div class="text-3xl font-black bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">⚡ VOLTUM</div>
+      <div class="hidden md:flex gap-6">
+        <a href="#features" class="hover:text-purple-400 transition">Features</a>
+        <a href="#pricing" class="hover:text-purple-400 transition">Pricing</a>
+        <a href="#faq" class="hover:text-purple-400 transition">FAQ</a>
+      </div>
+      <div class="flex gap-3">
+        <a href="/login.html" class="px-4 py-2 border border-purple-500 rounded-lg font-bold text-sm hover:bg-purple-500/10">Ingresar</a>
+        <a href="/login.html" class="px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold text-sm">Crear Preskit</a>
       </div>
     </div>
   </nav>
 
   <!-- HERO SECTION -->
-  <section class="min-h-screen bg-gradient-to-b from-black via-purple-900/30 to-black pt-24 px-4 flex items-center">
-    <div class="max-w-6xl mx-auto w-full">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-        <!-- Left Content -->
-        <div>
-          <div class="inline-block mb-6 px-4 py-2 bg-purple-600/20 border border-purple-500/30 rounded-full">
-            <span class="text-sm font-bold text-purple-300">✨ Para DJs Profesionales</span>
-          </div>
+  <section class="max-w-6xl mx-auto px-4 py-24">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+      <!-- Texto -->
+      <div>
+        <h1 class="text-6xl font-black mb-6 bg-gradient-to-r from-purple-400 via-pink-500 to-purple-400 bg-clip-text text-transparent leading-tight">
+          Tu Preskit Profesional en 5 Minutos
+        </h1>
+        <p class="text-xl text-gray-300 mb-8 leading-relaxed">
+          ⭐ AQUÍ VA TU PROPUESTA DE VALOR ⭐
+          <br><br>
+          Ejemplo: "Consigue más bookings con un preskit que impresiona productores. Foto profesional, equipamiento visible, eventos publicados. Todo en una URL compartible."
+        </p>
+        <div class="flex gap-4">
+          <a href="/login.html" class="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold text-lg hover:opacity-90 transition inline-block">
+            🚀 Crear Mi Preskit Gratis
+          </a>
+          <a href="#demo" class="px-8 py-4 border border-purple-500 rounded-lg font-bold text-lg hover:bg-purple-500/10 transition inline-block">
+            👀 Ver Demo
+          </a>
+        </div>
+        <p class="text-sm text-gray-500 mt-6">✅ Sin tarjeta de crédito | ✅ 30 segundos de setup</p>
+      </div>
 
-          <h1 class="text-6xl md:text-7xl font-black mb-6 leading-tight">
-            Tu Preskit
-            <span class="bg-gradient-to-r from-purple-400 via-pink-500 to-purple-400 bg-clip-text text-transparent">Profesional</span>
-          </h1>
+      <!-- Imagen/Video -->
+      <div class="bg-gradient-to-br from-purple-600/30 to-pink-600/30 rounded-2xl p-8 border border-purple-500/30 text-center">
+        <i class="fas fa-image text-8xl text-purple-500 opacity-50 mb-4 block"></i>
+        <p class="text-gray-400">🖼️ AQUÍ VA: Imagen del preskit en acción O video 30 segundos</p>
+        <p class="text-xs text-gray-500 mt-4">Sube una captura de pantalla del preskit público mostrando la foto, equipos, galerías, etc</p>
+      </div>
+    </div>
+  </section>
 
-          <p class="text-xl text-gray-400 mb-8 leading-relaxed">
-            Crea tu preskit en minutos. Muestra tu equipamiento Pioneer, tus eventos y contacto. 
-            <span class="text-white font-bold">Los productores te encontrarán.</span>
+  <!-- PROBLEMA → SOLUCIÓN -->
+  <section class="bg-gray-900/50 border border-purple-500/10 my-20 py-20">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-4xl font-black text-center mb-16">¿Por qué necesitas un Preskit?</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Problema 1 -->
+        <div class="bg-gradient-to-br from-red-600/20 to-pink-600/20 border border-red-500/30 rounded-2xl p-8">
+          <div class="text-5xl mb-4">❌</div>
+          <h3 class="text-2xl font-bold mb-3">Sin Preskit</h3>
+          <p class="text-gray-300">
+            AQUÍ VA: Describe el problema sin preskit.
+            <br><br>
+            Ejemplo: "Los productores no saben quién eres, qué equipamiento tocas, ni dónde verte. Pierdes oportunidades de booking."
           </p>
-
-          <div class="flex flex-col sm:flex-row gap-4 mb-12">
-            <a href="/login.html" class="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold text-lg hover:opacity-90 transition text-center">
-              🚀 Crear Mi Preskit
-            </a>
-            <a href="/demo.html" class="px-8 py-4 border-2 border-purple-500 rounded-lg font-bold text-lg hover:bg-purple-500/10 transition text-center">
-              👀 Ver Demo
-            </a>
-          </div>
-
-          <div class="flex gap-8 text-gray-400 text-sm">
-            <div class="flex items-center gap-2">
-              <i class="fas fa-check text-purple-400"></i>
-              <span>Sin tarjeta requerida</span>
-            </div>
-            <div class="flex items-center gap-2">
-              <i class="fas fa-check text-purple-400"></i>
-              <span>5 min para crear</span>
-            </div>
-          </div>
         </div>
 
-        <!-- Right Content - Visual -->
-        <div class="hidden md:block">
-          <div class="relative">
-            <div class="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl blur-3xl opacity-20"></div>
-            <div class="relative bg-gradient-to-br from-purple-900/40 to-pink-900/40 border border-purple-500/30 rounded-2xl p-8">
-              <div class="space-y-4">
-                <div class="flex gap-3">
-                  <div class="w-32 h-32 rounded-full bg-gradient-to-br from-purple-600 to-pink-600"></div>
-                  <div class="flex-1 space-y-2">
-                    <div class="h-6 bg-purple-500/20 rounded w-3/4"></div>
-                    <div class="h-4 bg-purple-500/10 rounded w-1/2"></div>
-                    <div class="h-4 bg-purple-500/10 rounded w-2/3"></div>
-                  </div>
-                </div>
-                <div class="h-px bg-purple-500/20"></div>
-                <div class="grid grid-cols-3 gap-2">
-                  <div class="h-16 bg-purple-500/10 rounded flex items-center justify-center">🎛️</div>
-                  <div class="h-16 bg-purple-500/10 rounded flex items-center justify-center">📀</div>
-                  <div class="h-16 bg-purple-500/10 rounded flex items-center justify-center">🎚️</div>
-                </div>
-              </div>
-            </div>
-          </div>
+        <!-- Problema 2 -->
+        <div class="bg-gradient-to-br from-red-600/20 to-pink-600/20 border border-red-500/30 rounded-2xl p-8">
+          <div class="text-5xl mb-4">😞</div>
+          <h3 class="text-2xl font-bold mb-3">No Profesional</h3>
+          <p class="text-gray-300">
+            AQUÍ VA: El impacto de no ser profesional.
+            <br><br>
+            Ejemplo: "Sin perfil profesional, los productores no te toman en serio. Pierdes credibilidad y bookings."
+          </p>
+        </div>
+
+        <!-- Solución -->
+        <div class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-8">
+          <div class="text-5xl mb-4">✨</div>
+          <h3 class="text-2xl font-bold mb-3">Con VOLTUM</h3>
+          <p class="text-gray-300">
+            AQUÍ VA: La solución.
+            <br><br>
+            Ejemplo: "Preskit profesional en minutos. Foto, equipamiento, eventos, redes. Todo en un link compartible. Impresiona productores y consigue más bookings."
+          </p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- CARACTERÍSTICAS -->
-  <section class="py-20 px-4 bg-gradient-to-b from-black to-purple-900/20">
-    <div class="max-w-6xl mx-auto">
-      <div class="text-center mb-16">
-        <h2 class="text-4xl md:text-5xl font-black mb-4">¿Por qué VOLTUM?</h2>
-        <p class="text-gray-400 text-xl max-w-2xl mx-auto">Herramientas diseñadas específicamente para DJs profesionales</p>
+  <!-- FEATURES (6 CARDS) -->
+  <section id="features" class="max-w-6xl mx-auto px-4 py-20">
+    <h2 class="text-4xl font-black text-center mb-16">Lo que incluye VOLTUM</h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Feature 1 -->
+      <div class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-8 hover:border-purple-500/60 transition">
+        <div class="text-5xl mb-4">🎛️</div>
+        <h3 class="text-2xl font-bold mb-3">Equipamiento Pioneer</h3>
+        <p class="text-gray-300">Muestra qué equipamiento Pioneer tocas. Elige de 18+ modelos (DDJ-FLX6, CDJ-3000, etc).</p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <!-- Feature 1 -->
-        <div class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-8 hover:border-purple-500/60 transition">
-          <div class="text-5xl mb-4">👤</div>
-          <h3 class="text-2xl font-bold mb-3">Perfil Profesional</h3>
-          <p class="text-gray-400">Foto circular, bio, redes sociales y galería de 5 fotos. Todo lo que necesitas para impresionar.</p>
-        </div>
+      <!-- Feature 2 -->
+      <div class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-8 hover:border-purple-500/60 transition">
+        <div class="text-5xl mb-4">📸</div>
+        <h3 class="text-2xl font-bold mb-3">Galería Premium</h3>
+        <p class="text-gray-300">Sube hasta 5 fotos profesionales. Muestra tu talento en acción en eventos y estudios.</p>
+      </div>
 
-        <!-- Feature 2 -->
-        <div class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-8 hover:border-purple-500/60 transition">
-          <div class="text-5xl mb-4">🎛️</div>
-          <h3 class="text-2xl font-bold mb-3">Equipamiento Pioneer</h3>
-          <p class="text-gray-400">Muestra todos tus equipos: controladores, CDJs, mezcladores y accesorios. Destacate por tu equipamiento.</p>
-        </div>
+      <!-- Feature 3 -->
+      <div class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-8 hover:border-purple-500/60 transition">
+        <div class="text-5xl mb-4">📅</div>
+        <h3 class="text-2xl font-bold mb-3">Eventos en Vivo</h3>
+        <p class="text-gray-300">Publica tus próximas presentaciones con fecha, lugar y link de entradas.</p>
+      </div>
 
-        <!-- Feature 3 -->
-        <div class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-8 hover:border-purple-500/60 transition">
-          <div class="text-5xl mb-4">📅</div>
-          <h3 class="text-2xl font-bold mb-3">Gestión de Eventos</h3>
-          <p class="text-gray-400">Publica tus próximas presentaciones, venue, horario y link de entradas. Todo en un solo lugar.</p>
-        </div>
+      <!-- Feature 4 -->
+      <div class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-8 hover:border-purple-500/60 transition">
+        <div class="text-5xl mb-4">🌐</div>
+        <h3 class="text-2xl font-bold mb-3">Redes Integradas</h3>
+        <p class="text-gray-300">Conecta Instagram, WhatsApp, Spotify, YouTube, SoundCloud. Todo en un click.</p>
+      </div>
 
-        <!-- Feature 4 -->
-        <div class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-8 hover:border-purple-500/60 transition">
-          <div class="text-5xl mb-4">🔗</div>
-          <h3 class="text-2xl font-bold mb-3">URL Personalizada</h3>
-          <p class="text-gray-400">Comparte tu preskit: voltum.cl/dj/tu-nombre. Perfecto para redes sociales y contactos.</p>
-        </div>
+      <!-- Feature 5 -->
+      <div class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-8 hover:border-purple-500/60 transition">
+        <div class="text-5xl mb-4">📊</div>
+        <h3 class="text-2xl font-bold mb-3">Analytics</h3>
+        <p class="text-gray-300">Ve cuántas personas visitan tu preskit y hacen click en tus redes sociales.</p>
+      </div>
 
-        <!-- Feature 5 -->
-        <div class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-8 hover:border-purple-500/60 transition">
-          <div class="text-5xl mb-4">📊</div>
-          <h3 class="text-2xl font-bold mb-3">Estadísticas</h3>
-          <p class="text-gray-400">Ve cuántas personas visitan tu preskit, clicks en tus redes y eventos próximos.</p>
-        </div>
-
-        <!-- Feature 6 -->
-        <div class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-8 hover:border-purple-500/60 transition">
-          <div class="text-5xl mb-4">⚡</div>
-          <h3 class="text-2xl font-bold mb-3">Súper Rápido</h3>
-          <p class="text-gray-400">Edita tu preskit en segundos. Sin complicaciones. Los cambios se actualizan al instante.</p>
-        </div>
+      <!-- Feature 6 -->
+      <div class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-8 hover:border-purple-500/60 transition">
+        <div class="text-5xl mb-4">🎫</div>
+        <h3 class="text-2xl font-bold mb-3">Link Compartible</h3>
+        <p class="text-gray-300">Un URL fácil de recordar. Comparte en WhatsApp, Instagram, TikTok, emails.</p>
       </div>
     </div>
   </section>
 
-  <!-- CÓMO FUNCIONA -->
-  <section class="py-20 px-4">
-    <div class="max-w-6xl mx-auto">
-      <div class="text-center mb-16">
-        <h2 class="text-4xl md:text-5xl font-black mb-4">3 Pasos Simples</h2>
-        <p class="text-gray-400 text-xl">Crea tu preskit en menos de 5 minutos</p>
+  <!-- DEMO PRESKIT -->
+  <section id="demo" class="bg-gray-900/50 border border-purple-500/10 py-20 my-20">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+      <h2 class="text-4xl font-black mb-8">Mira tu Preskit en Acción</h2>
+      
+      <div class="bg-gradient-to-br from-purple-600/30 to-pink-600/30 rounded-2xl border border-purple-500/30 overflow-hidden mb-8">
+        <img src="https://via.placeholder.com/800x450" alt="Demo Preskit" class="w-full">
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="relative">
-          <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
-            <div class="w-16 h-16 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center text-2xl font-black">1</div>
-          </div>
-          <div class="bg-gradient-to-br from-purple-600/10 to-pink-600/10 border border-purple-500/20 rounded-2xl p-8 pt-12 text-center">
-            <h3 class="text-2xl font-bold mb-3">Crea tu Cuenta</h3>
-            <p class="text-gray-400">Email, usuario y contraseña. Sin verificaciones complicadas.</p>
-          </div>
-        </div>
+      <p class="text-gray-400 mb-8 text-lg">
+        AQUÍ VA: Descripción de lo que se ve en la demo.
+        <br><br>
+        Ejemplo: "Este es el preskit de DJ Phoenix. Foto profesional, bio, equipamiento (DDJ-FLX6, CDJ-3000), galería de fotos, redes sociales, próximos eventos y estadísticas de visitas."
+      </p>
 
-        <div class="relative">
-          <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
-            <div class="w-16 h-16 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center text-2xl font-black">2</div>
-          </div>
-          <div class="bg-gradient-to-br from-purple-600/10 to-pink-600/10 border border-purple-500/20 rounded-2xl p-8 pt-12 text-center">
-            <h3 class="text-2xl font-bold mb-3">Paga tu Suscripción</h3>
-            <p class="text-gray-400">$10.000 CLP/mes. Acceso completo a todas las herramientas.</p>
-          </div>
-        </div>
-
-        <div class="relative">
-          <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
-            <div class="w-16 h-16 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center text-2xl font-black">3</div>
-          </div>
-          <div class="bg-gradient-to-br from-purple-600/10 to-pink-600/10 border border-purple-500/20 rounded-2xl p-8 pt-12 text-center">
-            <h3 class="text-2xl font-bold mb-3">¡Listo! Comparte</h3>
-            <p class="text-gray-400">Edita tu perfil y comparte tu URL. Los productores te encontrarán.</p>
-          </div>
-        </div>
-      </div>
+      <a href="/demo.html" class="px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold text-lg hover:opacity-90 transition inline-block">
+        👀 Ver Ejemplo en Vivo
+      </a>
     </div>
   </section>
 
-  <!-- PRECIOS -->
-  <section class="py-20 px-4 bg-gradient-to-b from-black to-purple-900/20">
-    <div class="max-w-4xl mx-auto">
-      <div class="text-center mb-16">
-        <h2 class="text-4xl md:text-5xl font-black mb-4">Simple y Transparente</h2>
-        <p class="text-gray-400 text-xl">Un único plan para todos los DJs</p>
+  <!-- PRICING -->
+  <section id="pricing" class="max-w-4xl mx-auto px-4 py-20">
+    <h2 class="text-4xl font-black text-center mb-16">Pricing Simple</h2>
+    
+    <div class="bg-gradient-to-br from-purple-600/30 to-pink-600/30 border border-purple-500/30 rounded-2xl p-12 text-center">
+      <h3 class="text-3xl font-bold mb-4">Plan PRO</h3>
+      <div class="text-6xl font-black text-pink-400 mb-4">$10.000</div>
+      <p class="text-gray-400 mb-8 text-lg">CLP / mes</p>
+
+      <div class="text-left mb-8 space-y-3">
+        <p class="flex items-center gap-3"><i class="fas fa-check text-green-400"></i> Todo ilimitado</p>
+        <p class="flex items-center gap-3"><i class="fas fa-check text-green-400"></i> Foto de perfil y galería</p>
+        <p class="flex items-center gap-3"><i class="fas fa-check text-green-400"></i> Equipamiento Pioneer</p>
+        <p class="flex items-center gap-3"><i class="fas fa-check text-green-400"></i> Gestión de eventos</p>
+        <p class="flex items-center gap-3"><i class="fas fa-check text-green-400"></i> Redes sociales integradas</p>
+        <p class="flex items-center gap-3"><i class="fas fa-check text-green-400"></i> Analytics de visitas</p>
+        <p class="flex items-center gap-3"><i class="fas fa-check text-green-400"></i> Cancelable cuando quieras</p>
       </div>
 
-      <div class="bg-gradient-to-br from-purple-600/30 to-pink-600/30 border border-purple-500/30 rounded-2xl p-12">
-        <div class="text-center mb-8">
-          <h3 class="text-4xl font-black mb-4">Plan PRO</h3>
-          <div class="flex items-baseline justify-center gap-2">
-            <span class="text-6xl font-black">$10.000</span>
-            <span class="text-gray-400 text-lg">CLP/mes</span>
-          </div>
-        </div>
+      <a href="/login.html" class="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold text-lg hover:opacity-90 transition w-full block">
+        🚀 Comenzar Ahora - $10.000 CLP/mes
+      </a>
 
-        <div class="border-t border-purple-500/30 my-8"></div>
-
-        <div class="space-y-4 mb-12">
-          <div class="flex items-center gap-3">
-            <i class="fas fa-check text-purple-400 text-lg"></i>
-            <span>Preskit completo con foto y bio</span>
-          </div>
-          <div class="flex items-center gap-3">
-            <i class="fas fa-check text-purple-400 text-lg"></i>
-            <span>Galería de 5 fotos</span>
-          </div>
-          <div class="flex items-center gap-3">
-            <i class="fas fa-check text-purple-400 text-lg"></i>
-            <span>Mostrar equipamiento Pioneer</span>
-          </div>
-          <div class="flex items-center gap-3">
-            <i class="fas fa-check text-purple-400 text-lg"></i>
-            <span>Gestión de eventos y fechas</span>
-          </div>
-          <div class="flex items-center gap-3">
-            <i class="fas fa-check text-purple-400 text-lg"></i>
-            <span>Redes sociales integradas</span>
-          </div>
-          <div class="flex items-center gap-3">
-            <i class="fas fa-check text-purple-400 text-lg"></i>
-            <span>URL personalizada</span>
-          </div>
-          <div class="flex items-center gap-3">
-            <i class="fas fa-check text-purple-400 text-lg"></i>
-            <span>Estadísticas de visitas</span>
-          </div>
-          <div class="flex items-center gap-3">
-            <i class="fas fa-check text-purple-400 text-lg"></i>
-            <span>Renovación automática</span>
-          </div>
-        </div>
-
-        <a href="/login.html" class="w-full py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold text-lg hover:opacity-90 transition block text-center">
-          Empezar Ahora
-        </a>
-
-        <p class="text-center text-gray-400 text-sm mt-6">Cancelar en cualquier momento. Sin preguntas.</p>
-      </div>
+      <p class="text-gray-500 text-sm mt-6">AQUÍ VA: Garantía de dinero de vuelta / Prueba gratis / Sin tarjeta</p>
     </div>
   </section>
 
   <!-- TESTIMONIOS -->
-  <section class="py-20 px-4">
-    <div class="max-w-6xl mx-auto">
-      <div class="text-center mb-16">
-        <h2 class="text-4xl md:text-5xl font-black mb-4">Confían en VOLTUM</h2>
-        <p class="text-gray-400 text-xl">DJs profesionales de toda Chile</p>
-      </div>
-
+  <section class="bg-gray-900/50 border border-purple-500/10 py-20 my-20">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-4xl font-black text-center mb-16">Lo que dicen los DJs</h2>
+      
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <!-- Testimonio 1 -->
         <div class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-8">
-          <div class="flex gap-1 mb-4">
-            <i class="fas fa-star text-yellow-400"></i>
-            <i class="fas fa-star text-yellow-400"></i>
-            <i class="fas fa-star text-yellow-400"></i>
-            <i class="fas fa-star text-yellow-400"></i>
-            <i class="fas fa-star text-yellow-400"></i>
-          </div>
-          <p class="text-gray-300 mb-6">"VOLTUM me ayudó a conseguir 3 gigs nuevos el mes pasado. Mi preskit se ve profesional y los promoters me contactan directo."</p>
-          <div class="flex items-center gap-3">
-            <div class="w-12 h-12 bg-gradient-to-br from-purple-600 to-pink-600 rounded-full"></div>
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center">
+              <i class="fas fa-user text-2xl"></i>
+            </div>
             <div>
-              <p class="font-bold">DJ Phoenix</p>
-              <p class="text-gray-400 text-sm">Santiago</p>
+              <h4 class="font-bold">AQUÍ VA: Nombre DJ 1</h4>
+              <p class="text-sm text-gray-400">@dj_handle</p>
             </div>
           </div>
+          <p class="text-gray-300 mb-4">
+            "AQUÍ VA: Testimonial real"
+            <br><br>
+            Ejemplo: "Con VOLTUM conseguí 5 bookings en 2 semanas. Los productores vieron mi preskit profesional y me contactaron directamente. Muy recomendado."
+          </p>
+          <div class="text-yellow-400">⭐⭐⭐⭐⭐</div>
         </div>
 
         <!-- Testimonio 2 -->
         <div class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-8">
-          <div class="flex gap-1 mb-4">
-            <i class="fas fa-star text-yellow-400"></i>
-            <i class="fas fa-star text-yellow-400"></i>
-            <i class="fas fa-star text-yellow-400"></i>
-            <i class="fas fa-star text-yellow-400"></i>
-            <i class="fas fa-star text-yellow-400"></i>
-          </div>
-          <p class="text-gray-300 mb-6">"Mejor inversión que he hecho. Es muy fácil de usar y muestra mi equipamiento Pioneer de forma profesional."</p>
-          <div class="flex items-center gap-3">
-            <div class="w-12 h-12 bg-gradient-to-br from-purple-600 to-pink-600 rounded-full"></div>
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center">
+              <i class="fas fa-user text-2xl"></i>
+            </div>
             <div>
-              <p class="font-bold">DJ Sonic</p>
-              <p class="text-gray-400 text-sm">Valparaíso</p>
+              <h4 class="font-bold">AQUÍ VA: Nombre DJ 2</h4>
+              <p class="text-sm text-gray-400">@dj_handle</p>
             </div>
           </div>
+          <p class="text-gray-300 mb-4">
+            "AQUÍ VA: Testimonial real"
+            <br><br>
+            Ejemplo: "Súper fácil de usar. En 5 minutos tenía mi preskit listo. Mis seguidores lo compartieron y conseguí visibilidad."
+          </p>
+          <div class="text-yellow-400">⭐⭐⭐⭐⭐</div>
         </div>
 
         <!-- Testimonio 3 -->
         <div class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-8">
-          <div class="flex gap-1 mb-4">
-            <i class="fas fa-star text-yellow-400"></i>
-            <i class="fas fa-star text-yellow-400"></i>
-            <i class="fas fa-star text-yellow-400"></i>
-            <i class="fas fa-star text-yellow-400"></i>
-            <i class="fas fa-star text-yellow-400"></i>
-          </div>
-          <p class="text-gray-300 mb-6">"Mis eventos aparecen siempre actualizados y recibo más consultas de promoters. Definitivamente vale los $10K."</p>
-          <div class="flex items-center gap-3">
-            <div class="w-12 h-12 bg-gradient-to-br from-purple-600 to-pink-600 rounded-full"></div>
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center">
+              <i class="fas fa-user text-2xl"></i>
+            </div>
             <div>
-              <p class="font-bold">DJ Neon</p>
-              <p class="text-gray-400 text-sm">Concepción</p>
+              <h4 class="font-bold">AQUÍ VA: Nombre DJ 3</h4>
+              <p class="text-sm text-gray-400">@dj_handle</p>
             </div>
           </div>
+          <p class="text-gray-300 mb-4">
+            "AQUÍ VA: Testimonial real"
+            <br><br>
+            Ejemplo: "Lo mejor es que se ve profesional sin gastar en un desarrollador. VOLTUM me ayudó a crecer como marca."
+          </p>
+          <div class="text-yellow-400">⭐⭐⭐⭐⭐</div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- FAQ -->
-  <section class="py-20 px-4 bg-gradient-to-b from-black to-purple-900/20">
-    <div class="max-w-3xl mx-auto">
-      <div class="text-center mb-16">
-        <h2 class="text-4xl md:text-5xl font-black mb-4">Preguntas Frecuentes</h2>
-      </div>
+  <section id="faq" class="max-w-4xl mx-auto px-4 py-20">
+    <h2 class="text-4xl font-black text-center mb-16">Preguntas Frecuentes</h2>
+    
+    <div class="space-y-4">
+      <!-- FAQ 1 -->
+      <details class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-6 cursor-pointer group">
+        <summary class="font-bold text-lg flex justify-between items-center">
+          ¿Cuánto cuesta VOLTUM?
+          <i class="fas fa-chevron-down group-open:rotate-180 transition"></i>
+        </summary>
+        <p class="text-gray-300 mt-4">
+          AQUÍ VA: Respuesta. Ejemplo: "$10.000 CLP al mes. Puedes cancelar cuando quieras, sin compromiso."
+        </p>
+      </details>
 
-      <div class="space-y-6">
-        <details class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-6 cursor-pointer group">
-          <summary class="flex items-center justify-between font-bold text-lg">
-            <span>¿Puedo cancelar en cualquier momento?</span>
-            <i class="fas fa-chevron-down group-open:rotate-180 transition"></i>
-          </summary>
-          <p class="text-gray-400 mt-4">Sí, puedes cancelar tu suscripción cuando quieras. No hay contratos ni penalizaciones. Tu preskit permanecerá activo hasta fin del mes.</p>
-        </details>
+      <!-- FAQ 2 -->
+      <details class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-6 cursor-pointer group">
+        <summary class="font-bold text-lg flex justify-between items-center">
+          ¿Puedo cancelar cuando quiera?
+          <i class="fas fa-chevron-down group-open:rotate-180 transition"></i>
+        </summary>
+        <p class="text-gray-300 mt-4">
+          AQUÍ VA: Respuesta. Ejemplo: "Sí. Sin problemas, sin penalizaciones. Solo cancela tu suscripción y listo."
+        </p>
+      </details>
 
-        <details class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-6 cursor-pointer group">
-          <summary class="flex items-center justify-between font-bold text-lg">
-            <span>¿Qué métodos de pago aceptan?</span>
-            <i class="fas fa-chevron-down group-open:rotate-180 transition"></i>
-          </summary>
-          <p class="text-gray-400 mt-4">Aceptamos todas las tarjetas de crédito/débito (Visa, Mastercard, etc) a través de Stripe. El pago se realiza de forma segura.</p>
-        </details>
+      <!-- FAQ 3 -->
+      <details class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-6 cursor-pointer group">
+        <summary class="font-bold text-lg flex justify-between items-center">
+          ¿Cuántas fotos puedo subir?
+          <i class="fas fa-chevron-down group-open:rotate-180 transition"></i>
+        </summary>
+        <p class="text-gray-300 mt-4">
+          AQUÍ VA: Respuesta. Ejemplo: "Hasta 5 fotos en la galería. Puedes cambiarlas cuando quieras."
+        </p>
+      </details>
 
-        <details class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-6 cursor-pointer group">
-          <summary class="flex items-center justify-between font-bold text-lg">
-            <span>¿Cuántos equipos Pioneer puedo mostrar?</span>
-            <i class="fas fa-chevron-down group-open:rotate-180 transition"></i>
-          </summary>
-          <p class="text-gray-400 mt-4">Puedes agregar todos los equipos que tengas: controladores, CDJs, mezcladores y accesorios. Sin límite de cantidad.</p>
-        </details>
+      <!-- FAQ 4 -->
+      <details class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-6 cursor-pointer group">
+        <summary class="font-bold text-lg flex justify-between items-center">
+          ¿Necesito tarjeta de crédito para probar?
+          <i class="fas fa-chevron-down group-open:rotate-180 transition"></i>
+        </summary>
+        <p class="text-gray-300 mt-4">
+          AQUÍ VA: Respuesta. Ejemplo: "No. Puedes crear tu perfil gratis. Solo necesitas tarjeta para la suscripción PRO."
+        </p>
+      </details>
 
-        <details class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-6 cursor-pointer group">
-          <summary class="flex items-center justify-between font-bold text-lg">
-            <span>¿Mi preskit es visible en Google?</span>
-            <i class="fas fa-chevron-down group-open:rotate-180 transition"></i>
-          </summary>
-          <p class="text-gray-400 mt-4">Sí, todos los preskit son públicos y optimizados para buscadores. Los productores pueden encontrarte en Google.</p>
-        </details>
+      <!-- FAQ 5 -->
+      <details class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-6 cursor-pointer group">
+        <summary class="font-bold text-lg flex justify-between items-center">
+          ¿Qué equipamiento Pioneer está disponible?
+          <i class="fas fa-chevron-down group-open:rotate-180 transition"></i>
+        </summary>
+        <p class="text-gray-300 mt-4">
+          AQUÍ VA: Respuesta. Ejemplo: "Tenemos 18+ modelos: DDJ-1000, DDJ-FLX6, CDJ-3000, DJM-900NXS2, y más. Si falta alguno, contáctanos."
+        </p>
+      </details>
 
-        <details class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-6 cursor-pointer group">
-          <summary class="flex items-center justify-between font-bold text-lg">
-            <span>¿Puedo cambiar mi username después?</span>
-            <i class="fas fa-chevron-down group-open:rotate-180 transition"></i>
-          </summary>
-          <p class="text-gray-400 mt-4">Por ahora el username es permanente. Te recomendamos elegir uno que te guste desde el inicio.</p>
-        </details>
-      </div>
+      <!-- FAQ 6 -->
+      <details class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-6 cursor-pointer group">
+        <summary class="font-bold text-lg flex justify-between items-center">
+          ¿Se ve bien en móvil?
+          <i class="fas fa-chevron-down group-open:rotate-180 transition"></i>
+        </summary>
+        <p class="text-gray-300 mt-4">
+          AQUÍ VA: Respuesta. Ejemplo: "100% responsive. Se ve perfecto en móvil, tablet y desktop. Tus visitantes verán todo bien."
+        </p>
+      </details>
     </div>
   </section>
 
   <!-- CTA FINAL -->
-  <section class="py-20 px-4">
-    <div class="max-w-4xl mx-auto text-center">
-      <h2 class="text-5xl md:text-6xl font-black mb-6">¿Listo para Despegar?</h2>
-      <p class="text-gray-400 text-xl mb-10">Únete a los DJs profesionales que ya usan VOLTUM</p>
-      
-      <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-        <a href="/login.html" class="px-10 py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold text-lg hover:opacity-90 transition">
-          🚀 Crear Preskit Gratis
-        </a>
-        <a href="/demo.html" class="px-10 py-4 border-2 border-purple-500 rounded-lg font-bold text-lg hover:bg-purple-500/10 transition">
-          👀 Ver Preskit Demo
-        </a>
-      </div>
-
-      <p class="text-gray-500 text-sm">No requiere tarjeta de crédito para la cuenta. Pagas solo si quieres la suscripción.</p>
-    </div>
+  <section class="bg-gradient-to-r from-purple-600/30 to-pink-600/30 border border-purple-500/30 rounded-2xl p-16 text-center my-20">
+    <h2 class="text-4xl font-black mb-6">
+      AQUÍ VA: Pregunta motivadora
+      <br>
+      Ejemplo: "¿Listo para impulsar tu carrera como DJ?"
+    </h2>
+    <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+      AQUÍ VA: Última propuesta de valor.
+      <br><br>
+      Ejemplo: "Miles de productores buscan DJs con preskit profesional. No pierdas más oportunidades. Crea tu preskit en 5 minutos."
+    </p>
+    <a href="/login.html" class="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold text-lg hover:opacity-90 transition inline-block">
+      ⚡ Crear Mi Preskit Ahora
+    </a>
   </section>
 
   <!-- FOOTER -->
-  <footer class="border-t border-purple-500/20 py-12 px-4">
-    <div class="max-w-6xl mx-auto">
+  <footer class="bg-black/50 border-t border-purple-500/20 py-12">
+    <div class="max-w-6xl mx-auto px-4">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        <!-- Logo -->
         <div>
           <div class="text-2xl font-black bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent mb-4">⚡ VOLTUM</div>
-          <p class="text-gray-500 text-sm">Preskit profesional para DJs</p>
+          <p class="text-gray-500">Tu preskit profesional en minutos.</p>
         </div>
+
+        <!-- Links -->
         <div>
-          <p class="font-bold mb-4">Producto</p>
-          <div class="space-y-2 text-gray-500 text-sm">
-            <p><a href="/demo.html" class="hover:text-white transition">Demo</a></p>
-            <p><a href="/login.html" class="hover:text-white transition">Crear Cuenta</a></p>
-            <p><a href="#" class="hover:text-white transition">Precios</a></p>
-          </div>
+          <h4 class="font-bold mb-4">Producto</h4>
+          <ul class="space-y-2 text-gray-500">
+            <li><a href="#features" class="hover:text-purple-400">Features</a></li>
+            <li><a href="#pricing" class="hover:text-purple-400">Pricing</a></li>
+            <li><a href="/demo.html" class="hover:text-purple-400">Demo</a></li>
+          </ul>
         </div>
+
+        <!-- Soporte -->
         <div>
-          <p class="font-bold mb-4">Legal</p>
-          <div class="space-y-2 text-gray-500 text-sm">
-            <p><a href="#" class="hover:text-white transition">Términos</a></p>
-            <p><a href="#" class="hover:text-white transition">Privacidad</a></p>
-            <p><a href="#" class="hover:text-white transition">Contacto</a></p>
-          </div>
+          <h4 class="font-bold mb-4">Soporte</h4>
+          <ul class="space-y-2 text-gray-500">
+            <li><a href="#faq" class="hover:text-purple-400">FAQ</a></li>
+            <li><a href="mailto:info@voltum.cl" class="hover:text-purple-400">Contacto</a></li>
+          </ul>
         </div>
+
+        <!-- Redes -->
         <div>
-          <p class="font-bold mb-4">Síguenos</p>
+          <h4 class="font-bold mb-4">Síguenos</h4>
           <div class="flex gap-4">
-            <a href="#" class="text-gray-500 hover:text-white transition"><i class="fab fa-instagram text-xl"></i></a>
-            <a href="#" class="text-gray-500 hover:text-white transition"><i class="fab fa-twitter text-xl"></i></a>
-            <a href="#" class="text-gray-500 hover:text-white transition"><i class="fab fa-youtube text-xl"></i></a>
+            <a href="https://instagram.com" class="text-gray-500 hover:text-purple-400 text-2xl"><i class="fab fa-instagram"></i></a>
+            <a href="https://twitter.com" class="text-gray-500 hover:text-purple-400 text-2xl"><i class="fab fa-twitter"></i></a>
+            <a href="https://youtube.com" class="text-gray-500 hover:text-purple-400 text-2xl"><i class="fab fa-youtube"></i></a>
           </div>
         </div>
       </div>
 
       <div class="border-t border-purple-500/20 pt-8 text-center text-gray-500 text-sm">
-        <p>&copy; 2025 VOLTUM. Todos los derechos reservados. | Hecho con ❤️ para DJs profesionales</p>
+        <p>&copy; 2025 VOLTUM. Todos los derechos reservados.</p>
       </div>
     </div>
   </footer>
