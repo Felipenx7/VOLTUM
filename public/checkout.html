@@ -126,7 +126,6 @@
 
           alert('✅ ¡PAGO EXITOSO!\n\nTu suscripción PRO está ACTIVADA.\nAcceso completo a tu dashboard.');
           
-          // Redirect con pequeño delay
           setTimeout(() => {
             window.location.replace('/dashboard.html');
           }, 500);
@@ -139,7 +138,6 @@
       }
     });
 
-    // Verificar al cargar
     window.addEventListener('load', function() {
       const user = JSON.parse(localStorage.getItem('voltum_user') || 'null');
       if (user && user.subscription && user.subscription.active) {
