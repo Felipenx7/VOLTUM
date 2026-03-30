@@ -6,17 +6,16 @@
   <title>Dashboard - VOLTUM</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body class="bg-gradient-to-b from-black via-purple-900/20 to-black text-white">
   <div class="min-h-screen">
     <nav class="bg-black/40 backdrop-blur border-b border-purple-500/20 sticky top-0 z-50">
       <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
         <div class="text-2xl font-black bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">⚡ VOLTUM</div>
-        <div class="flex gap-4 items-center">
+        <div class="flex gap-4">
           <span class="text-sm" id="userName">DJ</span>
-          <a href="/preskit-demo.html" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg font-bold text-sm">👁️ Ver Preskit</a>
-          <button onclick="logout()" class="px-4 py-2 border border-purple-500 rounded-lg font-bold text-sm hover:bg-purple-500/10">Salir</button>
+          <a href="/preskit-demo.html" class="px-4 py-2 bg-purple-600 rounded-lg font-bold text-sm">👁️ Ver</a>
+          <button onclick="logout()" class="px-4 py-2 border border-purple-500 rounded-lg font-bold text-sm">Salir</button>
         </div>
       </div>
     </nav>
@@ -26,191 +25,129 @@
       
       <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
         <div class="bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-2xl p-6">
-          <div class="text-gray-400 text-sm mb-2">Total de Visitas</div>
-          <div class="text-4xl font-black mb-2">1250</div>
-          <div class="text-green-400 text-sm">↑ 12% esta semana</div>
+          <div class="text-gray-400 text-sm">Visitas</div>
+          <div class="text-4xl font-black">1.250</div>
         </div>
-
         <div class="bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-2xl p-6">
-          <div class="text-gray-400 text-sm mb-2">Visitantes Únicos</div>
-          <div class="text-4xl font-black mb-2">342</div>
-          <div class="text-green-400 text-sm">↑ 8% esta semana</div>
+          <div class="text-gray-400 text-sm">Visitantes</div>
+          <div class="text-4xl font-black">342</div>
         </div>
-
         <div class="bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-2xl p-6">
-          <div class="text-gray-400 text-sm mb-2">Clicks en Redes</div>
-          <div class="text-4xl font-black mb-2">156</div>
-          <div class="text-green-400 text-sm">↑ 5 hoy</div>
+          <div class="text-gray-400 text-sm">Clicks</div>
+          <div class="text-4xl font-black">156</div>
         </div>
-
         <div class="bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-2xl p-6">
-          <div class="text-gray-400 text-sm mb-2">Próximas Presentaciones</div>
-          <div class="text-4xl font-black mb-2" id="eventCount">0</div>
-          <div class="text-blue-400 text-sm">Este mes</div>
-        </div>
-      </div>
-
-      <div class="bg-gray-900/50 border border-purple-500/20 rounded-2xl p-6 mb-12">
-        <h2 class="text-2xl font-bold mb-4">📈 Últimos 30 días</h2>
-        <div class="h-48 bg-gray-800/30 rounded-lg border border-purple-500/20 flex items-center justify-center">
-          <div class="text-center text-gray-400">
-            <i class="fas fa-chart-line text-4xl mb-2 block"></i>
-            <p>Gráfico de visitas</p>
-            <p class="text-sm">(Función disponible en Plan Pro)</p>
-          </div>
+          <div class="text-gray-400 text-sm">Eventos</div>
+          <div class="text-4xl font-black" id="eventCount">0</div>
         </div>
       </div>
 
       <div class="mb-12">
         <div class="flex justify-between items-center mb-8">
           <h2 class="text-3xl font-bold">📅 Mis Presentaciones</h2>
-          <button class="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold hover:opacity-90 transition" onclick="abrirModal()">
-            + Agregar Evento
-          </button>
+          <button class="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold" onclick="showModal()">+ Agregar</button>
         </div>
 
         <div id="eventsList" class="space-y-4"></div>
-
         <div id="emptyState" class="bg-gray-900/50 border border-purple-500/20 rounded-2xl p-12 text-center">
           <i class="fas fa-calendar text-6xl text-purple-500 mb-4 block"></i>
-          <p class="text-gray-400 mb-4">No tienes presentaciones programadas aún</p>
-          <button class="px-6 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg font-bold" onclick="abrirModal()">
-            Agregar primera presentación
-          </button>
+          <p class="text-gray-400 mb-4">Sin presentaciones</p>
+          <button class="px-6 py-2 bg-purple-600 rounded-lg font-bold" onclick="showModal()">Agregar</button>
         </div>
       </div>
     </div>
   </div>
 
   <div id="modal" class="hidden fixed inset-0 bg-black/50 backdrop-blur flex items-center justify-center z-50 p-4">
-    <div class="bg-gray-900 border border-purple-500/30 rounded-2xl p-8 max-w-md w-full max-h-[90vh] overflow-y-auto">
-      <h2 class="text-2xl font-bold mb-6">📅 Agregar Presentación</h2>
-
+    <div class="bg-gray-900 border border-purple-500/30 rounded-2xl p-8 max-w-md w-full">
+      <h2 class="text-2xl font-bold mb-6">Agregar Evento</h2>
       <div class="space-y-4">
-        <input type="text" id="eventName" placeholder="Nombre del Lugar" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
+        <input type="text" id="eventName" placeholder="Nombre" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
         <input type="date" id="eventDate" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
         <input type="time" id="eventTime" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
         <input type="text" id="eventCity" placeholder="Ciudad" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
-        <input type="text" id="eventVenue" placeholder="Lugar (Venue)" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
-        <input type="url" id="eventTicket" placeholder="Link de Entradas" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white text-sm">
-        <textarea id="eventDesc" placeholder="Descripción..." class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white h-20"></textarea>
-
-        <div class="flex gap-3 pt-4">
-          <button onclick="cerrarModal()" class="flex-1 px-4 py-2 border border-purple-500 rounded-lg font-bold hover:bg-purple-500/10 transition">Cancelar</button>
-          <button onclick="guardarEvento()" class="flex-1 px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold hover:opacity-90 transition">Guardar</button>
+        <input type="text" id="eventVenue" placeholder="Lugar" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white">
+        <input type="url" id="eventTicket" placeholder="Link entradas" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white text-sm">
+        <div class="flex gap-3">
+          <button onclick="closeModal()" class="flex-1 px-4 py-2 border border-purple-500 rounded-lg font-bold">Cancelar</button>
+          <button onclick="saveEvent()" class="flex-1 px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold">Guardar</button>
         </div>
       </div>
     </div>
   </div>
 
   <script>
-    const sbURL = 'https://btwrbjqvnwxxsyhipjta.supabase.co';
-    const sbKEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ0d3JianF2bnd4eHN5aGlwanRhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ4NTc1NDgsImV4cCI6MjA5MDQzMzU0OH0.ZFItnsTbRkVSz4Ut7JH7iccOZZPxiycsK36KgYEG7Tk';
-    const supabase = window.supabase.createClient(sbURL, sbKEY);
-
     let user = null;
     let eventos = [];
 
-    async function cargarEventos() {
-      try {
-        const { data, error } = await supabase.from('events').select('*').eq('user_id', user.id).order('event_date', { ascending: true });
-        if (error) throw error;
-        eventos = data || [];
-        mostrarEventos();
-      } catch (e) {
-        console.error('Error:', e);
-      }
+    function loadData() {
+      user = JSON.parse(localStorage.getItem('voltum_user'));
+      if (!user) { window.location.href = '/login.html'; return; }
+      
+      document.getElementById('userName').textContent = user.artist_name || user.username;
+      
+      const stored = localStorage.getItem(`eventos_${user.id}`);
+      eventos = stored ? JSON.parse(stored) : [];
+      renderEventos();
     }
 
-    function mostrarEventos() {
-      const lista = document.getElementById('eventsList');
-      const vacio = document.getElementById('emptyState');
+    function renderEventos() {
+      const list = document.getElementById('eventsList');
+      const empty = document.getElementById('emptyState');
 
       if (eventos.length === 0) {
-        lista.innerHTML = '';
-        vacio.classList.remove('hidden');
+        list.innerHTML = '';
+        empty.classList.remove('hidden');
         document.getElementById('eventCount').textContent = '0';
         return;
       }
 
-      vacio.classList.add('hidden');
+      empty.classList.add('hidden');
       document.getElementById('eventCount').textContent = eventos.length;
 
-      lista.innerHTML = eventos.map(evt => `
+      list.innerHTML = eventos.map((e, i) => `
         <div class="bg-gradient-to-r from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-6">
-          <div class="flex justify-between items-start mb-4">
-            <div class="flex-1">
-              <h3 class="text-xl font-bold mb-2">${evt.event_name}</h3>
-              <div class="space-y-1 text-gray-300 text-sm">
-                <p>📅 ${evt.event_date}${evt.event_time ? ' • ' + evt.event_time : ''}</p>
-                <p>📍 ${evt.city || 'N/A'}${evt.venue ? ' • ' + evt.venue : ''}</p>
-                ${evt.description ? `<p>ℹ️ ${evt.description}</p>` : ''}
-              </div>
+          <div class="flex justify-between">
+            <div>
+              <h3 class="text-xl font-bold">${e.name}</h3>
+              <p class="text-gray-400 text-sm">📅 ${e.date}${e.time ? ' ' + e.time : ''}</p>
+              <p class="text-gray-400 text-sm">📍 ${e.city || 'N/A'}</p>
             </div>
-            <button onclick="eliminarEvento('${evt.id}')" class="px-2 py-1 bg-red-600 hover:bg-red-700 rounded text-xs font-bold ml-2">🗑️</button>
+            <button onclick="deleteEvent(${i})" class="px-2 py-1 bg-red-600 rounded text-xs">🗑️</button>
           </div>
-          ${evt.ticket_link ? `<a href="${evt.ticket_link}" target="_blank" class="inline-block px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg font-bold text-sm">🎫 Entradas</a>` : ''}
         </div>
       `).join('');
     }
 
-    function abrirModal() {
-      document.getElementById('modal').classList.remove('hidden');
-      limpiarFormulario();
+    function showModal() { document.getElementById('modal').classList.remove('hidden'); }
+    function closeModal() { document.getElementById('modal').classList.add('hidden'); }
+
+    function saveEvent() {
+      const name = document.getElementById('eventName').value;
+      const date = document.getElementById('eventDate').value;
+
+      if (!name || !date) { alert('Rellena nombre y fecha'); return; }
+
+      eventos.push({
+        name,
+        date,
+        time: document.getElementById('eventTime').value,
+        city: document.getElementById('eventCity').value,
+        venue: document.getElementById('eventVenue').value,
+        ticket: document.getElementById('eventTicket').value
+      });
+
+      localStorage.setItem(`eventos_${user.id}`, JSON.stringify(eventos));
+      closeModal();
+      renderEventos();
+      alert('✅ Evento agregado');
     }
 
-    function cerrarModal() {
-      document.getElementById('modal').classList.add('hidden');
-    }
-
-    function limpiarFormulario() {
-      document.getElementById('eventName').value = '';
-      document.getElementById('eventDate').value = '';
-      document.getElementById('eventTime').value = '';
-      document.getElementById('eventCity').value = '';
-      document.getElementById('eventVenue').value = '';
-      document.getElementById('eventTicket').value = '';
-      document.getElementById('eventDesc').value = '';
-    }
-
-    async function guardarEvento() {
-      const nombre = document.getElementById('eventName').value.trim();
-      const fecha = document.getElementById('eventDate').value;
-
-      if (!nombre || !fecha) {
-        alert('⚠️ Rellena nombre y fecha');
-        return;
-      }
-
-      try {
-        await supabase.from('events').insert([{
-          user_id: user.id,
-          event_name: nombre,
-          event_date: fecha,
-          event_time: document.getElementById('eventTime').value || null,
-          city: document.getElementById('eventCity').value.trim(),
-          venue: document.getElementById('eventVenue').value.trim(),
-          ticket_link: document.getElementById('eventTicket').value.trim(),
-          description: document.getElementById('eventDesc').value.trim()
-        }]);
-
-        cerrarModal();
-        cargarEventos();
-        alert('✅ Evento agregado');
-      } catch (e) {
-        alert('❌ Error: ' + e.message);
-      }
-    }
-
-    async function eliminarEvento(id) {
-      if (!confirm('¿Eliminar evento?')) return;
-
-      try {
-        await supabase.from('events').delete().eq('id', id);
-        cargarEventos();
-      } catch (e) {
-        alert('❌ Error');
-      }
+    function deleteEvent(i) {
+      if (!confirm('¿Eliminar?')) return;
+      eventos.splice(i, 1);
+      localStorage.setItem(`eventos_${user.id}`, JSON.stringify(eventos));
+      renderEventos();
     }
 
     function logout() {
@@ -218,16 +155,7 @@
       window.location.href = '/login.html';
     }
 
-    // Proteger página
-    window.addEventListener('load', () => {
-      user = JSON.parse(localStorage.getItem('voltum_user'));
-      if (!user) {
-        window.location.href = '/login.html';
-        return;
-      }
-      document.getElementById('userName').textContent = user.artist_name || user.username;
-      cargarEventos();
-    });
+    window.addEventListener('load', loadData);
   </script>
 </body>
 </html>
