@@ -7,84 +7,78 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    body { font-family: system-ui, -apple-system, sans-serif; }
+  </style>
 </head>
 <body class="bg-gradient-to-b from-black via-purple-900/20 to-black text-white">
   <div class="min-h-screen">
-    <!-- Navbar -->
     <nav class="bg-black/40 backdrop-blur border-b border-purple-500/20 sticky top-0 z-50">
       <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
         <div class="text-2xl font-black bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">⚡ VOLTUM</div>
         <div class="flex gap-4 items-center">
-          <span class="text-sm">Bienvenido, <span id="djName" class="font-bold">DJ Phoenix</span></span>
-          <button onclick="goToPreskit()" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg font-bold text-sm">
+          <span class="text-sm">Bienvenido, <span class="font-bold">DJ Phoenix</span></span>
+          <button onclick="window.location.href='/preskit-demo.html'" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg font-bold text-sm">
             👁️ Ver Preskit
           </button>
         </div>
       </div>
     </nav>
 
-    <!-- Main Content -->
     <div class="max-w-6xl mx-auto px-4 py-12">
+      <h1 class="text-4xl font-black mb-8">📊 Mi Dashboard</h1>
       
-      <!-- Analytics Section -->
-      <div class="mb-12">
-        <h1 class="text-4xl font-black mb-8">📊 Mi Dashboard</h1>
-        
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <div class="bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-2xl p-6">
-            <div class="text-gray-400 text-sm mb-2">Total de Visitas</div>
-            <div class="text-4xl font-black mb-2" id="totalVisits">1250</div>
-            <div class="text-green-400 text-sm">↑ 12% esta semana</div>
-          </div>
-
-          <div class="bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-2xl p-6">
-            <div class="text-gray-400 text-sm mb-2">Visitantes Únicos</div>
-            <div class="text-4xl font-black mb-2" id="uniqueVisitors">342</div>
-            <div class="text-green-400 text-sm">↑ 8% esta semana</div>
-          </div>
-
-          <div class="bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-2xl p-6">
-            <div class="text-gray-400 text-sm mb-2">Clicks en Redes</div>
-            <div class="text-4xl font-black mb-2" id="socialClicks">156</div>
-            <div class="text-green-400 text-sm">↑ 5 hoy</div>
-          </div>
-
-          <div class="bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-2xl p-6">
-            <div class="text-gray-400 text-sm mb-2">Próximas Presentaciones</div>
-            <div class="text-4xl font-black mb-2" id="eventCount">0</div>
-            <div class="text-blue-400 text-sm">Este mes</div>
-          </div>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div class="bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-2xl p-6">
+          <div class="text-gray-400 text-sm mb-2">Total de Visitas</div>
+          <div class="text-4xl font-black mb-2">1250</div>
+          <div class="text-green-400 text-sm">↑ 12% esta semana</div>
         </div>
 
-        <div class="bg-gray-900/50 border border-purple-500/20 rounded-2xl p-6 mb-8">
-          <h2 class="text-2xl font-bold mb-4">📈 Últimos 30 días</h2>
-          <div class="h-48 bg-gray-800/30 rounded-lg border border-purple-500/20 flex items-center justify-center">
-            <div class="text-center text-gray-400">
-              <i class="fas fa-chart-line text-4xl mb-2"></i>
-              <p>Gráfico de visitas</p>
-              <p class="text-sm">(Función disponible en Plan Pro)</p>
-            </div>
+        <div class="bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-2xl p-6">
+          <div class="text-gray-400 text-sm mb-2">Visitantes Únicos</div>
+          <div class="text-4xl font-black mb-2">342</div>
+          <div class="text-green-400 text-sm">↑ 8% esta semana</div>
+        </div>
+
+        <div class="bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-2xl p-6">
+          <div class="text-gray-400 text-sm mb-2">Clicks en Redes</div>
+          <div class="text-4xl font-black mb-2">156</div>
+          <div class="text-green-400 text-sm">↑ 5 hoy</div>
+        </div>
+
+        <div class="bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-2xl p-6">
+          <div class="text-gray-400 text-sm mb-2">Próximas Presentaciones</div>
+          <div class="text-4xl font-black mb-2" id="eventCount">0</div>
+          <div class="text-blue-400 text-sm">Este mes</div>
+        </div>
+      </div>
+
+      <div class="bg-gray-900/50 border border-purple-500/20 rounded-2xl p-6 mb-12">
+        <h2 class="text-2xl font-bold mb-4">📈 Últimos 30 días</h2>
+        <div class="h-48 bg-gray-800/30 rounded-lg border border-purple-500/20 flex items-center justify-center">
+          <div class="text-center text-gray-400">
+            <i class="fas fa-chart-line text-4xl mb-2 block"></i>
+            <p>Gráfico de visitas</p>
+            <p class="text-sm">(Función disponible en Plan Pro)</p>
           </div>
         </div>
       </div>
 
-      <!-- Events Manager Section -->
       <div class="mb-12">
         <div class="flex justify-between items-center mb-8">
           <h2 class="text-3xl font-bold">📅 Mis Presentaciones</h2>
-          <button onclick="openEventModal()" class="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold hover:opacity-90 transition">
+          <button onclick="openModal()" class="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold hover:opacity-90">
             + Agregar Evento
           </button>
         </div>
 
-        <div id="eventsList" class="space-y-4">
-          <!-- Los eventos se cargan aquí -->
-        </div>
+        <div id="eventsList" class="space-y-4"></div>
 
         <div id="emptyState" class="bg-gray-900/50 border border-purple-500/20 rounded-2xl p-12 text-center">
           <i class="fas fa-calendar text-6xl text-purple-500 mb-4 block"></i>
           <p class="text-gray-400 mb-4">No tienes presentaciones programadas aún</p>
-          <button onclick="openEventModal()" class="px-6 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg font-bold">
+          <button onclick="openModal()" class="px-6 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg font-bold">
             Agregar primera presentación
           </button>
         </div>
@@ -92,14 +86,11 @@
     </div>
   </div>
 
-  <!-- Modal: Agregar/Editar Evento -->
-  <div id="eventModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur flex items-center justify-center z-50 p-4">
+  <div id="modal" class="hidden fixed inset-0 bg-black/50 backdrop-blur flex items-center justify-center z-50 p-4">
     <div class="bg-gray-900 border border-purple-500/30 rounded-2xl p-8 max-w-md w-full max-h-[90vh] overflow-y-auto">
-      <h2 class="text-2xl font-bold mb-6">
-        <span id="modalTitle">Agregar Presentación</span>
-      </h2>
+      <h2 class="text-2xl font-bold mb-6">📅 Agregar Presentación</h2>
 
-      <form onsubmit="handleSaveEvent(event)" class="space-y-4">
+      <form onsubmit="saveEvent(event)" class="space-y-4">
         <div>
           <label class="block text-sm text-gray-400 mb-2">Nombre del Lugar *</label>
           <input type="text" id="eventName" placeholder="Club Nocturno" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white" required>
@@ -136,10 +127,10 @@
         </div>
 
         <div class="flex gap-3 pt-4">
-          <button type="button" onclick="closeEventModal()" class="flex-1 px-4 py-2 border border-purple-500 rounded-lg font-bold hover:bg-purple-500/10 transition">
+          <button type="button" onclick="closeModal()" class="flex-1 px-4 py-2 border border-purple-500 rounded-lg font-bold hover:bg-purple-500/10">
             Cancelar
           </button>
-          <button type="submit" id="submitBtn" class="flex-1 px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold hover:opacity-90 transition">
+          <button type="submit" class="flex-1 px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold hover:opacity-90">
             Guardar
           </button>
         </div>
@@ -148,34 +139,21 @@
   </div>
 
   <script>
-    const SUPABASE_URL = 'https://btwrbjqvnwxxsyhipjta.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ0d3JianF2bnd4eHN5aGlwanRhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc0MDk1MjYsImV4cCI6MjA5Mjk4NTUyNn0.PwQW47h0BflM0JVQc0HKJ-8t3NjXTiY-9H_QD7k-R7A';
-    
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const URL = 'https://btwrbjqvnwxxsyhipjta.supabase.co';
+    const KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ0d3JianF2bnd4eHN5aGlwanRhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc0MDk1MjYsImV4cCI6MjA5Mjk4NTUyNn0.PwQW47h0BflM0JVQc0HKJ-8t3NjXTiY-9H_QD7k-R7A';
+    const client = window.supabase.createClient(URL, KEY);
 
     let events = [];
-    let editingEventId = null;
 
     async function loadEvents() {
       try {
-        console.log('Cargando eventos...');
-        const { data, error } = await supabase
-          .from('events')
-          .select('*')
-          .order('event_date', { ascending: true });
-
-        if (error) {
-          console.error('Error Supabase:', error);
-          throw error;
-        }
-
-        console.log('Eventos cargados:', data);
+        const { data, error } = await client.from('events').select('*').order('event_date', { ascending: true });
+        if (error) throw error;
         events = data || [];
         renderEvents();
-        updateEventCount();
-      } catch (error) {
-        console.error('Error al cargar eventos:', error);
-        alert('⚠️ Error cargando eventos: ' + error.message);
+      } catch (e) {
+        console.error('Error:', e);
+        alert('Error cargando eventos');
       }
     }
 
@@ -183,49 +161,36 @@
       const list = document.getElementById('eventsList');
       const empty = document.getElementById('emptyState');
 
-      if (!events || events.length === 0) {
+      if (events.length === 0) {
         list.innerHTML = '';
         empty.classList.remove('hidden');
+        document.getElementById('eventCount').textContent = '0';
         return;
       }
 
       empty.classList.add('hidden');
-      list.innerHTML = events.map((event, idx) => `
+      document.getElementById('eventCount').textContent = events.length;
+
+      list.innerHTML = events.map(e => `
         <div class="bg-gradient-to-r from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-6">
           <div class="flex justify-between items-start mb-4">
             <div>
-              <h3 class="text-xl font-bold mb-2">${event.event_name || 'Sin nombre'}</h3>
-              <div class="space-y-1 text-gray-300">
-                <p><i class="fas fa-calendar-alt w-4"></i> ${event.event_date}${event.event_time ? ' • ' + event.event_time : ''}</p>
-                <p><i class="fas fa-map-marker-alt w-4"></i> ${event.city || 'N/A'}${event.venue ? ' • ' + event.venue : ''}</p>
-                ${event.description ? `<p><i class="fas fa-info-circle w-4"></i> ${event.description}</p>` : ''}
+              <h3 class="text-xl font-bold mb-2">${e.event_name}</h3>
+              <div class="space-y-1 text-gray-300 text-sm">
+                <p>📅 ${e.event_date}${e.event_time ? ' • ' + e.event_time : ''}</p>
+                <p>📍 ${e.city || 'N/A'}${e.venue ? ' • ' + e.venue : ''}</p>
+                ${e.description ? `<p>ℹ️ ${e.description}</p>` : ''}
               </div>
             </div>
-            <div class="flex gap-2">
-              <button onclick="openEditEvent('${event.id}')" class="px-3 py-1 bg-purple-600 hover:bg-purple-700 rounded text-sm">
-                ✏️
-              </button>
-              <button onclick="deleteEvent('${event.id}')" class="px-3 py-1 bg-red-600 hover:bg-red-700 rounded text-sm">
-                🗑️
-              </button>
-            </div>
+            <button onclick="deleteEvent('${e.id}')" class="px-2 py-1 bg-red-600 hover:bg-red-700 rounded text-xs">🗑️</button>
           </div>
-          ${event.ticket_link ? `
-            <a href="${event.ticket_link}" target="_blank" class="inline-block px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg font-bold text-sm">
-              🎫 Entradas
-            </a>
-          ` : ''}
+          ${e.ticket_link ? `<a href="${e.ticket_link}" target="_blank" class="inline-block px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg font-bold text-sm">🎫 Entradas</a>` : ''}
         </div>
       `).join('');
     }
 
-    function updateEventCount() {
-      document.getElementById('eventCount').textContent = events.length;
-    }
-
-    function openEventModal() {
-      editingEventId = null;
-      document.getElementById('modalTitle').textContent = 'Agregar Presentación';
+    function openModal() {
+      document.getElementById('modal').classList.remove('hidden');
       document.getElementById('eventName').value = '';
       document.getElementById('eventDate').value = '';
       document.getElementById('eventTime').value = '';
@@ -233,123 +198,49 @@
       document.getElementById('eventVenue').value = '';
       document.getElementById('eventTicketLink').value = '';
       document.getElementById('eventDescription').value = '';
-      document.getElementById('submitBtn').textContent = 'Guardar';
-      document.getElementById('eventModal').classList.remove('hidden');
     }
 
-    function openEditEvent(id) {
-      const event = events.find(e => e.id === id);
-      if (!event) {
-        alert('Evento no encontrado');
-        return;
-      }
-
-      editingEventId = id;
-      document.getElementById('modalTitle').textContent = 'Editar Presentación';
-      document.getElementById('eventName').value = event.event_name || '';
-      document.getElementById('eventDate').value = event.event_date || '';
-      document.getElementById('eventTime').value = event.event_time || '';
-      document.getElementById('eventCity').value = event.city || '';
-      document.getElementById('eventVenue').value = event.venue || '';
-      document.getElementById('eventTicketLink').value = event.ticket_link || '';
-      document.getElementById('eventDescription').value = event.description || '';
-      document.getElementById('submitBtn').textContent = 'Actualizar';
-      document.getElementById('eventModal').classList.remove('hidden');
+    function closeModal() {
+      document.getElementById('modal').classList.add('hidden');
     }
 
-    function closeEventModal() {
-      document.getElementById('eventModal').classList.add('hidden');
-      editingEventId = null;
-    }
-
-    async function handleSaveEvent(e) {
+    async function saveEvent(e) {
       e.preventDefault();
 
-      const eventData = {
-        event_name: document.getElementById('eventName').value.trim(),
+      const data = {
+        event_name: document.getElementById('eventName').value,
         event_date: document.getElementById('eventDate').value,
         event_time: document.getElementById('eventTime').value || null,
-        city: document.getElementById('eventCity').value.trim(),
-        venue: document.getElementById('eventVenue').value.trim(),
-        ticket_link: document.getElementById('eventTicketLink').value.trim(),
-        description: document.getElementById('eventDescription').value.trim()
+        city: document.getElementById('eventCity').value,
+        venue: document.getElementById('eventVenue').value,
+        ticket_link: document.getElementById('eventTicketLink').value,
+        description: document.getElementById('eventDescription').value
       };
 
-      // Validaciones
-      if (!eventData.event_name) {
-        alert('❌ El nombre del lugar es requerido');
-        return;
-      }
-      if (!eventData.event_date) {
-        alert('❌ La fecha es requerida');
-        return;
-      }
-
       try {
-        const submitBtn = document.getElementById('submitBtn');
-        submitBtn.disabled = true;
-        submitBtn.textContent = '⏳ Guardando...';
-
-        if (editingEventId) {
-          console.log('Actualizando evento:', editingEventId);
-          const { error } = await supabase
-            .from('events')
-            .update(eventData)
-            .eq('id', editingEventId);
-          
-          if (error) throw error;
-          console.log('Evento actualizado');
-        } else {
-          console.log('Creando nuevo evento');
-          const { data, error } = await supabase
-            .from('events')
-            .insert([eventData])
-            .select();
-          
-          if (error) throw error;
-          console.log('Evento creado:', data);
-        }
-
-        closeEventModal();
-        await loadEvents();
-        alert('✅ Evento guardado correctamente');
-      } catch (error) {
-        console.error('Error al guardar:', error);
-        alert('❌ Error: ' + (error.message || 'Error desconocido'));
-      } finally {
-        const submitBtn = document.getElementById('submitBtn');
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Guardar';
+        const { error } = await client.from('events').insert([data]);
+        if (error) throw error;
+        closeModal();
+        loadEvents();
+        alert('✅ Evento agregado');
+      } catch (e) {
+        console.error('Error:', e);
+        alert('❌ Error: ' + e.message);
       }
     }
 
     async function deleteEvent(id) {
       if (!confirm('¿Eliminar este evento?')) return;
-
       try {
-        const { error } = await supabase
-          .from('events')
-          .delete()
-          .eq('id', id);
-
+        const { error } = await client.from('events').delete().eq('id', id);
         if (error) throw error;
-        
-        await loadEvents();
-        alert('✅ Evento eliminado');
-      } catch (error) {
-        console.error('Error:', error);
-        alert('❌ Error al eliminar');
+        loadEvents();
+      } catch (e) {
+        alert('Error');
       }
     }
 
-    function goToPreskit() {
-      window.location.href = '/preskit-demo.html';
-    }
-
-    window.addEventListener('load', () => {
-      console.log('Dashboard cargado');
-      loadEvents();
-    });
+    loadEvents();
   </script>
 </body>
 </html>
