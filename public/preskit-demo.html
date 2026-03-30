@@ -33,6 +33,15 @@
           <div class="bg-gray-900/50 border border-purple-500/20 rounded-2xl p-6 space-y-4">
             <h2 class="text-xl font-bold mb-4">✏️ Editar Información</h2>
             
+            <!-- Foto de Perfil -->
+            <div>
+              <label class="block text-sm text-gray-400 mb-2">📸 Foto de Perfil</label>
+              <input type="file" id="profilePhotoInput" accept="image/*" class="w-full px-3 py-2 bg-gray-800 border border-purple-500/30 rounded-lg text-white text-sm" onchange="handleProfilePhotoUpload(event)">
+              <div id="profilePhotoPreview" class="mt-3 w-20 h-20 mx-auto rounded-full border-2 border-purple-500 overflow-hidden bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-2xl">
+                🎧
+              </div>
+            </div>
+
             <!-- Nombre -->
             <div>
               <label class="block text-sm text-gray-400 mb-2">Nombre Artístico</label>
@@ -109,7 +118,7 @@
             
             <!-- Profile Header -->
             <div class="text-center mb-8">
-              <div class="w-32 h-32 mx-auto mb-4 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-4xl">
+              <div id="displayProfilePhoto" class="w-32 h-32 mx-auto mb-4 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-4xl overflow-hidden border-4 border-purple-500">
                 🎧
               </div>
               <h1 id="displayName" class="text-4xl font-black mb-2">DJ Phoenix</h1>
@@ -177,29 +186,6 @@
               </div>
             </div>
 
-            <!-- Pricing -->
-            <div class="bg-gray-800/50 p-4 rounded-lg border border-purple-500/20 mb-8">
-              <h3 class="font-bold mb-3">💰 Precios de Contratación</h3>
-              <div class="grid grid-cols-2 gap-3">
-                <div>
-                  <div class="text-sm text-gray-400">Club</div>
-                  <div class="font-bold">$150 USD</div>
-                </div>
-                <div>
-                  <div class="text-sm text-gray-400">Festival</div>
-                  <div class="font-bold">$500 USD</div>
-                </div>
-                <div>
-                  <div class="text-sm text-gray-400">Privado</div>
-                  <div class="font-bold">$200 USD</div>
-                </div>
-                <div>
-                  <div class="text-sm text-gray-400">Sesión Estudio</div>
-                  <div class="font-bold">$100 USD</div>
-                </div>
-              </div>
-            </div>
-
             <!-- Share Button -->
             <button onclick="sharePreskit()" class="w-full py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold hover:opacity-90 transition">
               🔗 Compartir Mi Preskit
@@ -225,6 +211,7 @@
 
     let selectedGenres = ['House', 'Techno'];
     let uploadedImages = [];
+    let profilePhoto = null;
 
     // Redes sociales con iconos
     const SOCIAL_NETWORKS = {
@@ -264,6 +251,27 @@
         label.appendChild(span);
         container.appendChild(label);
       });
+    }
+
+    function handleProfilePhotoUpload(event) {
+      const file = event.target.files[0];
+      
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          profilePhoto = e.target.result;
+          document.getElementById('profilePhotoPreview').innerHTML = `<img src="${profilePhoto}" class="w-full h-full object-cover">`;
+          updateProfilePhoto();
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function updateProfilePhoto() {
+      const displayDiv = document.getElementById('displayProfilePhoto');
+      if (profilePhoto) {
+        displayDiv.innerHTML = `<img src="${profilePhoto}" class="w-full h-full object-cover">`;
+      }
     }
 
     function handleImageUpload(event) {
@@ -369,6 +377,7 @@
       document.getElementById('displayGenres').innerHTML = genreHTML;
 
       updateSocialLinks();
+      updateProfilePhoto();
 
       alert('✅ Cambios guardados correctamente');
     }
